@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="de">geniessen</span></p>
+    <input type="text" id="englisch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistics</button>
+    <button onclick="switchMode()">Change Mode</button>
+    <button onclick="TestMode()">Test Mode</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Correct Words: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Incorrect Words: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"Apfelkuchen": "apple pie",
+    "Speck": "bacon",
+    "Rechnung": "bill",
+    "Flasche": "bottle",
+    "Karotten": "carrots",
+    "sicherlich": "certainly",
+    "Wechselgeld": "change",
+    "Huhn": "chicken",
+    "Cocktail": "cocktail",
+    "Sahne": "cream",
+    "Tasse": "cup",
+    "Dessert": "dessert",
+    "sterben": "die",
+    "sich zuhause fühlen": "feel at home",
+    "Fisch": "fish",
+    "Geschmack": "flavour",
+    "Pommes": "fries",
+    "Frucht": "fruit",
+    "Generation": "generation",
+    "Enkelin": "granddaughter",
+    "Grossmutter": "grandma",
+    "Friseur": "hairdresser",
+    "Pullover": "jumper",
+    "Salat": "lettuce",
+    "Hauptgericht": "main course",
+    "Fleisch": "meat",
+    "Menü": "menu",
+    "Mineralwasser": "mineral water",
+    "gemischter Salat": "mixed salad",
+    "älteste": "oldest",
+    "bestellen": "order",
+    "Erbsen": "peas",
+    "Person": "person",
+    "Popcorn": "popcorn",
+    "Kartoffeln": "potato",
+    "rot": "red",
+    "Brathähnchen": "roast chicken",
+    "einzig": "single",
+    "Grösse": "size",
+    "klein": "small",
+    "gross": "large",
+    "Briefmarke": "stamp",
+    "Wasser mit Kohlensäure": "sparkling water",
+    "sicher": "sure",
+    "testen": "test",
+    "Tomate": "tomato",
+    "heute Abend": "tonight",
+    "versuchen": "try",
+    "anprobieren": "try on",
+    "Vanille": "vanilla",
+    "Gemüse": "vegetable",
+    "irgendetwas": "anything",
+    "grillieren": "barbeque",
+    "Stiefel": "boot",
+    "Mantel": "coat",
+    "Kleid": "dress",
+    "während": "during",
+    "geniessen": "enjoy",
+    "Auge": "eye",
+    "fair": "fair",
+    "Modeshow": "fashion show",
+    "sich verheiraten": "get married",
+    "sich bereit machen": "get ready",
+    "Haar": "hair",
+    "Hut": "hat",
+    "hungrig": "hungry",
+    "Interview": "interview",
+    "Zuhörer": "listeners",
+    "Liebesgeschichte": "love story",
+    "treffen": "meet",
+    "Modell": "model",
+    "Koffer packen": "pack bags",
+    "Regen": "rain",
+    "lesen": "read",
+    "Sandalen": "sandals",
+    "Hemd": "shirt",
+    "Schuh": "shoe",
+    "kurz": "short",
+    "kurze Hosen": "shorts",
+    "Rock": "skirt",
+    "Socken": "socks",
+    "speziell": "special",
+    "Badeanzug": "swimsuit",
+    "reden": "talk",
+    "die Nachrichten": "the news",
+    "durstig": "thirsty",
+    "Krawatte": "tie",
+    "müde": "tired",
+    "Turnschuhe": "trainers",
+    "Hosen": "trousers",
+    "waschen": "wash",
+    "tragen": "wear",
+    "erwachsen": "adult",
+    "erstaunlich": "amazing",
+    "ankommen": "arrive",
+    "Fahrrad": "bicycle",
+    "Bustour": "bus tour",
+    "beschäftigt": "busy",
+    "ein Flugzeug erwischen": "catch a plane",
+    "sammeln": "collect",
+    "kosten": "cost",
+    "Tagebuch": "diary",
+    "aufgeregt": "excited",
+    "Flug": "flight",
+    "fliegen": "fly",
+    "Zukunft": "future",
+    "Joggen gehen": "go jogging",
+    "Sehenswürdigkeiten anschauen": "go sightseeing",
+    "Hostel": "hostel",
+    "wie lange": "how long?",
+    "Es ist Zeit zu gehen": "it's time to go",
+    "letzten Monat": "last month",
+    "glücklich": "lucky",
+    "Motorrad": "motorbike",
+    "Museum": "museum",
+    "planen": "plan",
+    "Schiff": "ship",
+    "noch": "still",
+    "Koffer": "suitcase",
+    "Ticket": "ticket",
+    "Reisebüro": "travel agent",
+    "Onkel": "uncle"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        let wordList = Object.keys(wörterbuch); // Words that haven't been asked yet
+        let usedWords = []; // Words that have been asked
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getNextWord() {
+            if (wordList.length === 0) {
+                alert("All words have been asked once. Starting the next round!");
+                wordList = [...usedWords]; // Reset word list
+                shuffleArray(wordList); // Shuffle for randomness
+                usedWords = []; // Reset used words
+            }
+
+            const word = wordList.pop(); // Get last word from shuffled list
+            usedWords.push(word); // Mark it as used
+            return word;
+        }
+
+        function translate() {
+            const englisch = document.getElementById("englisch").value.trim();
+            const deutsch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[deutsch];
+
+            const result = (englisch.toLowerCase() === correctTranslation.toLowerCase()) 
+                ? "Correct!" 
+                : `Incorrect, the correct solution is: ${correctTranslation}`;
+            alert(result);
+
+            if (englisch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(deutsch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(deutsch);
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const nextWord = getNextWord();
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="de">${nextWord}</span>`;
+            document.getElementById("englisch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            window.location.href = "Wortschatz Unit 12-14 NHB - MC - DE.html";
+        }
+
+        function TestMode() {
+            window.location.href = "Wortschatz Unit 12-14 NHB - TM - DE.html";
+        }
+
+        shuffleArray(wordList); // Shuffle words at the start
+        nextQuestion();
+    </script>
+
+<br>
+<p><span lang="de">Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</span></p>
+<p><a href="Unit 12-14 NHB.docx" target="_blank"><span lang="en">New Headway Beginner Units 12-14</span></a></p>
+<br>
+<br>
+</body>
+</html>

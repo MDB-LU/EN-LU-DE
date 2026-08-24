@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"general knowledge": "Allgemeinwissen",
+"state": "Staat",
+"elephant": "Elefant",
+"weigh": "wiegen",
+"end": "Ende",
+"bird": "Vogel",
+"migrate": "wegziehen",
+"clothes": "Kleider",
+"leather": "Leder",
+"stay": "bleiben",
+"guitar": "Gitarre",
+"team": "Mannschaft",
+"support": "unterstützen",
+"usually": "normalerweise",
+"habit": "Gewohnheit",
+"match": "Spiel",
+"carefully": "sorgfältig",
+"game": "Spiel",
+"cook": "Koch",
+"fluently": "fliessend",
+"quickly": "schnell",
+"unfortunately": "leider",
+"terrible": "schrecklich",
+"police": "Polizei",
+"immediate": "sofort",
+"test": "Prüfung",
+"pass": "bestehen",
+"fast asleep": "fest eingeschlafen",
+"gun": "Waffe",
+"immediately": "Sofort",
+"whistle": "pfeifen",
+"bored": "gelangweilt",
+"excited": "aufgeregt",
+"annoyed": "verärgert",
+"interesting": "interessant",
+"tiring": "ermüdend",
+"runner": "Läufer",
+"annoying": "lästig",
+"behaviour": "Verhalten",
+"nobody": "niemand",
+"worrying": "beunruhigend",
+"train": "Zug",
+"journey": "Reise",
+"loudly": "laut",
+"countryside": "Landschaft",
+"sheep": "Schafe",
+"ask": "fragen",
+"another": "ein anderer",
+"grass": "Gras",
+"story": "Geschichte",
+"indeed": "tatsächlich",
+"beautiful": "schön",
+"behave": "sich verhalten",
+"save": "retten",
+"stupid": "dumm",
+"ridiculous": "lächerlich",
+"describe": "beschreiben",
+"badly-behaved": "ungezogen",
+"once upon a time": "es war einmal",
+"well-behaved": "gut erzogen",
+"untidy": "unordentlich",
+"rude": "unhöflich",
+"lie": "Lüge",
+"medal": "Medaille",
+"anyway": "jedenfalls",
+"king": "König",
+"palace": "Palast",
+"put on": "anziehen",
+"pin": "heften",
+"front": "Vorderseite",
+"wolf": "Wolf",
+"clink": "klimpern",
+"towards": "Richtung",
+"answer": "antworten",
+"try": "versuchen",
+"heavy": "schwer",
+"bit": "Stück",
+"except": "ausser",
+"station": "Bahnhof",
+"timetable": "Fahrplan",
+"departure": "Abfahrt",
+"arrival": "Ankunft",
+"get in": "einsteigen",
+"return": "Rückfahrkarte",
+"change": "Wechselgeld",
+"platform": "Bahnsteig",
+"note": "Geldschein",
+"cash": "Bargeld",
+"flag": "Flagge",
+"ever": "jemals",
+"foreign": "ausländisch",
+"play": "Theaterstück",
+"tractor": "Traktor",
+"competition": "Wettkampf",
+"honeymoon": "Flitterwochen",
+"ride": "Fahrt",
+"double-decker": "Doppeldeckerbus",
+"pneumonia": "Lungenentzündung",
+"ambulance": "Krankenwagen",
+"engineer": "Ingenieur",
+"heart attack": "Herzinfarkt",
+"lung cancer": "Lungenkrebs",
+"rheumatic fever": "Gelenkrheuma",
+"secretary": "Sekretär",
+"illness": "Krankheit",
+"give up": "aufgeben",
+"serious": "ernst",
+"return": "zurückkehren",
+"niece": "Nichte",
+"aged": "im Alter von",
+"exercise": "trainieren",
+"pipe": "Pfeife",
+"ill": "krank",
+"certificate": "Zeugnis",
+"bacon": "Speck",
+"marmalade": "Marmelade",
+"abroad": "im Ausland",
+"grandchild": "Enkel",
+"great-grandchild": "Urenkel",
+"long-lived": "langlebig",
+"pack": "packen",
+"wake up": "aufwecken",
+"dawn": "Dämmerung",
+"blow the horn": "hupen",
+"already": "bereits",
+"lonesome": "einsam",
+"let go": "gehen lassen",
+"let down": "enttäuschen",
+"horn": "Hupe",
+"trumpet": "Trompete",
+"hold": "halten",
+"board": "an Bord gehen",
+"trolley": "Gepäckwagen",
+"luggage": "Gepäck",
+"duty-free": "zollfrei",
+"check in": "einchecken",
+"boarding pass": "Bordkarte",
+"passport control": "Passkontrolle",
+"check": "überprüfen",
+"gate": "Flugsteig",
+"flight": "Flug",
+"destination": "Reiseziel",
+"remark": "Bemerkung",
+"delayed": "verspätet",
+"hall": "Halle",
+"check-in desk": "Abfertigungsschalter",
+"each other": "einander",
+"announcement": "Durchsage",
+"seat": "Sitzplatz",
+"terrific": "fantastisch",
+"miss": "verpassen"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 13-14 NHE - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 13-14 NHE - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 13-14 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 13-14</span></a></p>
+<br>
+<br>
+</body>
+</html>

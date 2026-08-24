@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+    <button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"gap year": "Zwischenjahr",
+"scuba dive": "Sporttauchen",
+"until": "bis",
+"run out": "ablaufen",
+"as soon as": "sobald",
+"keep in touch": "in Kontakt bleiben",
+"pass": "bestehen",
+"salary": "Gehalt",
+"stop": "aufhören",
+"retire": "in den Ruhestand gehen",
+"get lost": "sich verlaufen",
+"safely": "sicher",
+"water": "giessen",
+"crew member": "Besatzungsmitglied",
+"feed": "füttern",
+"bite": "beissen",
+"touch": "berühren, anfassen",
+"continue": "fortsetzen",
+"react to": "reagieren auf",
+"increase": "ansteigen",
+"stupid": "dumm",
+"power": "Macht",
+"science": "Wissenschaft",
+"agree": "zustimmen",
+"grow": "wachsen",
+"probably": "wahrscheinlich",
+"ugly": "hässlich",
+"building site": "Baustelle",
+"speed": "Geschwindigkeit",
+"spread": "sich ausbreiten",
+"towards": "gegen",
+"leader": "Anführer",
+"glorious": "herrlich",
+"disappear": "verschwinden",
+"welcome": "willkommen heissen",
+"change": "Veränderung",
+"highway": "Autobahn",
+"boundary": "Grenze",
+"concrete": "Beton",
+"office block": "Bürogebäude",
+"design": "entwerfen",
+"air-conditioned": "klimatisiert",
+"commute": "pendeln",
+"wealth": "Reichtum",
+"statistics": "Statistik",
+"remarkable": "bemerkenswert",
+"significant": "bedeutsam",
+"look like": "aussehen wie",
+"refer to": "sich beziehen auf",
+"ground floor": "Erdgeschoss",
+"floor": "Stockwerk",
+"basement": "Keller",
+"gym": "Fitnessraum",
+"reservation": "Reservierung",
+"pillow": "Kopfkissen",
+"order": "bestellen",
+"wake-up call": "Weckruf",
+"used to": "gewöhnlich",
+"condition": "Verfassung",
+"rest": "Erholung",
+"go climbing": "klettern gehen",
+"footpath": "Fussweg",
+"adventure": "Abenteuer",
+"handrail": "Geländer",
+"at times": "manchmal",
+"be frightened": "Angst haben",
+"concentrate": "sich konzentrieren",
+"thrill": "Nervenkitzel",
+"enjoyment": "Genuss",
+"view": "Aussicht",
+"manage": "es schaffen",
+"shake": "zittern",
+"covered in sweat": "schweissüberströmt",
+"heat": "Hitze",
+"fear": "Angst",
+"exhausted": "erschöpft",
+"steep": "steil",
+"instructor": "Ausbildner",
+"recipe": "Rezept",
+"have a haircut": "sich die Haare schneiden lassen",
+"petrol station": "Tankstelle",
+"newsagent’s": "Zeitungshändler",
+"posh": "vornehm",
+"be killed": "getötet werden",
+"hunter": "Jäger",
+"get rid of something": "etwas loswerden",
+"burn": "verbrennen",
+"get in touch": "sich in Verbindung setzen",
+"strength": "Kraft",
+"poisonous": "giftig",
+"circumstances": "Umstände",
+"hitchhike": "Autostoppen",
+"investigate": "untersuchen",
+"contain": "enthalten",
+"report": "Bericht",
+"invent": "erfinden",
+"diary": "Tagebuch",
+"possession": "Besitz",
+"survive": "überleben",
+"various": "verschiedene",
+"be alive": "leben",
+"background": "Hintergrund",
+"efficiently": "effizient",
+"get on with somebody": "sich mit jemandem verstehen",
+"contact": "kontaktieren",
+"beg": "flehen",
+"shelter": "Schutz",
+"stove": "Herd",
+"however": "jedoch",
+"duck": "Ente",
+"squirrel": "Eichhörnchen",
+"moose": "Elch",
+"mushroom": "Pilz",
+"berry": "Beere",
+"lose weight": "abnehmen",
+"extremely": "äusserst",
+"weak": "schwach",
+"fault": "Schuld",
+"starve": "verhungern",
+"trapped": "gefangen",
+"bless": "segnen",
+"crawl": "kriechen",
+"sleeping bag": "Schlafsack",
+"lose consciousness": "das Bewusstsein verlieren",
+"raise": "erheben",
+"brave": "mutig",
+"peace": "Frieden",
+"kidnap": "entführen",
+"tie up": "festmachen",
+"blindfold": "Augenbinde",
+"witness": "Zeuge",
+"serious": "ernst",
+"confession": "Geständnis",
+"emergency service": "Notruf",
+"be scared": "Angst haben",
+"row": "heftiger Streit"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+        let usedWords = [];
+        let wordList = Object.keys(wörterbuch);
+
+        function getRandomWord() {
+            if (wordList.length === 0) {
+                // Reset the word list if all words have been used
+                wordList = Object.keys(wörterbuch);
+                usedWords = [];
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            const word = wordList.splice(randomIndex, 1)[0];
+            usedWords.push(word);
+
+            return word;
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(wörterbuch);
+            const options = new Set([correctTranslation]);
+
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+
+            return Array.from(options);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        function displayOptions(correctTranslation) {
+            const options = getRandomOptions(correctTranslation);
+            const shuffledOptions = shuffleArray(options); // Shuffle options
+            const optionsContainer = document.getElementById('options');
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctTranslation);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctTranslation) {
+            const result = (selectedOption === correctTranslation) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (selectedOption === correctTranslation) {
+                correctCount++;
+                correctWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            } else {
+                incorrectCount++;
+                incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const englisch = getRandomWord();
+            const correctTranslation = wörterbuch[englisch];
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
+            displayOptions(correctTranslation);
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 9-10 NHPI.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 9-10 NHPI - TM.html";
+        }
+
+
+        // Initiales Setzen der Frage
+        nextQuestion();
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 9-10 NHPI.docx" target="_blank"><span lang="en">New Headway Pre-Intermediate Units 9-10</span></a></p>
+<br>
+<br>
+</body>
+</html>

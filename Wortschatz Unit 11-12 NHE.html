@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"coat": "Mantel",
+"jumper": "Pullover",
+"shirt": "Hemd",
+"dress": "Kleid",
+"skirt": "Rock",
+"jacket": "Jacke",
+"suit": "Anzug",
+"trainers": "Turnschuhe",
+"boot": "Stiefel",
+"white": "weiss",
+"fair": "hell",
+"hair": "Haar",
+"dark": "dunkel",
+"smile": "lächeln",
+"stand up": "aufstehen",
+"run": "rennen",
+"rain": "regnen",
+"chew": "kauen",
+"gum": "Kaugummi",
+"baseball cap": "Baseballmütze",
+"sunglasses": "Sonnenbrille",
+"skateboard": "Skateboard",
+"umbrella": "Schirm",
+"whose": "wessen",
+"racket": "Schläger",
+"ballet": "Ballett",
+"suitcase": "Koffer",
+"shake": "schütteln",
+"cloud": "Wolke",
+"cry": "weinen",
+"bloom": "blühen",
+"rainbow": "Regenbogen",
+"sky": "Himmel",
+"wonderful": "wundervoll",
+"bright": "hell",
+"rhyme": "sich reimen",
+"list": "Liste",
+"pay": "bezahlen",
+"fresh": "frisch",
+"silly": "albern",
+"choose": "wählen",
+"try on": "anprobieren",
+"go with": "passen zu",
+"changing room": "Umkleidekabine",
+"credit card": "Kreditkarte",
+"size": "Grösse",
+"retire": "in Pension gehen",
+"blouse": "Bluse",
+"catch": "fangen",
+"wash": "waschen",
+"sneeze": "niesen",
+"jump": "springen",
+"fall": "fallen",
+"meeting": "Sitzung",
+"due": "fällig",
+"bless you": "Gesundheit",
+"pyramid": "Pyramide",
+"tulip": "Tulpe",
+"lion": "Löwe",
+"float": "schweben",
+"accident": "Unfall",
+"water": "Wasser",
+"mark": "Note",
+"race": "Rennen",
+"windsurfing": "Windsurfen",
+"motor racing": "Autorennen",
+"sky-diving": "Fallschirmspringen",
+"interested in": "interessiert an",
+"teach": "unterrichten",
+"future": "Zukunft",
+"Text": "Text",
+"refer to": "sich beziehen auf",
+"sky-diver": "Fallschirmspringer",
+"racing driver": "Rennfahrer",
+"shed": "Schuppen",
+"grow up": "aufwachsen",
+"parachute": "Fallschirm",
+"jump": "Sprung",
+"decide": "entscheiden",
+"move": "umziehen",
+"full-time": "Vollzeit",
+"forever": "für immer",
+"coast": "Küste",
+"view": "Aussicht",
+"forget": "vergessen",
+"worry": "Sorge",
+"skydive": "Fallschirmsprung",
+"record": "Rekord",
+"circuit": "Rennstrecke",
+"corner": "Ecke",
+"course": "Kurs",
+"amazed": "erstaunt",
+"championship": "Meisterschaft",
+"beat": "schlagen",
+"excitement": "Aufregung",
+"frightened": "verängstigt",
+"race": "Rennen fahren",
+"windy": "windig",
+"snow": "Schnee",
+"cloudy": "wolkig",
+"foggy": "neblig",
+"cool": "kühl",
+"dry": "trocken",
+"weather": "Wetter",
+"degree": "Grad",
+"noon": "Mittag",
+"suggestion": "Vorschlag"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 11-12 NHE - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 11-12 NHE - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 11-12 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 11-12</span></a></p>
+<br>
+<br>
+</body>
+</html>

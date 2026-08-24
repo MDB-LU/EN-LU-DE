@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="de">geniessen</span></p>
+    <input type="text" id="englisch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistics</button>
+    <button onclick="switchMode()">Change Mode</button>
+    <button onclick="TestMode()">Test Mode</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Correct Words: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Incorrect Words: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+ "Gemüse": "vegetable",
+    "Apfelsaft": "apple juice",
+    "Joghurt": "yoghurt",
+    "Käse": "cheese",
+    "Erdbeere": "strawberry",
+    "Erbse": "pea",
+    "Karotte": "carrot",
+    "Tomate": "tomato",
+    "Keks": "biscuit",
+    "zählen": "count",
+    "einige": "some",
+    "Pilz": "mushroom",
+    "Brot": "bread",
+    "Milch": "milk",
+    "Fleisch": "meat",
+    "Reis": "rice",
+    "Zigarette": "cigarette",
+    "Cola": "coke",
+    "fertig": "ready",
+    "bestellen": "order",
+    "Art": "sort",
+    "irgendetwas": "any",
+    "Kaugummi": "chewing gum",
+    "Raum": "room",
+    "Tasche": "pocket",
+    "voll": "full",
+    "hungrig sein": "be hungry",
+    "rund um": "around",
+    "menschlich": "human",
+    "Geschichte": "history",
+    "weiterziehen": "move on",
+    "kontrollieren": "control",
+    "Umwelt": "environment",
+    "Sorte": "kind",
+    "abhängig sein von": "depend on",
+    "welche": "which",
+    "Teil": "part",
+    "zum Beispiel": "for example",
+    "Süden": "south",
+    "Nudeln": "noodles",
+    "Hering": "herring",
+    "Sardine": "sardine",
+    "zentral": "central",
+    "Wurst": "sausage",
+    "Gang": "course",
+    "Mahlzeit": "meal",
+    "Essstäbchen": "chopstick",
+    "Finger": "finger",
+    "aufheben": "pick up",
+    "möglich": "possible",
+    "transportieren": "transport",
+    "andere": "other",
+    "typisch": "typical",
+    "Familie": "family",
+    "Haupt": "main",
+    "höflich": "polite",
+    "eine Bitte": "a request",
+    "geben": "pass",
+    "Salz": "salt",
+    "Dessert": "dessert",
+    "Hilfe": "help",
+    "froh": "glad",
+    "sprudelnd": "fizzy",
+    "Speisekarte": "menu",
+    "ausleihen": "lend",
+    "leihen": "borrow",
+    "gross": "tall",
+    "als": "than",
+    "gefährlich": "dangerous",
+    "laut": "noisy",
+    "unfreundlich": "unfriendly",
+    "sauber": "clean",
+    "sicher": "safe",
+    "Gebäude": "building",
+    "U-Bahn": "underground",
+    "alles": "everything",
+    "Luft": "air",
+    "Strasse": "street",
+    "heute Abend": "tonight",
+    "Bibliothek": "library",
+    "Übung": "exercise",
+    "Millionär": "millionaire",
+    "Schloss": "castle",
+    "nichts": "nothing",
+    "Minuten": "mins",
+    "Flughafen": "airport",
+    "weit": "far",
+    "Dorf": "village",
+    "hübsch": "pretty",
+    "international": "cosmopolitan",
+    "beliebt": "popular",
+    "Reisen": "travel",
+    "Cousin": "cousin",
+    "gründen": "found",
+    "Handel": "trade",
+    "Zucker": "sugar",
+    "Gewürz": "spice",
+    "Einwanderer": "immigrant",
+    "Bevölkerung": "population",
+    "Karneval": "carnival",
+    "benennen": "name",
+    "Viertel": "quarter",
+    "ausgezeichnet": "excellent",
+    "Mischung": "mixture",
+    "Lied": "song",
+    "Hymne": "hymn",
+    "schwarz": "black",
+    "Musiker": "musician",
+    "Orchester": "orchestra",
+    "Ufer": "bank",
+    "Tor": "gateway",
+    "Osten": "east",
+    "Westen": "west",
+    "Weltreich": "empire",
+    "kulturell": "cultural",
+    "Kunst": "art",
+    "Unterricht": "learning",
+    "Psychiater": "psychiatrist",
+    "Passagier": "passenger",
+    "Gruppe": "group",
+    "die zehn besten": "top ten",
+    "Holz": "wood",
+    "Kirche": "church",
+    "Kathedrale": "cathedral",
+    "Brücke": "bridge",
+    "Parkplatz": "car park",
+    "Hafen": "port",
+    "Fabrik": "factory",
+    "Feld": "field",
+    "Nachtklub": "night club",
+    "Hügel": "hill",
+    "Berg": "mountain",
+    "Ferienhaus": "cottage",
+    "Fluss": "river",
+    "hoch": "high",
+    "Schiff": "ship",
+    "Kuh": "cow",
+    "abbiegen": "turn",
+    "dauern": "take",
+    "entlang": "along",
+    "unten": "down",
+    "in": "into",
+    "hinaus": "out of",
+    "vorbei": "over",
+    "durch": "through",
+    "oben": "up",
+    "Garage": "garage",
+    "Strasse": "road",
+    "Hecke": "hedge"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        let wordList = Object.keys(wörterbuch); // Words that haven't been asked yet
+        let usedWords = []; // Words that have been asked
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getNextWord() {
+            if (wordList.length === 0) {
+                alert("All words have been asked once. Starting the next round!");
+                wordList = [...usedWords]; // Reset word list
+                shuffleArray(wordList); // Shuffle for randomness
+                usedWords = []; // Reset used words
+            }
+
+            const word = wordList.pop(); // Get last word from shuffled list
+            usedWords.push(word); // Mark it as used
+            return word;
+        }
+
+        function translate() {
+            const englisch = document.getElementById("englisch").value.trim();
+            const deutsch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[deutsch];
+
+            const result = (englisch.toLowerCase() === correctTranslation.toLowerCase()) 
+                ? "Correct!" 
+                : `Incorrect, the correct solution is: ${correctTranslation}`;
+            alert(result);
+
+            if (englisch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(deutsch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(deutsch);
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const nextWord = getNextWord();
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="de">${nextWord}</span>`;
+            document.getElementById("englisch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            window.location.href = "Wortschatz Unit 9-10 NHE - MC - DE.html";
+        }
+
+        function TestMode() {
+            window.location.href = "Wortschatz Unit 9-10 NHE - TM - DE.html";
+        }
+
+        shuffleArray(wordList); // Shuffle words at the start
+        nextQuestion();
+    </script>
+
+<br>
+<p><span lang="de">Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</span></p>
+<p><a href="Unit 9-10 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 9-10</span></a></p>
+<br>
+<br>
+</body>
+</html>

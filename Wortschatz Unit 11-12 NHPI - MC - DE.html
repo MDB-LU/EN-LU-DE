@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="de">Hund</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistics</button>
+    <button onclick="switchMode()">Change Mode</button>
+    <button onclick="TestMode()">Test Mode</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Correct Words: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Incorrect Words: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"billion": "Milliarde",
+"originally": "ursprünglich",
+"advertisement": "Werbung",
+"grow": "wachsen",
+"steal": "stehlen",
+"chef": "Chefkoch",
+"review": "Kritik",
+"change": "ändern",
+"discuss": "besprechen",
+"topic": "Thema",
+"illuminating": "erhellend",
+"addict": "Süchtiger",
+"soil": "Erdboden",
+"fabric": "Stoff",
+"silk": "Seide",
+"plantation": "Plantage",
+"lung cancer": "Lungenkrebs",
+"inhale": "inhalieren",
+"ban": "verbieten",
+"sweeten": "süssen",
+"refine": "verfeinern",
+"chew": "kauen",
+"harvest": "ernten",
+"tobacco": "Tabak",
+"cause": "verursachen",
+"harm": "Schaden",
+"ill-effect": "unangenehme Folgen",
+"mix": "mischen",
+"rather": "ziemlich",
+"dirty": "schmutzig",
+"smelly": "stinkend",
+"disgusting": "ekelhaft",
+"nowadays": "heutzutage",
+"rare": "selten",
+"on top of": "auf",
+"chain": "Kette",
+"addictive": "süchtig machend",
+"unnecessary": "unnötig",
+"far apart": "weit auseinander",
+"pick": "pflücken",
+"increase": "Zunahme",
+"result in": "führen zu",
+"fall": "Sturz",
+"form": "bilden",
+"slavery": "Sklaverei",
+"gum": "Kaugummi",
+"flavour": "Geschmack",
+"skeleton": "Skelett",
+"freshen": "erfrischen",
+"wrap": "einwickeln",
+"tree sap": "Baumsaft",
+"advertise": "werben",
+"be considered": "betrachten als",
+"notice": "Schild",
+"drinks machine": "Getränkeautomat",
+"motorway": "Autobahn",
+"out of order": "ausser Betrieb",
+"unleaded": "bleifrei",
+"serve": "bedienen",
+"prohibited": "verboten",
+"penalty": "Strafe",
+"security": "Sicherheit",
+"luggage": "Gepäck",
+"unattended": "unbeaufsichtigt",
+"item": "Gegenstand",
+"remove": "entfernen",
+"further": "weiter",
+"engaged": "besetzt",
+"southbound": "südwärts",
+"keep off": "fern halten von",
+"one way": "Einbahnstrasse",
+"queue": "sich anstellen",
+"services": "Raststätte",
+"sweets": "Süssigkeiten",
+"dress": "Kleid",
+"servant": "Diener",
+"gran": "Oma",
+"keep": "behalten",
+"stranger": "Fremder",
+"shoplift": "Ladendiebstahl begehen",
+"dizzy": "schwindlig",
+"toothache": "Zahnschmerzen",
+"ghost": "Geist",
+"imagine": "sich einbilden",
+"downstairs": "unten",
+"solution": "Lösung",
+"transparent": "durchsichtig",
+"apparent": "erscheinend",
+"haunt": "heimsuchen",
+"rest": "sich ausruhen",
+"witness": "Zeuge",
+"murder": "Mord",
+"victim": "Opfer",
+"criminal": "Krimineller",
+"return": "zurückkehren",
+"promise": "versprechen",
+"pass on": "weitergeben",
+"nasty": "unangenehm",
+"vicar": "Pfarrer",
+"retired": "pensioniert",
+"spirit": "Geist",
+"cap": "Mütze",
+"trouble": "belästigen",
+"kick out": "hinauswerfen",
+"firmly": "mit fester Stimme",
+"brain scan": "Hirntomographie",
+"consultant": "Facharzt",
+"mysterious": "geheimnisvoll",
+"case": "Fall",
+"voice": "Stimme",
+"brain": "Gehirn",
+"change your mind": "es sich anders überlegen",
+"get past": "vorbeigehen",
+"never mind": "das macht nichts",
+"hurry up": "sich beeilen"
+        };
+
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let correctWords = [];
+    let incorrectWords = [];
+    let usedWords = [];
+    let wordList = Object.keys(wörterbuch); // Contains words that haven't been asked yet.
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRandomWord() {
+        if (wordList.length === 0) {
+            alert("All words have been asked once. A new round will start.");
+            wordList = [...usedWords]; // Copy used words back
+            shuffleArray(wordList); // Shuffle for randomness
+            usedWords = []; // Reset used words
+        }
+
+        const word = wordList.pop(); // Take the last word
+        usedWords.push(word); // Mark as used
+        return word;
+    }
+
+    function getRandomOptions(correctAnswer) {
+        const words = Object.keys(wörterbuch);
+        const options = new Set([correctAnswer]);
+
+        while (options.size < 4) {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            options.add(randomWord);
+        }
+
+        return Array.from(options);
+    }
+
+    function displayOptions(correctAnswer) {
+        const options = getRandomOptions(correctAnswer);
+        shuffleArray(options);
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+
+        options.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option';
+            button.textContent = option;
+            button.onclick = () => checkAnswer(option, correctAnswer);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function checkAnswer(selectedOption, correctAnswer) {
+        const result = (selectedOption === correctAnswer) ? "Correct!" : "Incorrect, the correct solution is " + correctAnswer;
+        alert(result);
+
+        const germanWord = document.getElementById("wordToTranslate").textContent.trim();
+
+        if (selectedOption === correctAnswer) {
+            correctCount++;
+            correctWords.push(germanWord);
+        } else {
+            incorrectCount++;
+            incorrectWords.push(germanWord);
+        }
+
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        const germanWord = getRandomWord();
+        const correctAnswer = wörterbuch[germanWord];
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="de">${correctAnswer}</span>`;
+        displayOptions(germanWord);
+    }
+
+    function showStatistics() {
+        document.getElementById("correctCount").textContent = correctCount;
+        document.getElementById("incorrectCount").textContent = incorrectCount;
+
+        document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+        document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
+
+        document.getElementById("statistics").style.display = "block";
+    }
+
+    function switchMode() {
+        window.location.href = "Wortschatz Unit 11-12 NHPI - DE.html";
+    }
+
+    function TestMode() {
+        window.location.href = "Wortschatz Unit 11-12 NHPI - TM - DE.html";
+    }
+
+    shuffleArray(wordList); // Shuffle words at the start
+    nextQuestion();
+</script>
+
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 11-12 NHPI.docx" target="_blank"><span lang="de">New Headway Pre-Intermediate Units 11-12</span></a></p>
+<br>
+<br>
+</body>
+</html>

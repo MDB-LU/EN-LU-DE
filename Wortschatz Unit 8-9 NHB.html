@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>.
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+           "a few": "ein paar",
+"armchair": "Sessel",
+"autumn": "Herbst",
+"bar": "Bar",
+"bathroom": "Badezimmer",
+"bed": "Bett",
+"bedroom": "Schlafzimmer",
+"chemist": "Apotheke",
+"church": "Kirche",
+"cinema": "Kino",
+"club": "Klub",
+"company": "Firma",
+"cooker": "Herd",
+"credit card": "Kreditkarte",
+"different": "verschieden",
+"dining room": "Esszimmer",
+"drawer": "Schublade",
+"engineer": "Ingenieur",
+"everything": "alles",
+"fast": "schnell",
+"ferry": "Fähre",
+"fresh": "frisch",
+"garden": "Garten",
+"harbour": "Hafen",
+"key": "Schlüssel",
+"kitchen": "Küche",
+"lamp": "Lampe",
+"living room": "Wohnzimmer",
+"magazine": "Magazin",
+"market": "Markt",
+"newsagent": "Kiosk",
+"next to": "neben",
+"night-life": "Nachtleben",
+"on": "auf",
+"opera": "Oper",
+"pen": "Kugelschreiber",
+"picture": "Bild",
+"post office": "Post",
+"room": "Zimmer",
+"run": "rennen",
+"sailing": "segeln",
+"seafood": "Meeresfrüchte",
+"shoe": "Schuh",
+"shower": "duschen",
+"sign": "Zeichen",
+"slow": "langsam",
+"sofa": "Sofa",
+"spring": "Frühling",
+"stay": "bleiben",
+"summer": "Sommer",
+"supermarket": "Supermarkt",
+"surfing": "surfen",
+"table": "Tisch",
+"theatre": "Theater",
+"toilet": "Toilette",
+"train": "Zug",
+"travel": "reisen",
+"turn left": "links abbiegen",
+"turn right": "rechts abbiegen",
+"under": "unter",
+"walk": "laufen",
+"wall": "Wand",
+"wonderful": "wundervoll",
+"birthday": "Geburtstag",
+"calendar": "Kalender",
+"dirty": "schmutzig",
+"expert": "Experte",
+"musician": "Musiker",
+"painter": "Maler",
+"painting": "Gemälde",
+"politician": "Politiker",
+"princess": "Prinzessin",
+"racing driver": "Rennfahrer",
+"say": "sagen",
+"scientist": "Wissenschaftlerin",
+"see": "sehen",
+"sell": "verkaufen",
+"singer": "Sänger",
+"so": "so",
+"take": "nehmen",
+"thousand": "Tausend",
+"upset": "wütend",
+"worth": "wert",
+"writer": "Autor",
+"year": "Jahr",
+"yesterday": "gestern"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 8-9 NHB - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 8-9 NHB - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 8-9 NHB.docx" target="_blank"><span lang="en">New Headway Beginner Units 8-9</span></a></p>
+<br>
+<br>
+</body>
+</html>
