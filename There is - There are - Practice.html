@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>There is / There are - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>There is / There are - Practice</h1>
+ <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+    <br>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Lesen Sie die untenstehende Beschreibung. Schreiben Sie danach sechs Sätze mit </span><strong>there is</strong> <span lang="de">und</span> <strong>there are</strong>. <span lang="de">Am Anfang steht ein Beispiel. Diese Übung fliesst nicht in die Bewertung ein.</span>
+<br>
+<p><strong>Bildbeschreibung:</strong>
+<p>Ein Park mit verschiedenen Bereichen. Es gibt einen Spielplatz, einen kleinen Teich und mehrere Bänke. Auf dem Spielplatz gibt es eine Schaukel, eine Rutsche und ein Klettergerüst. Daneben steht ein Eiswagen. Am Teich schwimmen Enten, und es gibt auch einen Springbrunnen in der Mitte. Auf der Wiese neben dem Teich sitzen einige Leute auf Picknickdecken. Entlang des Weges stehen fünf Bänke. Auf einer Bank sitzt ein Mann und liest eine Zeitung, auf einer anderen Bank isst eine Frau ein Sandwich. Am Rand des Parks gibt es ein Café, und davor stehen zwei Tische mit Stühlen.</p>
+<br>
+<p>Example 1: There is a fountain in the pond.</p>
+<p>2: <input type="text" id="0.2" name="0.2"></p>
+<p>3: <input type="text" id="0.3" name="0.3"></p>
+<p>4: <input type="text" id="0.4" name="0.4"></p>
+<p>5: <input type="text" id="0.5" name="0.5"></p>
+<p>6: <input type="text" id="0.6" name="0.6"></p>
+<p>7: <input type="text" id="0.7" name="0.7"></p>
+
+<h2>Exercise 2</h2>
+<p><span lang="de">Lesen Sie die Beschreibung des Parks nochmal und beantworten Sie die Fragen. Am Anfang steht ein Beispiel.</span></p>
+<p><strong><span lang="de">WICHTIG</span>:</strong> Write <strong>is not</strong> and not <strong>isn't</strong>.</p>
+<p>Example: Is there a café in the park? <strong>Yes, there is.</strong></p>
+<p>2: Are there any ducks in the pond? <input type="text" id="2" name="2"></p>
+<p>3: Is there a swing on the playground? <input type="text" id="3" name="3"></p>
+<p>4: Are there any benches along the path? <input type="text" id="4" name="4"></p>
+<p>5: Is there a tennis court in the playground? <input type="text" id="5" name="5"></p>
+<p>6: Are there any restaurants near the café? <input type="text" id="6" name="6"></p>
+<p>7: Is there a man reading on a bench? <input type="text" id="7" name="7"></p>
+<p>8: Are there any flowers in the park? <input type="text" id="8" name="8"></p>
+
+<h2>Exercise 3</h2>
+<p><span lang="de">Schreiben Sie Fragen und Antworten. Am Anfang steht ein Beispiel.</span></p>
+<p><strong><span lang="de">WICHTIG</span>:</strong> <span lang="de">Schreiben Sie</span> <strong>is not</strong> <span lang="de">und nicht</span> <strong>isn't</strong>.</p>
+
+<p><strong>9: benches / near the pond / ?</strong></p>
+<p>A: Are there any benches near the pond?
+<p>B: Yes, there are.
+
+<p><strong>10: swing / café / ?</strong></p>
+<p>A: <input type="text" id="10.1" name="10.1"></p>
+<p>B: No, <input type="text" id="10.2" name="10.2"></p>
+
+<p><strong>11: ducks / playground / ?</strong></p>
+<p>A: <input type="text" id="11.1" name="11.1"></p>
+<p>B: No, <input type="text" id="11.2" name="11.2"></p>
+
+<p><strong>12: tables / café / ?</strong></p>
+<p>A: <input type="text" id="12.1" name="12.1"></p>
+<p>B: Yes, <input type="text" id="12.2" name="12.2"></p>
+
+<p><strong>13: fountain / pond / ?</strong></p>
+<p>A: <input type="text" id="13.1" name="13.1"></p>
+<p>B: Yes, <input type="text" id="13.2" name="13.2"></p>
+
+<p><strong>14: woman / bench / ?</strong></p>
+<p>A: <input type="text" id="14.1" name="14.1"></p>
+<p>B: No, <input type="text" id="14.2" name="14.2"></p>
+
+<p><strong>15: swing / playground / ?</strong></p>
+<p>A: <input type="text" id="15.1" name="15.1"></p>
+<p>B: Yes, <input type="text" id="15.2" name="15.2"></p>
+
+<p><strong>16: people / the tables / ?</strong></p>
+<p>A: <input type="text" id="16.1" name="16.1"></p>
+<p>B: No, <input type="text" id="16.2" name="16.2"></p>
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+        function checkAnswers() {
+            const correctAnswers = {
+      		2: "Yes, there are.",
+                3: "Yes, there is.",
+                4: "Yes, there are.",
+                5: "No, there is not.",
+                6: "No, there are not.",
+                7: "Yes, there is.",
+                8: "No, there are not.",
+                10.1: "Is there a swing in the café?",
+                10.2: "there is not.",
+                11.1: "Are there any ducks in the playground?",
+		11.2: "there are not.",
+		12.1: "Are there any tables in the café?",
+		12.2: "there are.",
+	        13.1: "Is there a fountain in the pond?",
+                13.2: "there is.",
+                14.1: "Is there a woman on a bench?",
+                14.2: "there is not.",                
+		15.1: "Is there a swing on the playground?",
+                15.2: "there is.",
+		16.1: "Are there any people at the tables?",
+		16.2: "there are not."
+            };
+            
+
+               let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>
+

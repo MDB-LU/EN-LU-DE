@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numbers - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Numbers - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Schreiben Sie die folgenden Zahlen auf Englisch:</span></p>
+<p>22 <input type="text" id="22" name="22"></p>
+<p>45 <input type="text" id="45" name="45"></p>
+<p>68 <input type="text" id="68" name="68"></p>
+<p>52 <input type="text" id="52" name="52"></p>
+<p>21 <input type="text" id="21" name="21"></p>
+<p>99 <input type="text" id="99" name="99"></p>
+<p>73 <input type="text" id="73" name="73"></p>
+<p>7 <input type="text" id="7" name="7"></p>
+<p>55 <input type="text" id="55" name="55"></p>
+<p>112 <input type="text" id="112" name="112"></p>
+
+	<h2>Exercise 2</h2>
+<p><span lang="de">Ordnen Sie die Zahlen den richtigen Worten zu:</span></p>
+<br>
+<p>304 <select id="304" name="304">
+            <option value="...">...</option>
+            <option value="Four hundred and ninety-five">Four hundred and ninety-five</option>
+	    <option value="One hundred and seventy-four">One hundred and seventy-four</option>
+	    <option value="Two hundred and fourteen">Two hundred and fourteen</option>
+            <option value="Three hundred and four">Three hundred and four</option>
+	    <option value="Seven hundred and thirty-two">Seven hundred and thirty-two</option>
+        </select>.</p>
+<p>174 <select id="174" name="174">
+            <option value="...">...</option>
+            <option value="Four hundred and ninety-five">Four hundred and ninety-five</option>
+	    <option value="One hundred and seventy-four">One hundred and seventy-four</option>
+	    <option value="Two hundred and fourteen">Two hundred and fourteen</option>
+            <option value="Three hundred and four">Three hundred and four</option>
+	    <option value="Seven hundred and thirty-two">Seven hundred and thirty-two</option>
+        </select>.</p>
+<p>732 <select id="732" name="732">
+            <option value="...">...</option>
+            <option value="Four hundred and ninety-five">Four hundred and ninety-five</option>
+	    <option value="One hundred and seventy-four">One hundred and seventy-four</option>
+	    <option value="Two hundred and fourteen">Two hundred and fourteen</option>
+            <option value="Three hundred and four">Three hundred and four</option>
+	    <option value="Seven hundred and thirty-two">Seven hundred and thirty-two</option>
+        </select>.</p>
+<p>214 <select id="214" name="214">
+            <option value="...">...</option>
+            <option value="Four hundred and ninety-five">Four hundred and ninety-five</option>
+	    <option value="One hundred and seventy-four">One hundred and seventy-four</option>
+	    <option value="Two hundred and fourteen">Two hundred and fourteen</option>
+            <option value="Three hundred and four">Three hundred and four</option>
+	    <option value="Seven hundred and thirty-two">Seven hundred and thirty-two</option>
+        </select>.</p>
+<p>495 <select id="495" name="495">
+            <option value="...">...</option>
+            <option value="Four hundred and ninety-five">Four hundred and ninety-five</option>
+	    <option value="One hundred and seventy-four">One hundred and seventy-four</option>
+	    <option value="Two hundred and fourteen">Two hundred and fourteen</option>
+            <option value="Three hundred and four">Three hundred and four</option>
+	    <option value="Seven hundred and thirty-two">Seven hundred and thirty-two</option>
+        </select>.</p>
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Beantworten Sie die Fragen, indem Sie die richtige Zahl wählen.</span></p>
+<p>1: How do you write two hundred and fifty-four?</p>
+<input type="radio" name="1">254<br>
+<input type="radio" name="1">245<br>
+<input type="radio" name="1">425
+<br>
+<p>How do you write six hundred and seventy-eight?</p>
+<input type="radio" name="2">768<br>
+<input type="radio" name="2">687<br>
+<input type="radio" name="2">678
+<br>
+<p>3: How do you write three hundred and five?</p>
+<input type="radio" name="3">350<br>
+<input type="radio" name="3">305<br>
+<input type="radio" name="3">503
+
+<br>
+<br>
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+	22: "twenty-two",
+	45: "forty-five",
+	68: "sixty-eight",
+	52: "fifty-two",
+	21: "twenty-one",
+	99: "ninety-nine",
+	73: "seventy-three",
+	7: "seven",
+	55: "fifty-five",
+	112: "one hundred and twelve",
+        304: "Three hundred and four",
+        174: "One hundred and seventy-four",
+        732: "Seven hundred and thirty-two",
+        214: "Two hundred and fourteen",
+        495: "Four hundred and ninety-five",
+        1: "254",
+        2: "678",
+        3: "305"
+    };
+
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

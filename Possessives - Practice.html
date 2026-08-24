@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Possessives - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Possessives - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Füllen Sie die Lücke mit dem richtigen Possessiv Adjektiv.</span></p>
+p>I = <input type="text" id="I" name="I"></p>
+<p>You = <input type="text" id="You" name="You"></p>
+<p>He = <input type="text" id="He" name="He"></p>
+<p>She = <input type="text" id="She" name="She"></p>
+<p>It = <input type="text" id="It" name="It"></p>
+<p>We = <input type="text" id="We" name="We"></p>
+<p>You = <input type="text" id="YouP" name="YouP"></p>
+<p>They = <input type="text" id="They" name="They"></p>
+
+	<h2>Exercise 2</h2>
+<p><span lang="de">Machen Sie Sätze. Am Anfang steht ein Beispiel.</span></p>
+<p><strong>Example: Paolo, television</strong></p>
+<p>Example: This is Paolo's television.</p>
+<p><strong>1: Sofia, notebook</strong></p>
+<p><input type="text" id="1" name="1"></p>
+<p><strong>2: Emily, phone</strong></p>
+<p><input type="text" id="1" name="1"></p>
+<p><strong>3: Jacob, cat</strong></p>
+<p><input type="text" id="1" name="1"></p>
+<p><strong>4: Oliver, guitar</strong></p>
+<p><input type="text" id="1" name="1"></p>
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Für was steht das <strong>'s</strong>? Das Possessiv oder </span>is?</p>
+<p>5: She's a teacher. <select id="5" name="5">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>6: This is Maria's brother. <select id="6" name="6">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>7: What's her name? <select id="7" name="7">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>8: Daniel is Emma's cousin. <select id="8" name="8">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p> 
+
+<p>9: Liam's car is very fast. <select id="9" name="9">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>10: Who's your best friend? <select id="10" name="10">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>11: Charlotte's 28. <select id="11" name="11">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p>
+
+<p>12: Mike's dog loves to play fetch. <select id="12" name="12">
+            <option value="...">...</option>
+            <option value="is">is</option>
+            <option value="Possessive">Possessive</option>
+        </select>.</p> 
+
+	<h2>Exercise 4</h2>
+<p><span lang="de">Vervollständigen Sie die Sätze mit einem Possessiv Adkjektiv.</span></p>
+
+<p>13:</p>
+<p>A: What's <input type="text" id="13" name="13">  job?</p>
+<p>B: I'm a nurse.</p>
+<p>14:</p>
+<p>A: What are <input type="text" id="14" name="14"> names?</p>
+<p>B: She's Sonia and he's Olivier.</p>
+<p>15:</p>
+<p>This is my daughter. <input type="text" id="15" name="15"> name's Victoria.</p>
+<p>16:</p>
+<p>I'm married. <input type="text" id="16" name="16"> wife's Italian.</p>
+<p>17:</p>
+<p>A: My brother, John, is in London.</p>
+<p>B: Oh, what's <input type="text" id="17" name="17"> address?</p>
+<p>18:</p>
+<p>Jane and I are doctors. <input type="text" id="18" name="18"> hospital is in Manchester.</p>
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+	I: "my",
+        You: "your",
+        He: "his",
+        She: "her",
+        It: "its",
+        We: "our",
+        YouP: "your",
+        They: "their",
+	1: "This is Sofia's notebook.",
+        2: "This is Emily's phone.",
+        3: "This is Jacob's cat.",
+        4: "This is Oliver's guitar.",
+        5: "is",
+        6: "Possessive",
+        7: "is",
+        8: "Possessive",
+        9: "Possessive",
+        10: "is",
+        11: "is",
+        12: "Possessive",
+        13: "your",
+        14: "their",
+        15: "Her",
+        16: "My",
+        17: "his",
+        18: "Our"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

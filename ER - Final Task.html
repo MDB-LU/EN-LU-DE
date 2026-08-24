@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Task</title>
+</head>
+
+<body>
+    <p><h1><span lang="en">Final Task</span></h1></p>
+    <p>Gratulation! Sie haben es zur letzen Seite geschafft.</p>
+    <p>Um das Zahlenschloss zu öffnen, braucht es eine Kombination aus drei einstelligen Zahlen. Werden Sie diese Kombination finden können?</p><br>
+<br>
+    <p><h2><span lang="en">Clue 1:</span></h2></p>
+    <p>Für den ersten Hinweis haben Sie die Höhe des grössten Bergs von Neuseeland notiert. Die Nummer war <strong>3724</strong>. Wissen Sie auch noch, wie der Berg hiess?</p>
+    <input type="radio" name="Q1" id="wrong1" lang="de"><label><span lang="en">Mount Logan</span></label><br>
+    <input type="radio" name="Q1" id="wrong2" lang="de"><label><span lang="en">Mount McLaren</span></label><br>
+    <input type="radio" name="Q1" id="correct1" lang="de"><label><span lang="en">Mount Cook</span></label><br>
+    <input type="radio" name="Q1" id="wrong3" lang="de"><label><span lang="en">Mount Obama</span></label><br>
+<br>
+<button onclick="checkAnswer()" lang="de"><span lang="de">Eingabe</span></button>
+<script>
+        function checkAnswer() {
+            var correctAnswer = document.getElementById('correct1');
+            var wrongAnswer1 = document.getElementById('wrong1');
+            var wrongAnswer2 = document.getElementById('wrong2');
+            var wrongAnswer3 = document.getElementById('wrong3');
+            
+            if (correctAnswer.checked) {
+                alert('Die erste Zahl für das Zahlenschloss ist: 6');
+            } else if (wrongAnswer1.checked) {
+                alert('Die erste Zahl für das Zahlenschloss ist: 2');
+            } else if (wrongAnswer2.checked) {
+                alert('Die erste Zahl für das Zahlenschloss ist: 4');
+            } else if (wrongAnswer3.checked) {
+                alert('Die erste Zahl für das Zahlenschloss ist: 9');
+            } else {
+                alert('Bitte wähle eine Antwort.');
+            }
+        }
+    </script>
+<br>
+	<p><h2><span lang="en">Clue 2:</span></h2></p>
+	<p>Der zweite Hinweis war die Zahl <strong>4</strong>, weil vier Filme der Excel Liste von Regisseur Taika Waititi gedreht wurden.</p>
+	<p>Sie wissen bereits, dass Neuseeland bekannt für ihre Filmindustrie ist. Die Schauspieler Tom Cruise und Henry Cavill haben zusammen in einem Film mitgespielt, der in Neuseeland gedreht wurde. Wie lautet der Name dieses Films?</p>
+	<p><strong>ACHTUNG:</strong> Sie müssen den Namen des Films vollständig und korrekt ins Eingebefeld schreiben!</p>
+<br>
+	<input type="text" id="movieTitle"><br>
+	<button onclick="checkTitle()" lang="de"><span lang="de">Eingabe</span></button>
+
+
+<script>
+        function checkTitle() {
+            var input = document.getElementById('movieTitle').value;
+            switch (input) {
+                case "Mission Impossible: Fallout":
+                    alert("Die zweite Zahl für das Zahlenschloss ist: 2");
+                    break;
+                case "The Last Samurai":
+                    alert("Die zweite Zahl für das Zahlenschloss ist: 5");
+                    break;
+                case "Killer Sofa":
+                    alert("Die zweite Zahl für das Zahlenschloss ist: 8");
+                    break;
+                case "No Exit":
+                    alert("Die zweite Zahl für das Zahlenschloss ist: 3");
+                    break;
+                default:
+                    alert("Bitte versuchen Sie es erneut");
+                    break;
+            }
+        }
+
+	document.addEventListener('DOMContentLoaded', function() {
+            var input = document.getElementById('movieTitle');
+            input.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkTitle();
+                }
+            });
+        });
+</script>
+<br>
+	<p><h2><span lang="en">Clue 3:</span></h2></p>
+	<p>Der dritte und letzte Hinweis war die Zahl <strong>10</strong>. Hier brauchen Sie nur einfache Mathematik, um die Zahl herauszufinden.</p>
+	<p>Auf der Lernumgebung gibt es eine Seite namens <span lang="en"><strong>Manchester</strong></span>. Auf dieser Seite werden Fussballvereine beschrieben. Wie viele?</p>
+	<p><strong>Subtrahieren</strong> Sie diese Nummer von der Zahl 10 und Sie haben die letzte Nummer der Kombination gefunden.</p>
+<br>
+	<p><h2>KOMBINATION</h2></p>
+	<p>Sie haben das Ende des Escape Rooms erreicht. Sie stehen direkt vor dem Zahlenschloss. Geben Sie die richtige Kombination ein und finden Sie heraus, ob Sie das Zimmer verlassen dürfen.</p>
+<br>
+	<div>
+        <input type="text" id="inputField"><br>
+        <button id="submitButton" lang="de"><span lang="de">Eingabe</span></button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputField = document.getElementById("inputField");
+            const submitButton = document.getElementById("submitButton");
+
+            function checkCode() {
+                const userInput = inputField.value;
+                if (userInput === "628") {
+                    alert("Gratulation! Sie haben den Escape Room erfolgreich verlassen!");
+                } else {
+                    alert("Falsch. Versuchen Sie die drei Rätsel auf dieser Seite noch einmal zu lösen.");
+                }
+            }
+
+            submitButton.addEventListener("click", checkCode);
+
+            inputField.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    checkCode();
+                }
+            });
+        });
+    </script>
+<br>
+<br>
+</body>
+</html>

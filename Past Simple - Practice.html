@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Simple - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Past Simple - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Schreiben Sie die</span> Past Simple <span lang="de">Form der folgenden Verben hin</span>:</p>
+<p>Example: play, <strong>played</strong></p>
+<p>1: watch, <input type="text" id="1" name="1"></p>
+<p>2: hate, <input type="text" id="2" name="2"></p>
+<p>3: change, <input type="text" id="3" name="3"></p>
+<p>4: cook, <input type="text" id="4" name="4"></p>
+<p>5: believe, <input type="text" id="5" name="5"></p>
+
+	<h2>Exercise 2</h2>
+<p><span lang="de">Stellen Sie die Wörter zu einer Frage zusammen. Am Anfang steht ein Beispiel. Nutzen Sie die</span> Past Simple form.</p>
+<p><strong>Example: pizza / you / eat / yesterday / ? = Did you eat pizza yesterday?</strong>
+<p>6: he / to work / last weekend / drive / ?</p>
+<input type="text" id="6" name="6">
+<p>7: yesterday / wash / they / the dishes / ?</p> 
+<input type="text" id="7" name="7">
+<p>8: move / last year / Jim / to the new house / ? </p> 
+<input type="text" id="8" name="8">
+<p>9: in London / grow up / Jennifer / ?</p>
+<input type="text" id="9" name="9">
+<p>10: books / write / How many / Stephen King / ?</p> 
+<input type="text" id="10" name="10">
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Wählen Sie den grammatikalisch richtigen negativen Satz:</span></p>
+<p><strong>11:</strong></p>
+<input type="radio" name="11">He don't work in a bank.</p>
+<input type="radio" name="11">He didn't work in a bank.</p>
+<p><strong>12:</strong></p>
+<input type="radio" name="12">She didn't likes football.</p>
+<input type="radio" name="12">She didn't like football.</p>
+<p><strong>13:</strong></p>
+<input type="radio" name="13">They didn't can swim.</p>
+<input type="radio" name="13">They can't swim.</p>
+<p><strong>14:</strong></p>
+<input type="radio" name="14">He wasn't a funny person.</p>
+<input type="radio" name="14">He didn't is a funny person. </p>
+<p><strong>15:</strong></p>
+<input type="radio" name="15">I didn't think it was funny.</p>
+<input type="radio" name="15">I didn't thinked it was funny.</p>
+
+	<h2>Exercise 4</h2>
+<p><span lang="de">Wählen Sie die richtige Form der folgenden unregelmässigen Verben.</span></p>
+<p>16: choose, <select id="16" name="16">
+            <option value="...">...</option>
+            <option value="chose">chose</option>
+            <option value="chosen">chosen</option>
+            <option value="choosed">choosed</option>
+        </select></p>
+<p>17: grow, <select id="17" name="17">
+            <option value="...">...</option>
+            <option value="grown">grown</option>
+            <option value="grow">grow</option>
+            <option value="grew">grew</option>
+        </select></p>
+<p>18: know, <select id="18" name="18">
+            <option value="...">...</option>
+            <option value="knew">knew</option>
+            <option value="known">known</option>
+            <option value="knewn">knewn</option>
+        </select></p>
+<p>19: swim, <select id="19" name="19">
+            <option value="...">...</option>
+            <option value="swim">swim</option>
+            <option value="swum">swum</option>
+            <option value="swam">swam</option>
+        </select></p>
+<p>20: can, <select id="20" name="20">
+            <option value="...">...</option>
+            <option value="canned">canned</option>
+            <option value="can't">can't</option>
+            <option value="could">could</option>
+        </select></p>
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1: "watched",
+        2: "hated",
+        3: "changed",
+        4: "cooked",
+        5: "believed",
+        6: "Did he drive to work last weekend?",
+        7: "Did they wash the dishes yesterday?",
+        8: "Did Jim move to the new house last year?",
+        9: "Did Jennifer grow up in London?",
+        10: "How many books did Stephen King write?",
+        11: "He didn't work in a bank.",
+        12: "She didn't like football.",
+        13: "They can't swim.",
+        14: "He wasn't a funny person.",
+        15: "I didn't think it was funny.",
+        16: "chose",
+        17: "grew",
+        18: "knew",
+	19: "swam",
+	20: "could"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

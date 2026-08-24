@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passwort</title>
+    <script>
+        function checkPassword() {
+            var password = document.getElementById('password').value;
+            if (password === '3724410') {
+                window.location.href = 'ER - Final Task.html'; // Weiterleitung zur geschützten Seite
+            } else {
+                alert('Falsches Passwort! Bitte versuche es erneut.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.getElementById('password');
+            input.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p><h2>Passwort</h2></p>
+    <p><span lang="en">All Blacks</span> ist die richtige Antwort. Haben Sie auch alle anderen Rätsel bis hierhin richtig gelöst?</p>
+    <p>Bis hierhin haben Sie drei Hinweise in Ihrem Arbeitsblatt notiert. Geben Sie diese drei Zahlen nacheinander ohne einen Leerschlag dazwischen in das Eingabefeld ein.</p>
+    <p>Sie werden nur zur letzten Seite kommen, wenn Sie die richtigen Zahlen eintippen. Ist Ihre eingegeben Zahl falsch, dann müssen Sie schauen, ob Sie irgendwo eine Zahl falsch notiert oder eine Aufgabe falsch gelöst haben.</p>
+<br>
+    <p>Geben Sie die drei Hinweise ein:</p>  
+    <input type="text" id="password">
+    <button onclick="checkPassword()" lang="de"><span lang="de">Eingabe</span></button>
+</body>
+</html>

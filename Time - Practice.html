@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Time - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Ergänzen Sie die fehlenden Uhrzeiten in den Sätzen. Am Anfang steht ein Beispiel:</span></p>
+<p>1: It's quarter past seven.</p>
+<p><strong>7:15</strong></p>
+<p>2: It's half past twelve.</p>
+<p><input type="text" id="2" name="2"></p>
+<p>3: It's ten to five.</p>
+<p><input type="text" id="3" name="3"></p>
+<p>4: It's five past eight.</p>
+<p><input type="text" id="4" name="4"></p>
+<p>5: It's twenty-five to eleven.</p>
+<p><input type="text" id="5" name="5"></p>
+
+    <h2>Exercise 2</h2>
+<p><span lang="de">Ordnen Sie die Uhrzeiten den richtigen Worten zu:</span></p>
+
+<p>2:30 = <select id="2:30" name="2:30">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>6:15 = <select id="6:15" name="6:15">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>10:45 = <select id="10:45" name="10:45">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>1:05 = <select id="1:05" name="1:05">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>10:50 = <select id="10:50" name="10:50">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>2:20 = <select id="2:20" name="2:20">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+<p>8:00 = <select id="8:00" name="8:00">
+            <option value="...">...</option>
+            <option value="Twenty past two">Twenty past two</option>
+	    <option value="Ten to eleven">Ten to eleven</option>
+	    <option value="Quarter past six">Quarter past six</option>
+            <option value="Eight o'clock">Eight o'clock</option>
+	    <option value="Half past two">Half past two</option>
+	    <option value="Five past one">Five past one</option>
+	    <option value="Quarter to eleven">Quarter to eleven</option>
+        </select></p>
+
+<br>
+<br>
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        2: "12:30",
+        3: "4:50",
+        4: "8:05",
+        5: "10:35",
+        2.30: "Half past two",
+        6.15: "Quarter past six",
+        10.45: "Quarter to eleven",
+        1.05: "Five past one",
+        10.50: "Ten to eleven",
+        2.20: "Twenty past two",
+        8.00: "Eight o'clock"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

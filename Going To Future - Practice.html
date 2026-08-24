@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Going to Future - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Going to Future - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Wählen Sie den grammatikalisch richtigen Satz aus.</span></p>
+<p><strong>1:</strong></p>
+<input type="radio" name="1">I'm going to bake a cake for the party.<br>
+<input type="radio" name="1">I am going to baking a cake for the party.
+    
+<p><strong>2:</strong></p>
+<input type="radio" name="2">They're going visit a museum this weekend.<br>
+<input type="radio" name="2">They are going to visit a museum this weekend.
+    
+<p><strong>3:</strong></p>
+<input type="radio" name="3">She are going to call her best friend later.<br>
+<input type="radio" name="3">She is going to call her best friend later.
+   
+<p><strong>4:</strong></p>
+<input type="radio" name="4">We going to go camping next month.<br>
+<input type="radio" name="4">We are going to go camping next month.
+    
+<p><strong>5:</strong></p>
+<input type="radio" name="5">He is going to play tennis tomorrow.<br>
+<input type="radio" name="5">He's going to playing tennis tomorrow.
+ 
+	<h2>Exercise 2</h2>
+<p><span lang="de">Wandeln Sie die Sätze in negative Sätze um. Nutzen Sie die</span> going to future.</p>
+<p><strong><span lang="de">WICHTIG:</strong> Nutzen Sie KEINE Abkürzungen. Schreiben Sie</span> <strong>I am</strong> <span lang="de">und nicht</span> <strong>I'm</strong>.</p>
+<br>
+<p><strong>6: I am going to help my brother with his homework.</strong></p>
+<input type="text" id="6" name="6"> 
+
+<p><strong>7: They are going to travel to Spain next month.</strong></p>
+<input type="text" id="7" name="7"> 
+
+<p><strong>8: She is going to paint a picture tomorrow.</strong></p>
+<input type="text" id="8" name="8"> 
+
+<p><strong>9: We are going to clean the garage this weekend.</strong></p>
+<input type="text" id="9" name="9"> 
+
+<p><strong>10: He is going to play the piano at the concert.</strong></p>
+<input type="text" id="10" name="10"> 
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Wandeln Sie die folgenden Sätze in Fragen um. Nutzen Sie die</span> going to future.</p>
+<p><strong><span lang="de">WICHTIG:</strong> Nutzen Sie KEINE Abkürzungen. Schreiben Sie</span> <strong>I am</strong> <span lang="de">und nicht</span> <strong>I'm</strong>.</p>
+<br>
+<p><strong>11: He is going to call his boss tomorrow.</strong></p>
+<input type="text" id="11" name="11"> 
+
+<p><strong>12: They are going to visit the zoo on Sunday.</strong></p>
+<input type="text" id="12" name="12"> 
+
+<p><strong>13: We are going to take the train to the city.</strong></p>
+<input type="text" id="13" name="13"> 
+
+<p><strong>14: She is going to cook dinner for her family.</strong></p>
+<input type="text" id="14" name="14"> 
+
+<p><strong>15: You are going to do your homework after school.</strong></p>
+<input type="text" id="15" name="15"> 
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1: "I'm going to bake a cake for the party.",
+        2: "They are going to visit a museum this weekend.",
+        3: "She is going to call her best friend later.",
+        4: "We are going to go camping next month.",
+        5: "He is going to play tennis tomorrow.",
+        6: "I am not going to help my brother with his homework.",
+        7: "They are not going to travel to Spain next month.",
+        8: "She is not going to paint a picture tomorrow.",
+        9: "We are not going to clean the garage this weekend.",
+        10: "He is not going to play the piano at the concert.",
+        11: "Is he going to call his boss tomorrow?",
+        12: "Are they going to visit the zoo on Sunday?",
+        13: "Are we going to take the train to the city?",
+        14: "Is she going to cook dinner for her family?",
+        15: "Are you going to do your homework after school?"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adjectives - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adjectives - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+    <br>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Schreiben Sie den Komparativ und den Superlativ des Adjektivs in das Eingabefeld.</span></p>
+<p><strong>Example 1: small</strong></p>
+<p><strong>smaller, the smallest</strong></p>
+<p><strong>2: happy</strong></p>
+<input type="text" id="2" name="2">
+<p><strong>3: bright</strong></p>
+<input type="text" id="3" name="3">
+<p><strong>4: fast</strong></p>
+<input type="text" id="4" name="4">
+<p><strong>5: dangerous</strong></p>
+<input type="text" id="5" name="5">
+<p><strong>6: bold</strong></p>
+<input type="text" id="6" name="6">
+<p><strong>7: difficult</strong></p>
+<input type="text" id="7" name="7">
+<p><strong>8: lazy</strong></p>
+<input type="text" id="8" name="8">
+<p><strong>9: spicy</strong></p>
+<input type="text" id="9" name="9">
+<p><strong>10: delicious</strong></p>
+<input type="text" id="10" name="10">
+<br>
+	<h2>Exercise 2</h2>
+<p><p><span lang="de">Füllen Sie die Lücke mit dem Adjektiv in Klammern in der richtigen Form (Komparativ / Superlativ). Am Anfang gibt es ein Beispiel.</p>
+<p><strong>Example: Paris is THE MOST FAMOUS (famous) city in France.</strong>
+<p>11: This car is <input type="text" id="11" name="11"> (expensive) than my old one.</p>
+<p>12: London is <input type="text" id="12" name="12"> (busy) city I have ever visited.</p>
+<p>13: My dog is <input type="text" id="13" name="13"> (young) than my neighbor’s dog.</p>
+<p>14: The test today was <input type="text" id="14" name="14"> (difficult) than the last one.</p>
+<p>15: Antarctica is <input type="text" id="15" name="15"> (cold) place on Earth.</p>
+<p>16: Peter is <input type="text" id="16" name="16"> (funny) person in the group.</p>
+<p>17: This task is <input type="text" id="17" name="17"> (hard) than it looks.</p>
+<p>18: Mount Everest is <input type="text" id="18" name="18"> (high) mountain in the world.</p>
+
+	<h2>Exercise 3</h2>
+<p><p><span lang="de">Wählen Sie die richtige Form des Adjektivs.</span></p>
+<p>19: The long hike up the hill was so <select id="19" name="19">
+            <option value="...">...</option>
+            <option value="tired">tired</option>
+            <option value="tiring">tiring</option>
+        </select>.</p>
+<p>20: She was <select id="20" name="20">
+            <option value="...">...</option>
+            <option value="excited">excited</option>
+            <option value="exciting">exciting</option>
+        </select> to see her favorite band perform live.</p>
+<p>21: The explanation was <select id="21" name="21">
+            <option value="...">...</option>
+            <option value="confused">confused</option>
+            <option value="confusing">confusing</option>
+        </select> and no one understood it clearly.</p>
+<p>22: The fireworks display was truly <select id="22" name="22">
+            <option value="...">...</option>
+            <option value="amazed">amazed</option>
+            <option value="amazing">amazing</option>
+        </select>.</p>
+<p>23: He found it <select id="23" name="23">
+            <option value="...">...</option>
+            <option value="worried">worried</option>
+            <option value="worrying">worrying</option>
+        </select> that she hadn’t replied for hours.</p>
+<p>24: I was so <select id="24" name="24">
+            <option value="...">...</option>
+            <option value="annoyed">annoyed</option>
+            <option value="annoying">annoying</option>
+        </select> by the constant noise from the construction site.</p>
+<p>25: The sound of the ocean waves was very <select id="25" name="25">
+            <option value="...">...</option>
+            <option value="relaxed">relaxed</option>
+            <option value="relaxing">relaxing</option>
+        </select>.</p>
+
+    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+        function checkAnswers() {
+            const correctAnswers = {
+                2: "happier, the happiest",
+                3: "brighter, the brightest",
+                4: "faster, the fastest",
+                5: "more dangerous, the most dangerous",
+                6: "bolder, the boldest",
+                7: "more difficult, the most difficult",
+                8: "lazier, the laziest",
+                9: "spicier, the spiciest",
+                10: "more delicious, the most delicious",
+                11: "more expensive",
+                12: "the busiest",
+                13: "younger",
+                14: "more difficult",
+                15: "the coldest",
+                16: "the funniest",
+                17: "harder",
+                18: "the highest",
+                19: "tiring",
+                20: "excited",
+                21: "confusing",
+                22: "amazing",
+                23: "worrying",
+                24: "annoyed",
+                25: "relaxing"
+            };
+            
+
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let correctCount = 0;
+            let feedbackHTML = "";
+            
+            for (let id in correctAnswers) {
+                let userAnswer = document.getElementById(id).value.trim().toLowerCase();
+                let correctAnswer = correctAnswers[id].toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                } else {
+                    feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+                }
+            }
+            
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+            
+            const feedbackElement = document.getElementById("feedback");
+            feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Much & Many - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Much & Many - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Wählen Sie die richtige Form:</span> much <span lang="de">oder</span> many.</p>
+<p>1: How <select id="1" name="1">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> flour do we need to bake the cake?</p>
+<p>2: I don’t have <select id="2" name="2">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> pencils in my backpack.</p>
+<p>3: Do you have <select id="3" name="3">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> energy left after the workout?</p>
+<p>4: There aren't <select id="4" name="4">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> chairs in the room for everyone.</p>
+<p>5: How <select id="5" name="5">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> juice is in the pitcher?</p>
+<p>6: There were too <select id="6" name="6">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> cars on the road this morning.</p>
+<p>7: She doesn't have <select id="7" name="7">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> interest in sports.</p>
+<p>8: There isn’t <select id="8" name="8">
+            <option value="...">...</option>
+            <option value="much">much</option>
+            <option value="many">many</option>
+        </select> cheese on the pizza.</p>
+
+	<h2>Exercise 2</h2>
+<p><span lang="de">Schreiben Sie die Sätze so um, indem Sie</span> <strong>much</strong> <span lang="de">oder</span> <strong>many</strong> <span lang="de">nutzen. Am Anfang steht ein Beispiel.</span></p>
+<p><strong>Example: There aren’t a lot of books on the shelf.</strong></p>
+<p>There aren’t many books on the shelf.</p>
+<p><strong>9: We didn’t buy a lot of oranges at the market.</strong></p>
+<input type="text" id="9" name="9"> 
+<p><strong>10: He doesn’t drink a lot of coffee in the morning.</strong></p>
+<input type="text" id="10" name="10"> 
+<p><strong>11: Is there a lot of noise coming from the street?</strong></p>
+<input type="text" id="11" name="11"> 
+<p><strong>12: She doesn’t eat a lot of chocolate during the week.</strong></p>
+<input type="text" id="12" name="12"> 
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Wählen Sie den Satz, der grammatikalisch korrekt ist.</span></p>
+<p><strong>13:</strong></p>
+<input type="radio" name="13">There isn’t much rice in the pot.<br>
+<input type="radio" name="13">There isn’t many rice in the pot.
+
+<p><strong>14:</strong></p>
+<input type="radio" name="14">How much chairs are needed for the event?<br>
+<input type="radio" name="14">How many chairs are needed for the event?
+
+<p><strong>15:</strong></p>
+<input type="radio" name="15">There were too much people in line for the tickets.<br>
+<input type="radio" name="15">There were too many people in line for the tickets.
+
+<p><strong>16:</strong></p>
+<input type="radio" name="16">Do you have much homework this weekend?<br>
+<input type="radio" name="16">Do you have many homework this weekend?
+
+<p><strong>17:</strong></p>
+<input type="radio" name="17">I don’t have much patience for waiting in long lines.<br>
+<input type="radio" name="17">I don’t have many patience for waiting in long lines.
+
+<p><strong>18:</strong></p>
+<input type="radio" name="18">How much soup is left in the bowl?<br>
+<input type="radio" name="18">How many soup is left in the bowl?
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1: "much",
+        2: "many",
+        3: "much",
+        4: "many",
+        5: "much",
+        6: "many",
+        7: "much",
+        8: "much",
+        9: "We didn't buy many oranges at the market.",
+        10: "He doesn't drink much coffee in the morning.",
+        11: "Is there much noise coming from the street?",
+        12: "She doesn't eat much chocolate during the week.",
+        13: "There isn’t much rice in the pot.",
+        14: "How many chairs are needed for the event?",
+        15: "There were too many people in line for the tickets.",
+        16: "Do you have much homework this weekend?",
+        17: "I don’t have much patience for waiting in long lines.",
+        18: "How much soup is left in the bowl?"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

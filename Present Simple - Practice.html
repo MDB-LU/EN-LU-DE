@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Present Simple - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+    <br>
+
+    <h2>Exercise 1</h2>
+    <p><span lang="de">Wählen Sie die richtige Form des Verbs im</span> Present Simple:</p>
+    <p>1: Sarah always  
+        <select id="1" name="1">
+            <option value="...">...</option>
+            <option value="walk">walk</option>
+            <option value="walks">walks</option>
+        </select> to school in the morning.</p>
+    <p>2: My father 
+        <select id="2" name="2">
+            <option value="...">...</option>
+            <option value="read">read</option>
+            <option value="reads">reads</option>
+        </select> the newspaper every day.</p>
+    <p>3: The bus 
+        <select id="3" name="3">
+            <option value="...">...</option>
+            <option value="stop">stop</option>
+            <option value="stops">stops</option>
+        </select> at the corner near my house.</p>
+    <p>4: Birds 
+        <select id="4" name="4">
+            <option value="...">...</option>
+            <option value="sing">sing</option>
+            <option value="sings">sings</option>
+        </select> beautifully at sunrise.</p>
+    <p>5: We 
+        <select id="5" name="5">
+            <option value="...">...</option>
+            <option value="eat">eat</option>
+            <option value="eats">eats</option>
+        </select> breakfast together every weekend.</p>
+    <br>
+
+    <h2>Exercise 2</h2>
+    <p><span lang="de">Vervollständigen Sie die Sätze mit der richtigen Form des Verbs in Klammern. Nutzen Sie das</span> Present Simple.</p>
+    <p>6: He <input type="text" id="6" name="6"> (read) books before going to bed.</p>
+    <p>7: They <input type="text" id="7" name="7"> (travel) to Italy every summer.</p>
+    <p>8: She <input type="text" id="8" name="8"> (write) emails at work.</p>
+    <p>9: It <input type="text" id="9" name="9"> (shine) brightly in the summer.</p>
+    <p>10: I <input type="text" id="10" name="10"> (need) a cup of coffee in the morning.</p>
+    <br>
+
+    <h2>Exercise 3</h2>
+    <p><span lang="de">Vervollständigen Sie die Sätze im</span> Present Simple:</p>
+    <p>11: <select id="11" name="11">
+            <option value="...">...</option>
+            <option value="Do">Do</option>
+            <option value="Does">Does</option>
+        </select> they enjoy swimming?</p>
+    <p>12: Does he <select id="12" name="12">
+            <option value="...">...</option>
+            <option value="have">have</option>
+            <option value="has">has</option>
+        </select> a car?</p>
+    <p>13: <select id="13" name="13">
+            <option value="...">...</option>
+            <option value="Do">Do</option>
+            <option value="Does">Does</option>
+        </select> you visit your grandparents often?</p>
+    <p>14: <select id="14" name="14">
+            <option value="...">...</option>
+            <option value="Do">Do</option>
+            <option value="Does">Does</option>
+        </select> she eat lunch at home?</p>
+    <p>15: Does the teacher 
+        <select id="15" name="15">
+            <option value="...">...</option>
+            <option value="give">give</option>
+            <option value="gives">gives</option>
+        </select> homework every day?</p>
+    <p>16: <select id="16" name="16">
+            <option value="...">...</option>
+            <option value="Do">Do</option>
+            <option value="Does">Does</option>
+        </select> it take long to get there?</p>
+    <br>
+
+    <h2>Exercise 4</h2>
+    <p><span lang="de">Machen Sie negative Sätze. Nutzen Sie <strong>KEINE</strong> Abkürzungen. Zu Beispiel: Schreiben Sie</span> <strong>do not</strong> <span lang="de">und nicht</span> <strong>don't</strong>.</p>
+    <p>17: She <input type="text" id="17" name="17"> (not / read) novels.</p>
+    <p>18: They <input type="text" id="18" name="18"> (not / eat) fast food.</p>
+    <p>19: He <input type="text" id="19" name="19"> (not / work) in a hospital.</p>
+    <p>20: We <input type="text" id="20" name="20"> (not / drive) to the office.</p>
+    <p>21: It <input type="text" id="21" name="21"> (not / happen) often.</p>
+    <br>
+    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+        function checkAnswers() {
+            const correctAnswers = {
+                1: "walks",
+                2: "reads",
+                3: "stops",
+                4: "sing",
+                5: "eat",
+                6: "reads",
+                7: "travel",
+                8: "writes",
+                9: "shines",
+                10: "need",
+                11: "Do",
+                12: "have",
+                13: "Do",
+                14: "Does",
+                15: "give",
+                16: "Does",
+                17: "does not read",
+                18: "do not eat",
+                19: "does not work",
+                20: "do not drive",
+                21: "does not happen"
+            };
+            
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let correctCount = 0;
+            let feedbackHTML = "";
+            
+            for (let id in correctAnswers) {
+                let userAnswer = document.getElementById(id).value.trim().toLowerCase();
+                let correctAnswer = correctAnswers[id].toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                } else {
+                    feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+                }
+            }
+            
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+            
+            const feedbackElement = document.getElementById("feedback");
+            feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+        }
+    </script>
+</body>
+</html>

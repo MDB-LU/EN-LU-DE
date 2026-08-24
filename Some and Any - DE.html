@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Some und Any</title>
+</head>
+
+<body>
+	<p><h1><span lang="en">Some</span> und <span lang="en">Any</span></h1></p>
+	<p>Wir brauchen <span lang="en"><strong>some</strong></span> und <span lang="en"><strong>any</strong></span>, wenn wir nicht wissen, wie viele Einheiten eines Gegenstandes es gibt, bzw. wenn es nicht relevant ist, wie viele Einheiten vorhanden sind.</p>
+	<p>Wir brauchen <span lang="en"><strong>some</strong></span> und <span lang="en"><strong>any</strong></span> auch mit unzählbaren Nomen (zum Beispiel: <span lang="en">water, money, sand</span>).</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">I don't want any presents for my birthday.</span></p>
+	<p><span lang="en">There are some books on the shelf.</span></p>
+	<p><span lang="en">Do you have any apples?</span></p>
+
+<br>
+	<p><h2><span lang="en">Some</span></h2></p>
+	<p><span lang="en"><strong>Some</strong></span> wird grundsätzlich in positiven Sätzen verwendet.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">There are some eggs in the fridge.</span></p>
+	<p><span lang="en">Some fans didn't support their team.</span></p>
+	<p><span lang="en">We still have some milk left.</span></p>
+<br>
+	<p><h2><span lang="en">Any</span></h2><p>
+	<p><span lang="en"><strong>Any</strong></span> wird grundsätzlich in negativen Sätzen und in Fragen verwendet.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">He doesn't have any chocolate.</span></p>
+	<p><span lang="en">Do you need any help?</span></p>
+	<p><span lang="en">There hasn't been any real improvement.</span></p>
+<br>
+	<p><h2>WICHTIG</h2><p>
+	<p>Es gibt eine Ausnahm zu dieser Regel. Es ist auch möglich, <span lang="en"><strong>some</strong></span> in Fragen zu nutzen, vor allem dann, wenn man jemanden etwas anbieten möchte, oder wenn man von jemandem etwas verlangt.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">Would you like some water?</span></p>
+	<p><span lang="en">Could I have some water?</span></p>
+<br>
+	<p><h2>Kurzer Check</h2></p>
+	<p>Wählen Sie die korrekte Antwort für die folgenden Fragen aus:</p>
+
+	<p>1. Wann brauchen wir grundsätzlich <span lang="en"><strong>some</strong>?</p>
+	<input type="radio" name="Q1" lang="de"><label>in negativen Sätzen</label>
+	<input type="radio" name="Q1" id="correct1" lang="de"><label>in positiven Sätzen</label>
+	<input type="radio" name="Q1" lang="de"><label>in Fragen</label>
+
+	<p>2. Wann brauchen wir grundsätzlich <span lang="en"><strong>any</strong>?</p>
+	<input type="radio" name="Q2" id="correct2" lang="de"><label>in negativen Sätzen und Fragen</label>
+	<input type="radio" name="Q2" lang="de"><label>in positiven Sätzen und Fragen</label>
+	
+	<p>3. Wählen Sie den richtigen Satz aus:</p>
+	<input type="radio" name="Q3" id="correct3" lang="de"><label><span lang="en">I don't have any books at home.</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">I don't have some books at home.</span></label>
+
+	<p>4. Wählen Sie den richtigen Satz aus:</p>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">Do you know some good TV shows?</span></label>
+	<input type="radio" name="Q4" id="correct4" lang="de"><label><span lang="en">Do you know any good TV shows?</span></label>
+
+	<p>5. Wählen Sie den richtigen Satz aus:</p>
+	<input type="radio" name="Q5" id="correct5" lang="de"><label><span lang="en">Would you like some chocolate?</span></label>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">Would you like any chocolate?</span></label>
+
+<br>
+<br>
+<input type="submit" name="Antworten prüfen" value="Antworten prüfen" onclick="result()" lang="de">
+
+<script type="text/javascript" lang="de">
+	var score=0;
+	function result() {
+	if (document.getElementById('correct1').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct2').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct3').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct4').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct5').checked)
+	{
+	score++;
+	}
+	alert("Richtige Antworten:"+score);
+	}
+</script>
+
+<br>
+<br>
+	<p><h2>Übung</h2></p>
+	<p>Falls Sie <span lang="en"><strong>some</strong></span> und <span lang="en"><strong>any</strong></span> weiter üben möchten, dann klicken Sie den folgenden Link:</p>
+	<p><a href="Some and Any - Practice.html" target="_blank" lang="de"><span lang="en">Some</span> und <span lang="en">Any</span></a></p>
+<br>
+</body>
+</html>

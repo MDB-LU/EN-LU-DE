@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Some & Any - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Some & Any - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Wählen Sie welcher Satz richtig (korrekt) und welcher falsch (inkorrekt) ist.</span></p>
+
+<p><strong>1:</strong></p>
+<p>There aren't some apples. <select id="1.1" name="1.1">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+<p>There aren't any apples. <select id="1.2" name="1.2">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+
+<p><strong>2:</strong></p>
+<p>Do you know some nice place to eat? <select id="2.1" name="2.1">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+<p>Do you know a nice place to eat? <select id="2.2" name="2.2">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+
+<p><strong>3:</strong></p>
+<p>I have some pictures of the beach. <select id="3.1" name="3.1">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+<p>I have any pictures of the beach. <select id="3.2" name="3.2">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+
+<p><strong>4:</strong></p>
+<p>Could I have some juice, please? <select id="4.1" name="4.1">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+<p>Could I have any juice, please? <select id="4.2" name="4.2">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+
+<p><strong>5:</strong></p>
+<p>There are some chairs in the living room. <select id="5.1" name="5.1">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+<p>There are any chairs in the living room. <select id="5.2" name="5.2">
+            <option value="...">...</option>
+            <option value="correct">correct</option>
+	    <option value="incorrect">incorrect</option>
+        </select></p>
+
+<h2>Exercise 2</h2>
+<p><span lang="de">Komplettieren Sie die Sätze mit</span> <strong>some</strong> <span lang="de">oder</span> <strong>any</strong>.</p>
+<p>6: In my bag there are <input type="text" id="6" name="6"> pencils and pens.</p>
+<p>7: There aren't <input type="text" id="7" name="7"> newspapers.</p>
+<p>8: Are there <input type="text" id="8" name="8"> books on the shelf?</p>
+<p>9: There aren't <input type="text" id="9" name="9"> magazines on the table.</p>
+<p>10: We have <input type="text" id="10" name="10"> maps in the drawer.</p>
+<p>11: There isn't <input type="text" id="11" name="11"> water in the fridge.</p>
+<p>12: I need to buy <input type="text" id="12" name="12"> fruit for the picnic.</p>
+<p>13: Is there <input type="text" id="13" name="13"> milk in the carton?</p>
+<p>14: Do you have <input type="text" id="14" name="14"> other choice?</p>
+
+<br>
+<br>
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1.1: "incorrect",
+        1.2: "correct",
+        2.1: "incorrect",
+	2.2: "correct",
+	3.1: "correct",
+	3.2: "incorrect",
+        4.1: "correct",
+	4.2: "incorrect",
+        5.1: "correct",
+	5.2: "incorrect",
+        6: "some",
+        7: "any",
+        8: "any",
+        9: "any",
+        10: "some",
+        11: "any",
+        12: "some",
+        13: "any",
+        14: "any"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

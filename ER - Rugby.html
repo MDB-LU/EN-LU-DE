@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rugby</title>
+</head>
+
+<body>
+	<p><h1>Rugby</h1></p>
+	<p><span lang="de">Rugby ist ein wichtiger Teil der Kultur Neuseelands. Ihr Nationalteam hat einen berühmten Spitznamen. Wie lautet dieser?</span></p>	
+<br>
+	<p><a href="ER - Wallabies.html" target="_blank" lang="de">Wallabies</a></p>
+	<p><a href="ER - Springboks.html" target="_blank" lang="de">Springboks</a></p>
+	<p><a href="ER - Boys in Green.html" target="_blank" lang="de">The Boys in Green</a></p>
+	<p><a href="ER - Passwort.html" target="_blank" lang="de">All Blacks</a></p>
+	<p><a href="ER - Wallabies.html" target="_blank" lang="de">Los Pumas</a></p>
+<br>
+	<p><span lang="de">Falls Sie Hilfe brauchen, dann klicken Sie den folgenden Schalter:</span></p>
+<button onclick="toggleSolution('Answers')" lang="de">Hilfe anzeigen</button>
+    	<div id="Answers_solution" style="display: none;">
+	<p><span lang="de">Dem Spitznamen der Nationalmannschaft sind Sie schon begegnet. Sie haben ihn in Aufgabe 1 im Rätsel gelesen.</p>
+</div>
+
+    <script>
+        function toggleSolution(id) {
+            var solution = document.getElementById(id + "_solution");
+            if (solution.style.display === "none") {
+                solution.style.display = "inline";
+            } else {
+                solution.style.display = "none";
+            }
+        }
+    </script>
+
+<br>
+</body>
+</html>

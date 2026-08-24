@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel</title>
+</head>
+
+<body>
+	<p><h1>Artikel</h1></p>
+	<p>Artikel sind Worte, die als Begleitwort zu einem Nomen verwendet werden. Im Englischen gibt es zwei Typen von Artikeln. Bestimmt und unbestimmt.</p>
+<br>
+	<p><h2>Bestimmter Artikel</h2></p>
+	<p>Der bestimmte Artikel ist das Wort <span lang="en"><strong>the</strong></span>. Der bestimmte Artikel kann mit Nomen in Einzahl und Mehrzahl verwendet werden.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">Give me the hammer.</span></p>
+	<p><span lang="en">The beaches in Portugal are beautiful.</span></p>
+	<p><span lang="en">I didn't like the film.</span></p>
+<br>
+	<p><h2>WICHTIG</h2><p>
+	<p>Wir brauchen den bestimmten Artikel um auf etwas bestimmtes zu verweisen. Zum Beispiel: Wenn ein Freund Sie fragt: <span lang="en">"Are you going to the party at the weekend?"</span>, dann wissen sowohl Sie als auch Ihr Freund, welche Party er meint.</p>
+<br>
+	<p><h2>Unbestimmter Artikel</h2><p>
+	<p>Der unbestimmte Artikel gibt es in zwei Varianten: <span lang="en"><strong>a</strong></span> oder <span lang="en"><strong>an</strong></span>.</p>
+	<p>Wir brauchen <span lang="en"><strong>a</strong></span> wenn das nächste Wort mit einem Konsonantenlaut beginnt.</p>
+	<p>Wir brauchen <span lang="en"><strong>an</strong></span> wenn das nächste Wort mit einem Vokallaut beginnt.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">I need a holiday.</span></p>
+	<p><span lang="en">Do you have an umbrella?</span></p>
+	<p><span lang="en">My neighbours have a dog.</span></p>
+<br>
+	<p><h2>WICHTIG</h2><p>
+	<p>Der unbestimmte Artikel kann nur für Nomen in der Einzahl verwendet werden.</p>
+<br>
+	<p><h2>Kurzer Check</h2></p>
+	<p>Wählen Sie die richtige Antwort für die folgenden Fragen:</p>
+
+	<p>1. Welches Wort wird für den bestimmten Artikel verwendet?</p>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">a / an</span></label>
+	<input type="radio" name="Q1" id="correct1" lang="de"><label><span lang="en">the</span></label>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">some</span></label>
+
+	<p>2. Welches Wort wird für den unbestimmten Artikel verwendet?</p>
+	<input type="radio" name="Q2" id="correct2" lang="de"><label><span lang="en">a / an</span></label>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">the</span></label>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">some</span></label>
+	
+	<p>3. Wählen Sie den richtigen Satz:</p>
+	<input type="radio" name="Q3" id="correct3" lang="de"><label><span lang="en">She has a dog and a cat.</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">She has the dog and the cat.</span></label>
+
+	<p>4. Wählen Sie den richtigen Satz:</p>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">A house is very old.</span></label>
+	<input type="radio" name="Q4" id="correct4" lang="de"><label><span lang="en">The house is very old.</span></label>
+
+	<p>5. Wählen Sie den richtigen Satz:</p>
+	<input type="radio" name="Q5" id="correct5" lang="de"><label><span lang="en">The film was great, although it didn't have a great ending.</span></label>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">A film was great, although it didn't have the great ending.</span></label>
+
+<br>
+<br>
+<input type="submit" name="Antworten prüfen" value="Antworten prüfen" onclick="result()" lang="de">
+
+<script type="text/javascript" lang="de">
+	var score=0;
+	function result() {
+	if (document.getElementById('correct1').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct2').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct3').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct4').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct5').checked)
+	{
+	score++;
+	}
+	alert("Richtige Antworten:"+score);
+	}
+</script>
+
+<br>
+<br>
+	<p><h2>Übung</h2></p>
+	<p>Wenn Sie die bestimmten und unbestimmten Artikel weiter üben möchten, dann klicken Sie den folgenden Link:</p>
+	<p><a href="Articles - Practice.html" target="_blank" lang="de">Artikel</a></p>
+<br>
+</body>
+</html>

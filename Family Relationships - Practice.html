@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Relationships - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Family Relationships - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Schreiben Sie die englischen Namen der folgenden Familienmitglieder auf:</span></p>
+<p><span lang="de">Vater =</span> <input type="text" id="Vater" name="Vater"></p>
+<p><span lang="de">Mutter =</span> <input type="text" id="Mutter" name="Mutter"></p>
+<p><span lang="de">Bruder =</span> <input type="text" id="Bruder" name="Bruder"></p>
+<p><span lang="de">Schwester =</span> <input type="text" id="Schwester" name="Schwester"></p>
+<p><span lang="de">Sohn =</span> <input type="text" id="Sohn" name="Sohn"></p>
+<p><span lang="de">Tochter =</span> <input type="text" id="Tochter" name="Tochter"></p>
+<p><span lang="de">Neffe =</span> <input type="text" id="Neffe" name="Neffe"></p>
+<p><span lang="de">Nichte =</span> <input type="text" id="Nichte" name="Nichte"></p>
+<p><span lang="de">Onkel =</span> <input type="text" id="Onkel" name="Onkel"></p>
+<p><span lang="de">Tante =</span> <input type="text" id="Tante" name="Tante"></p>
+<p><span lang="de">Grossvater =</span> <input type="text" id="Grossvater" name="Grossvater"></p>
+<p><span lang="de">Grossmutter =</span> <input type="text" id="Grossmutter" name="Grossmutter"></p>
+<p><span lang="de">Geschwister =</span> <input type="text" id="Geschwister" name="Geschwister"></p>
+<p><span lang="de">Eltern =</span> <input type="text" id="Eltern" name="Eltern"></p>
+
+    <h2>Exercise 2</h2>
+<p><span lang="de">Ergänzen Sie die fehlenden Wörter in den Sätzen:</span></p>
+<p>1: My mother's sister is my <select id="1" name="1">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>
+<p>2: My father's brother is my <select id="2" name="2">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>
+<p>3: My brother's son is my <select id="3" name="3">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>	
+<p>4: My sister's daughter is my <select id="4" name="4">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>	
+<p>5: My father's father is my <select id="5" name="5">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>
+<p>6: My mother's mother is my <select id="6" name="6">
+            <option value="...">...</option>
+            <option value="grandfather">grandfather</option>
+	    <option value="nephew">nephew</option>
+	    <option value="aunt">aunt</option>
+            <option value="grandmother">grandmother</option>
+	    <option value="uncle">uncle</option>
+	    <option value="niece">niece</option>
+        </select>.</p>
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Füllen Sie die Lücken mit den richtigen Familienbeziehungen:</span></p>
+<p>7: John is my father's brother. He is my <input type="text" id="7" name="7">.</p>
+<p>8: Mary is my aunt's daughter. She is my <input type="text" id="8" name="8">.</p>
+<p>9: Peter is my sister's son. He is my <input type="text" id="9" name="9">.</p>
+<p>10: Lucy is my brother's daughter. She is my <input type="text" id="10" name="10">.</p>
+<p>11: William is my father's father. He is my <input type="text" id="11" name="11">.</p>
+
+    <h2>Exercise 4</h2>
+<p><span lang="de">Beschreiben Sie Ihre Familie. Wie viele Geschwister haben Sie, wie viele Cousins und Cousinen? Sind Sie selbst schon Onkel oder Tante? Schreiben Sie mindestens fünf Sätze. Diese Aufgabe fliesst nicht in die Bewertung ein.</span></p>
+<input type="text" id="12" name="12">
+
+<br>
+<br>
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        Vater: "father",
+        Mutter: "mother",
+        Bruder: "brother",
+        Schwester: "sister",
+        Sohn: "son",
+        Tochter: "daughter",
+        Neffe: "nephew",
+        Nichte: "niece",
+        Onkel: "uncle",
+        Tante: "aunt",
+        Grossvater: "grandfather",
+        Grossmutter: "grandmother",
+        Geschwister: "siblings",
+        Eltern: "parents",
+        1: "aunt",
+        2: "uncle",
+        3: "nephew",
+        4: "niece",
+        5: "grandfather",
+        6: "grandmother",
+        7: "uncle",
+        8: "cousin",
+        9: "nephew",
+        10: "niece",
+        11: "grandfather"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

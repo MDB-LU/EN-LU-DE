@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Continuous - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Present Continuous - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Vervollständigen Sie die Sätze mit dem gegebenen Verb. Nutzen Sie das</span> Present Continuous.</p>
+<p>1: She <input type="text" id="1" name="1"> (draw) a picture right now.</p>
+<p>2: They <input type="text" id="2" name="2"> (dance) at the party.</p>
+<p>3: I <input type="text" id="3" name="3"> (write) an email to my friend.</p>
+<p>4: We <input type="text" id="4" name="4"> (learn) how to cook.</p>
+<p>5: He <input type="text" id="5" name="5"> (fix) his bike in the garage.</p>
+
+<h2>Exercise 2</h2>
+<p><span lang="de">Wandeln Sie die Sätze in das</span> Present Continuous <span lang="de">um</span>.</p>
+<p><strong>6: She plays the piano.</strong></p>
+<input type="text" id="6" name="6">
+<p><strong>7: They read the newspaper.</strong></p>    
+<input type="text" id="7" name="7">
+<p><strong>8: I drive my car.</strong></p>    
+<input type="text" id="8" name="8">
+<p><strong>9: We visit the museum.</strong></p>     
+<input type="text" id="9" name="9">
+<p><strong>10: He cleans the windows.</strong></p>   
+<input type="text" id="10" name="10"> 
+
+<h2>Exercise 3</h2>
+<p><span lang="de">Setzen Sie die Worte in die richtige Reihenfolge und eine Frage zu stellen.</span></p>
+<p><strong>11: you / when / leaving / are</strong></p>
+    <input type="text" id="11" name="11">
+<p><strong>12: is / what / she / doing</strong></p>
+    <input type="text" id="12" name="12">
+<p><strong>13: the / talking / they / are / to / who</strong></p>
+    <input type="text" id="13" name="13">
+<p><strong>14: are / bringing / what / you</strong></p>
+    <input type="text" id="14" name="14">
+<p><strong>15: sitting / is / where / he</strong></p>
+    <input type="text" id="15" name="15">
+
+<h2>Exercise 4</h2>
+<p><span lang="de">Wählen Sie den richtigen negativen Satz aus.</span></p>
+<p><strong>16:</strong></p>
+<input type="radio" name="16">She not is reading a magazine.<br>
+<input type="radio" name="16">She isn't reading a magazine.
+
+<p><strong>17:</strong></p>
+<input type="radio" name="17">They're not painting the fence.<br>
+<input type="radio" name="17">They are painting the fence not.
+ 
+<p><strong>18:</strong></p>
+<input type="radio" name="18">He isn't listening to music right now.<br>
+<input type="radio" name="18">He not's listening to music right now.
+
+<p><strong>19:</strong></p>
+<input type="radio" name="19">We are planning a trip to the beach. <br>
+<input type="radio" name="19">We are not planning a trip to the beach.
+
+<p><strong>20:</strong></p>
+<input type="radio" name="20">The cat aren't playing with the ball.<br>
+<input type="radio" name="20">The cat isn't playing with the ball.
+ 
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1: "is drawing",
+        2: "are dancing",
+        3: "am writing",
+        4: "are learning",
+        5: "is fixing",
+        6: "She is playing the piano.",
+        7: "They are reading the newspaper.",
+        8: "I am driving my car.",
+        9: "We are visiting the museum.",
+        10: "He is cleaning the windows.",
+        11: "When are you leaving?",
+        12: "What is she doing?",
+        13: "Who are they talking to?",
+        14: "What are you bringing?",
+        15: "Where is he sitting?",
+        16: "She isn't reading a magazine.",
+        17: "They're not painting the fence.",
+ 	18: "He isn't listening to music right now.",
+        19: "We are not planning a trip to the beach.",
+        20: "The cat isn't playing with the ball."
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

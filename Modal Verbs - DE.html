@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modalverben</title>
+</head>
+
+<body>
+	<p><h1>Modalverben</h1></p>
+	<p>Modalverben verändern den Aussagewert des Verbs, also die Aussageabsicht. Sie drücken aus, ob etwas möglich, notwendig, erlaubt, gewollt oder verlangt wird. Die gängigsten Modalverben im Englischen sind <span lang="en"><strong>can, could, may, might, should, will, would, must</strong></span>.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">I can drive a tractor.</span></p>
+	<p><span lang="en">I'm tired, I should go home.</span></p>
+	<p><span lang="en">I might go to the concert, but I'm not sure yet.</span></p>
+<br>
+	<p>Modalverben haben die gleiche Form für jede Person:</p>
+	<p><span lang="en">I can</span></p>
+	<p><span lang="en">You can</span></p>
+	<p><span lang="en">He can / She can / It can</span></p>
+	<p><span lang="en">We can</span></p>
+	<p><span lang="en">You can</span></p>
+	<p><span lang="en">They can</span></p>
+<br>
+	<p>Modalverben sind eine Art Hilfsverb, also treten sie oft in Kombination mit anderen Verben auf. Sie werden mit einem Hauptverb verwendet, welches in der Grundform (Infinitiv) genutzt wird.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">I can swim.</span></p>
+	<p><span lang="en">He should leave.</span></p>
+	<p><span lang="en">They will win.</span></p>
+<br>
+	<p><h2>Negativ</h2></p>
+	<p>Wollen wir einen negativen Satz mit einem Modalverb machen, dann müssen wir einfach das Wort <span lang="en"><strong>not</strong></span> hinzufügen.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">They might not win this game.</span></p>
+	<p><span lang="en">I should not be here. <strong>OR</strong> I shouldn't be here.</span></p>
+<br>
+	<p><h2>Fragen</h2></p>
+	<p>Wir können auch Fragen stellen. In diesem Fall müssen wir bloss das Modalverb vor das Subjekt stellen.</p>
+	<p><strong>Beispiele:</strong></p>
+	<p><span lang="en">Can I come home?</span></p>
+	<p><span lang="en">Should they win this award?</span></p>
+	<p><span lang="en">Will they perform their best song?</span></p>
+<br>
+	<p><h2>Kurzer Check</h2></p>
+	<p>Wählen Sie die korrekte Antwort für die folgenden Fragen.</p>
+
+	<p>1. Welche dieser Verben sind Modalverben?</p>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">be, have, do</span></label>
+	<input type="radio" name="Q1" id="correct1" lang="de"><label><span lang="en">can, should, might</span></label>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">play, watch, go</span></label>
+
+	<p>2. Wenn wir ein Modalverb haben, in welcher Form steht dann das Hauptverb?</p>
+	<input type="radio" name="Q2" id="correct2" lang="de"><label>Grundform (Infinitiv)</label>
+	<input type="radio" name="Q2" lang="de"><label>ing form</label>
+	<input type="radio" name="Q2" lang="de"><label>Partizip</label>
+
+	<p>3. Wählen Sie den richtigen Satz:</p>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">He could swims all day.</span></label>
+	<input type="radio" name="Q3" id="correct3" lang="de"><label><span lang="en">He could swim all day.</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">He could swam all day.</span></label>
+
+	<p>4. Wählen Sie die richtige Frage:</p>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">Can he does a backflip?</span></label>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">He can do a backflip?</span></label>
+	<input type="radio" name="Q4" id="correct4" lang="de"><label><span lang="en">Can he do a backflip?</span></label>
+<br>
+<br>
+<input type="submit" name="Antworten prüfen" value="Antworten prüfen" onclick="result()" lang="de">
+
+<script type="text/javascript" lang="de">
+	var score=0;
+	function result() {
+	if (document.getElementById('correct1').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct2').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct3').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct4').checked)
+	{
+	score++;
+	}
+	alert("Richtige Antworten:"+score);
+	}
+</script>
+<br>
+<br>
+</body>
+</html>

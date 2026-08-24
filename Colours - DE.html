@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farben</title>
+</head>
+
+<body>
+	<p><h1><span lang="en">Colours</span></h1></p>
+	<p>Wenn Sie auf Englisch etwas beschreiben wollen, dann wird oft die Farbe von diesem Gegenstand verwendet. Auf dieser Seite lernen Sie, wie die gängigsten Farben auf Englisch heissen.</p>
+<br>
+	<p><h2><span lang="en">Colours</span></h2></p>
+	<p>Folgend die Namen der Farben auf Deutsch und auf Englisch:</p>
+	<p>Blau = <strong><span lang="en">blue</span></strong></p>
+	<p>Rot = <strong><span lang="en">red</span></strong></p>
+	<p>Gelb = <strong><span lang="en">yellow</span></strong></p>
+	<p>Grün = <strong><span lang="en">green</span></strong></p>
+	<p>Lila = <strong><span lang="en">purple</span></strong></p>
+	<p>Orange = <strong><span lang="en">orange</span></strong></p>
+	<p>Rosa = <strong><span lang="en">pink</span></strong></p>
+	<p>Schwarz = <strong><span lang="en">black</span></strong></p>
+	<p>Weiss = <strong><span lang="en">white</span></strong></p>
+	<p>Grau = <strong><span lang="en">grey</span></strong></p>
+	<p>Braun = <strong><span lang="en">brown</span></strong></p>
+	<p>Indigo = <strong><span lang="en">indigo</span></strong></p>
+	<p>Gold = <strong><span lang="en">gold</span></strong></p>
+	<p>Silber = <strong><span lang="en">silver</span></strong></p>
+<br>	
+<br>
+	<p><h2>Kurzer Check</h2></p>
+	<p>Beantworten Sie die folgenden Fragen:</p>
+<br>
+	<p>1. Wenn man <span lang="en">blue</span> und <span lang="en">yellow</span> miteinander mischt, dann erhält man die Farbe ...?</p>
+	<input type="radio" name="Q1" lang="de"><span lang="en">black</span>
+	<input type="radio" name="Q1" lang="de"><span lang="en">red</span>
+	<input type="radio" name="Q1" id="correct1" lang="de"><span lang="en">green</span>
+
+	<p>2. Wenn man <span lang="en">red</span> und <span lang="en">yellow</span> miteinander mischt, dann erhält man die Farbe ...?</p>
+	<input type="radio" name="Q2" lang="de"><span lang="en">blue</span>
+	<input type="radio" name="Q2" id="correct2" lang="de"><span lang="en">orange</span>
+	<input type="radio" name="Q2" lang="de"><span lang="en">white</span>
+
+	<p>3. Wenn man <span lang="en">red</span> und <span lang="en">blue</span> miteinander mischt, dann erhält man die Farbe ...?</p>
+	<input type="radio" name="Q3" lang="de"><span lang="en">geen</span>
+	<input type="radio" name="Q3" id="correct3" lang="de"><span lang="en">purple</span>
+	<input type="radio" name="Q3" lang="de"><span lang="en">yellow</span>
+
+	<p>4. Welche Farben sind auf der Schweizer Fahne zu erkennen?</p>
+	<input type="radio" name="Q4" lang="de"><span lang="en">black and blue</span><br>
+	<input type="radio" name="Q4" lang="de"><span lang="en">orange and indigo</span><br>
+	<input type="radio" name="Q4" id="correct4" lang="de"><span lang="en">red and white</span><br>
+
+	<p>5. Wenn man an einem Wettkampf den zweiten Platz belegt, dann bekommt man die ...?</p>
+	<input type="radio" name="Q5" lang="de"><span lang="en">gold medal</span><br>
+	<input type="radio" name="Q5" id="correct5" lang="de"><span lang="en">silver medal</span><br>
+	<input type="radio" name="Q5" lang="de"><span lang="en">bronze medal</span><br>
+<br>
+<br>
+<input type="submit" name="Antworten prüfen" value="Antworten prüfen" onclick="result()" lang="de">
+
+<script type="text/javascript" lang="de">
+	var score=0;
+	function result() {
+	if (document.getElementById('correct1').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct2').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct3').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct4').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct5').checked)
+	{
+	score++;
+	}
+	alert("Richtige Antworten:"+score);
+	}
+</script>
+<br>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Pronouns - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Object Pronouns - Practice</h1>
+    <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Füllen Sie die Lücke mit einem Objektpronomen.</span></p>
+<p>I = <input type="text" id="I" name="I"></p>
+<p>You = <input type="text" id="You" name="You"></p>
+<p>He = <input type="text" id="He" name="He"></p>
+<p>She = <input type="text" id="She" name="She"></p>
+<p>It = <input type="text" id="It" name="It"></p>
+<p>We = <input type="text" id="We" name="We"></p>
+<p>You = <input type="text" id="YouP" name="YouP"></p>
+<p>They = <input type="text" id="They" name="They"></p>
+
+	<h2>Exercise 2</h2>
+<p><span lang="de">Wählen Sie das richtige Objektpronomen</span>.</p>
+<p>1: Can you help <select id="1" name="1">
+            <option value="...">...</option>
+            <option value="we">we</option>
+            <option value="us">us</option>
+        </select>?</p>
+<p>2: I don't know <select id="2" name="2">
+            <option value="...">...</option>
+            <option value="he">he</option>
+            <option value="him">him</option>
+        </select> very well.</p>
+<p>3: She always sits next to <select id="3" name="3">
+            <option value="...">...</option>
+            <option value="I">I</option>
+            <option value="me">me</option>
+        </select> in class.</p>
+<p>4: He asked <select id="4" name="4">
+            <option value="...">...</option>
+            <option value="she">she</option>
+            <option value="her">her</option>
+        </select> to come to the party.</p>
+<p>5: The teacher explained the rules to <select id="5" name="5">
+            <option value="...">...</option>
+            <option value="they">they</option>
+            <option value="them">them</option>
+        </select>.</p>
+<p>6: This present is for <select id="6" name="6">
+            <option value="...">...</option>
+            <option value="you">you</option>
+            <option value="your">your</option>
+        </select>.</p>
+
+	<h2>Exercise 3</h2>
+<p><span lang="de">Vervollständigen Sie die Sätze. Nutzen Sie Objektpronomen</span>.</p>
+<p>7: I don't like this movie. I think <input type="text" id="7" name="7"> is boring.</p>
+<p>8:</p>
+<p>A: Do you know Sarah and Tom?</p>
+<p>B: Yes, I see <input type="text" id="8" name="8"> every day at school.</p>
+<p>9:</p> 
+<p>A: Can you come with me to the park?</p>
+<p>B: Sure, I'd love to join <input type="text" id="9" name="9">.</p>
+<p>10: We don’t use the old printer anymore. We only use <input type="text" id="10" name="10"> when the new one is broken.</p>
+<p>11:</p> 
+<p>A: Where’s my notebook?</p>
+<p>B: I gave <input type="text" id="11" name="11"> to Sarah this morning.</p>
+<p>12: My dog loves my parents. It always follows <input type="text" id="12" name="12"> around the house.</p>
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        I: "me",
+        You: "you",
+        He: "him",
+        She: "her",
+        It: "it",
+        We: "us",
+        YouP: "you",
+        They: "them",
+        1: "us",
+        2: "him",
+        3: "me",
+        4: "her",
+        5: "them",
+        6: "you",
+        7: "it",
+        8: "them",
+        9: "you",
+        10: "it",
+        11: "it",
+        12: "them"
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>
