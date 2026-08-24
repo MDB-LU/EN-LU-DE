@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+           "artist": "Künstler",
+"at home": "zuhause",
+"breakfast": "Frühstück",
+"buy": "kaufen",
+"clock": "Uhr",
+"cook": "kochen",
+"day": "Tag",
+"dinner": "Abendessen",
+"early": "früh",
+"get up": "aufstehen",
+"glass": "Glass",
+"go": "gehen",
+"go for a walk": "spazieren gehen",
+"go out": "ausgehen",
+"go shopping": "einkaufen gehen",
+"go to bed": "ins Bett gehen",
+"grandfather": "Grossvater",
+"have a shower": "duschen",
+"have breakfast": "frühstücken",
+"have lunch": "Mittag essen",
+"late": "spät",
+"leave": "verlassen",
+"listen to music": "Musik hören",
+"never": "nie",
+"paint": "malen",
+"play the piano": "Klavier spielen",
+"sometimes": "manchmal",
+"stay at home": "zuhause bleiben",
+"studio": "Studio",
+"thank you very much": "Danke vielmals",
+"time": "Zeit",
+"today": "heute",
+"tomorrow": "morgen",
+"until": "bis",
+"usually": "normalerweise",
+"watch": "schauen",
+"week": "Woche",
+"weekend": "Wochenende",
+"what time is it?": "Welche Zeit ist es?",
+"when?": "Wann?",
+"beach": "Strand",
+"because": "weil",
+"boy": "Junge",
+"boyfriend": "fester Freund",
+"building": "Gebäude",
+"cafe": "Café",
+"capital city": "Hauptstadt",
+"cat": "Katze",
+"champagne": "Champagner",
+"changing room": "Umkleidekabine",
+"cheap": "günstig",
+"chocolate": "Schokolade",
+"clothes shop": "Kleiderladen",
+"cold": "kalt",
+"comfortable": "bequem",
+"delicious": "köstlich",
+"email": "E-Mail",
+"every": "jede",
+"expensive": "teuer",
+"famous": "berühmt",
+"fantastic": "fantastisch",
+"first": "erste",
+"floor": "Stockwerk",
+"friendly": "freundlich",
+"girl": "Mädchen",
+"give": "geben",
+"hate": "hassen",
+"help": "helfen",
+"here": "hier",
+"homework": "Hausaufgabe",
+"horrible": "fürchterlich",
+"hot": "heiss",
+"international": "international",
+"jacket": "Jacke",
+"journalist": "Journalist",
+"lovely": "schön",
+"marry": "heiraten",
+"money": "Geld",
+"movies": "Filme",
+"new": "neu",
+"of course": "natürlich",
+"postcard": "Postkarte",
+"present": "Geschenk",
+"president": "Präsident",
+"pyramid": "Pyramide",
+"railway station": "Bahnhof",
+"see you soon": "bis bald",
+"send": "senden",
+"teach": "unterrichten",
+"that": "dass",
+"vacation": "Urlaub",
+"very much": "sehr viel",
+"visit": "besuchen",
+"weather": "Wetter",
+"wedding": "Hochzeit",
+"wet": "feucht",
+"why?": "wieso",
+"with": "mit"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 6-7 NHB - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 6-7 NHB - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 6-7 NHB.docx" target="_blank"><span lang="en">New Headway Beginner Units 6-7</span></a></p><br>
+<br>
+</body>
+</html>

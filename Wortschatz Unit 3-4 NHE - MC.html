@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+    <button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"scientist": "Wissenschaftler",
+"come": "kommen",
+"work": "arbeiten",
+"week": "Woche",
+"language": "Sprache",
+"like": "mögen",
+"skiing": "Skilaufen",
+"winter": "Winter",
+"go for a walk": "spazieren gehen",
+"summer": "Sommer",
+"town": "Stadt",
+"ordinary": "gewöhnlich",
+"every": "jedes",
+"people": "Leute",
+"fly": "fliegen",
+"non-stop": "durchgehend",
+"love": "lieben",
+"free time": "Freizeit",
+"city": "Stadt",
+"sick": "krank",
+"never": "nie",
+"barman": "Barkeeper",
+"centre": "Zentrum",
+"little": "klein",
+"dog": "Hund",
+"walk": "laufen",
+"play": "spielen",
+"football": "Fussball",
+"interpreter": "Dolmetscher",
+"United Nations": "Vereinigte Nationen",
+"office": "Büro",
+"listen": "hören",
+"music": "Musik",
+"how many": "wie viele",
+"shop": "Laden",
+"make": "machen",
+"breakfast": "Frühstück",
+"guest": "Gast",
+"petrol": "Benzin",
+"deliver": "zustellen",
+"beer": "Bier",
+"collect": "sammeln",
+"boat": "Boot",
+"drive": "fahren",
+"school": "Schule",
+"glass": "Glas",
+"wine": "Wein",
+"as": "als",
+"undertaker": "Leichenbestatter",
+"busy": "beschäftigt",
+"man": "Mann",
+"fireman": "Feuerwehrmann",
+"taxi driver": "Taxifahrer",
+"school-bus driver": "Schulbusfahrer",
+"boatman": "Bootsmann",
+"ambulance man": "Krankenwagenfahrer",
+"petrol attendant": "Tankwart",
+"also": "auch",
+"north": "Norden",
+"only": "nur",
+"but": "aber",
+"by": "mit",
+"weekday": "Wochentag",
+"get up": "aufstehen",
+"island": "Insel",
+"only": "einzig",
+"too": "auch",
+"to watch television": "fernsehen",
+"supper": "Abendessen",
+"do the accounts": "abrechnen",
+"go to bed": "ins Bett gehen",
+"perhaps": "vielleicht",
+"chocolate": "Schokolade",
+"vanilla": "Vanille",
+"boy": "Junge",
+"hurry up": "sich beeilen",
+"late": "spät",
+"sit": "sitzen",
+"quiet": "leise",
+"pilot": "Pilot",
+"postman": "Briefträger",
+"architect": "Architekt",
+"shopkeeper": "Ladeninhaber",
+"design": "entwerfen",
+"house": "Haus",
+"look after": "sich kümmern um",
+"hospital": "Krankenhaus",
+"money": "Geld",
+"translate": "übersetzen",
+"thing": "Ding",
+"sell": "verkaufen",
+"plane": "Flugzeug",
+"serve": "servieren",
+"half": "halb",
+"past": "nach",
+"quarter": "Viertel",
+"to": "vor",
+"about": "etwa",
+"excuse me": "Entschuldigung",
+"tell": "erzählen",
+"time": "Zeit",
+"of course": "selbstverständlich",
+"I’m sorry": "es tut mir leid",
+"know": "kennen",
+"watch": "Armbanduhr",
+"never mind": "macht nichts",
+"interview": "befragen",
+"start": "beginnen",
+"weekend": "Wochenende",
+"famous": "berühmt",
+"early": "früh",
+"news": "Nachrichten",
+"programme": "Sendung",
+"domestic": "häuslich",
+"morning": "Morgen",
+"before": "vor",
+"gym": "Turnhalle",
+"food": "Essen",
+"dinner": "Abendessen",
+"fortunately": "glücklicherweise",
+"cooking": "Kochen",
+"block": "Wohnblock",
+"afternoon": "Nachmittag",
+"kids": "Kinder",
+"sometimes": "manchmal",
+"friend": "Freund",
+"relax": "sich entspannen",
+"visit": "besuchen",
+"go out": "ausgehen",
+"take": "nehmen",
+"buy": "kaufen",
+"cook": "kochen",
+"work": "Arbeit",
+"why": "warum",
+"life": "Leben",
+"travel": "reisen",
+"when": "wenn",
+"homework": "Hausaufgaben",
+"always": "immer",
+"leave": "verlassen",
+"read": "lesen",
+"a lot": "viel",
+"smoke": "rauchen",
+"tired": "müde",
+"long": "lang",
+"short": "kurz",
+"near": "nahe",
+"lake": "See",
+"go sailing": "segeln",
+"baseball": "Baseball",
+"ice hockey": "Eishockey",
+"ice-skating": "Schlittschuhlaufen",
+"favourite": "lieblings",
+"season": "Jahreszeit",
+"fall": "Herbst",
+"colour": "Farbe",
+"tree": "Baum",
+"red": "rot",
+"gold": "golden",
+"orange": "orange",
+"yellow": "gelb",
+"brown": "braun",
+"sunny": "sonnig",
+"often": "oft",
+"wet": "feucht",
+"grey": "grau",
+"meet": "treffen",
+"chat": "sich unterhalten",
+"then": "dann",
+"suddenly": "plötzlich",
+"beach": "Strand",
+"sunbathe": "sonnenbaden",
+"export department": "Exportabteilung",
+"special": "besondere",
+"take photographs": "fotografieren",
+"flower": "Blume",
+"especially": "besonders",
+"spring": "Frühling",
+"sing": "singen",
+"too": "zu",
+"shy": "schüchtern",
+"much": "viel",
+"boring": "langweilig",
+"traffic": "Verkehr",
+"worry": "sich Sorgen machen",
+"quite": "ziemlich",
+"open": "öffnen",
+"window": "Fenster",
+"exposure": "Belichtung",
+"mean": "bedeuten",
+"picture": "Bild"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+        let usedWords = [];
+        let wordList = Object.keys(wörterbuch);
+
+        function getRandomWord() {
+            if (wordList.length === 0) {
+                // Reset the word list if all words have been used
+                wordList = Object.keys(wörterbuch);
+                usedWords = [];
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            const word = wordList.splice(randomIndex, 1)[0];
+            usedWords.push(word);
+
+            return word;
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(wörterbuch);
+            const options = new Set([correctTranslation]);
+
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+
+            return Array.from(options);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        function displayOptions(correctTranslation) {
+            const options = getRandomOptions(correctTranslation);
+            const shuffledOptions = shuffleArray(options); // Shuffle options
+            const optionsContainer = document.getElementById('options');
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctTranslation);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctTranslation) {
+            const result = (selectedOption === correctTranslation) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (selectedOption === correctTranslation) {
+                correctCount++;
+                correctWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            } else {
+                incorrectCount++;
+                incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const englisch = getRandomWord();
+            const correctTranslation = wörterbuch[englisch];
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
+            displayOptions(correctTranslation);
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 3-4 NHE.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 3-4 NHE - TM.html";
+        }
+
+        // Initiales Setzen der Frage
+        nextQuestion();
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 3-4 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 3-4</span></a></p>
+<br>
+<br>
+</body>
+</html>

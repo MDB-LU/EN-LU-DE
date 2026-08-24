@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vorstellen</title>
+</head>
+
+<body>
+	<p><h1>Vorstellen</h1></p>
+	<p>Sich selbst vorstellen zu können gehört zu den Grundlagen des Lernens einer anderen Sprache. Dabei wird der eigene Name genannt, eventuell wie alt man ist, wo man wohnt und was Ihre Hobbys sind. Folgend ein Beispiel, wie so etwas auf Englisch tönen könnte:</p>
+	<p><span lang="en">My name is John. I am 25 years old and I live in London. My hobbies are playing and watching football.</span></p>
+<br>
+	<p><h2>Fragen</h2></p>
+	<p>Meistens will man auch mehr von der Person erfahren, der man sich vorstellt. Dazu stellen wir dieser Person Fragen zu ihrem Namen, wie es ihr geht, und je nach Situation wie alt sie ist, wo sie wohnt oder was sie beruflich macht.</p>
+	<p>Im folgenden Quiz sind diese Fragen als Antwortoptionen verfügbar. Wählen Sie die richtige Antwort für die jeweilige Frage aus.</p>
+<br>
+	<p><strong>1. Welche Frage nutzen wir, wenn wir von jemandem den Namen erfahren wollen?</strong></p>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">How are you?</span></label>
+	<input type="radio" name="Q1" id="correct1" lang="de"><label><span lang="en">What is your name?</span></label>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">Where do you live?</span></label>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">What do you do?</span></label>
+	<input type="radio" name="Q1" lang="de"><label><span lang="en">How old are you?</span></label>
+
+	<p><strong>2. Welche Frage nutzen wir, wenn wir jemanden fragen wollen, wie alt diese Person ist?</strong></p>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">How are you?</span></label>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">What is your name?</span></label>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">Where do you live?</span></label>
+	<input type="radio" name="Q2" lang="de"><label><span lang="en">What do you do?</span></label>
+	<input type="radio" name="Q2" id="correct2" lang="de"><label><span lang="en">How old are you?</span></label>
+	
+	<p><strong>3. Welche Frage nutzen wir, wenn wir jemanden fragen wollen, wie es ihm oder ihr geht?</strong></p>
+	<input type="radio" name="Q3" id="correct3" lang="de"><label><span lang="en">How are you?</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">What is your name?</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">Where do you live?</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">What do you do?</span></label>
+	<input type="radio" name="Q3" lang="de"><label><span lang="en">How old are you?</span></label>
+
+	<p><strong>4. Welche Frage nutzen wir, wenn wir jemanden fragen wollen, wo diese Person lebt?</strong></p>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">How are you?</span></label>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">What is your name?</span></label>
+	<input type="radio" name="Q4" id="correct4" lang="de"><label><span lang="en">Where do you live?</span></label>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">What do you do?</span></label>
+	<input type="radio" name="Q4" lang="de"><label><span lang="en">How old are you?</span></label>
+
+	<p><strong>5. Welche Frage nutzen wir, wenn wir von jemanden erfahren wollen, was er oder sie beruflich macht?</strong></p>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">How are you?</span></label>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">What is your name?</span></label>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">Where do you live?</span></label>
+	<input type="radio" name="Q5" id="correct5" lang="de"><label><span lang="en">What do you do?</span></label>
+	<input type="radio" name="Q5" lang="de"><label><span lang="en">How old are you?</span></label>
+<br>
+<br>
+<input type="submit" name="Antworten prüfen" value="Antworten prüfen" onclick="result()" lang="de">
+
+<script type="text/javascript" lang="de">
+	var score=0;
+	function result() {
+	if (document.getElementById('correct1').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct2').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct3').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct4').checked)
+	{
+	score++;
+	}
+	if (document.getElementById('correct5').checked)
+	{
+	score++;
+	}
+	alert("Richtige Antworten:"+score);
+	}
+</script>
+
+	<p>Folgend die richtigen Antworten:</p>
+	<p><span lang="en">What is your name?</span> wird genutzt, um jemanden nach dem Namen zu fragen.</p>
+	<p><span lang="en">How are you?</span> wird genutzt, wenn wir jemanden fragen, wie es ihm oder ihr geht.</p>
+	<p><span lang="en">Where do you live?</span> wird genutzt, um jemanden zu fragen, wo er oder sie wohnt.</p>
+	<p><span lang="en">What do you do?</span> wird genutzt, um jemanden nach dem Beruf zu fragen.</p>
+	<p><span lang="en">How old are you?</span> wird genutzt, um jemanden nach dem Alter zu fragen.</p>
+<br>
+	<p><h2>Unterhaltung</h2></p>
+	<p>In einer Unterhaltung könnte es folgendermassen aussehen: Person A und Person B unterhalten sich miteinander.</p>
+	<p><span lang="en">A: Hello, my name is John. What is your name?</span></p>
+	<p><span lang="en">B: Hello John. My name is Mary. How are you?</span></p>
+	<p><span lang="en">A: Hi Mary. I am fine. And you?</span></p>
+	<p><span lang="en">B: Fine, thanks. Where do you live?</span></p>
+	<p><span lang="en">A: I live in London.</span></p>
+	<p><span lang="en">B: What do you do there?</span></p>
+	<p><span lang="en">A: I'm a teacher.</span></p>
+<br>
+	<p><h2>Kurzer Check</h2></p>
+	<p>Wählen Sie für die folgenden Fragen die richtigen Fragen oder Antworten aus.</p>
+<br>
+<span lang="en">
+	<p>A: Hi, 
+	<select id="Q1" name="Q1" required>
+		<option value="my name is">my name is</option>
+	        <option value="name is">name is</option>
+	</select> John.
+	<select id="Q2" name="Q2" required>
+		<option value="What do you">What do you</option>
+		<option value="What is your">What is your</option>
+	</select> name?</p>
+	<p>B: Hello John. My name is Mary.
+	<select id="Q3" name="Q3" required>
+		<option value="Where do you live">Where do you live?</option>
+		<option value="How old are you">How old are you?</option>
+	</select></p>
+	<p>A: I am 25 years old.</p>
+	<p>B: And
+	<select id="Q4" name="Q4" required>
+		<option value="what do you do">What do you do?</option>
+	        <option value="where do you live">Where do you live?</option>
+	</select></p>
+	<p>A: I live in London. Where do you live?</p>
+	<p>B: 
+	<select id="Q5" name="Q5" required>
+		<option value="I work in a bank">I work in a bank.</option>
+	        <option value="I live in Manchester">I live in Manchester.</option>
+	</select></p>
+</span>
+<br>
+	<p>Wenn Sie alle Sätze ausgewählt haben, dann können Sie sich über den folgenden Schalter die komplette Unterhaltung anzeigen lassen.</p>
+	<button onclick="toggleSolution('Q1')" lang="de">Lösung anzeigen</button>
+    <div id="Q1_solution" style="display: none;">
+        <span lang="en">
+            <p>A: Hi, my name is John. What is your name?</p>
+            <p>B: Hello John. My name is Mary How old are you?</p>
+            <p>A: I am 25 years old.</p>
+            <p>B: And where do you live?</p>
+            <p>A: I live in London. Where do you live?</p>
+            <p>B: I live in Manchester.</p>
+        </span>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var solution = document.getElementById(id + "_solution");
+            if (solution.style.display === "none" || solution.style.display === "") {
+                solution.style.display = "block";
+            } else {
+                solution.style.display = "none";
+            }
+        }
+    </script>
+<br>
+<br>
+	<p><h2>Übung:</h2></p>
+	<p>Auf der folgenden Seite können Sie das Vorstellen, das Fragen und Antworten auf Fragen zur eigenen Person noch etwas üben.</p>
+	<p><a href="Vorstellen - Practice.html" target="_blank" lang="de">Vorstellen</a></p>
+<br>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will Future - Practice</title>
+    <style>
+        .incorrect {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Will Future - Practice</h1>
+     <p><span lang="de">Lösen Sie die folgenden Aufgaben. Am Ende der Seite finden Sie einen Schalter mit dem Namen</span> <strong>Check Answers</strong>. <span lang="de">Drücken Sie diesen Schalter um Ihre Resultate zu prüfen.</span></p>
+
+    <h2>Exercise 1</h2>
+<p><span lang="de">Vervollständigen Sie die Sätze mit dem</span> <strong>will future</strong>.</p>
+<p>1: I think she <input type="text" id="1" name="1"> <strong>(win)</strong> the competition.</p>
+<p>2: They <input type="text" id="2" name="2"> <strong>(arrive)</strong> before midnight.</p>
+<p>3: We <input type="text" id="3" name="3"> <strong>(visit)</strong> our grandparents during the holidays.</p>
+<p>4: He <input type="text" id="4" name="4"> <strong>(eat)</strong> dinner because he is hungry.</p>
+<p>5: She <input type="text" id="5" name="5"> <strong>(call)</strong> you later to discuss the plans.</p>
+
+    <h2>Exercise 2</h2>
+<p><span lang="de">Wandeln Sie diese Sätze in negative Sätze um. Nutzen Sie die</span> will future.</p>
+<p><strong><span lang="de">WICHTIG</span>:</strong> <span lang="de">Nutzen Sie KEINE Abkürzungen. Schreiben Sie</span> <strong>will not</strong> <span lang="de">und nicht</span> won't.</p>
+<p>6: They will come to the meeting.</p>
+<input type="text" id="6" name="6">
+<p>7: I will clean the house today.</p>
+<input type="text" id="7" name="7">
+<p>8: She will invite her classmates to the party.</p>
+<input type="text" id="8" name="8">
+<p>9: We will visit the new museum.</p>
+<input type="text" id="9" name="9">
+<p>10: He will join the football team next year.</p>
+<input type="text" id="10" name="10">
+
+    <h2>Exercise 3</h2>
+<p><span lang="de">Wandeln Sie diese Sätze in Fragen um. Nutzen Sie die</span> will future.</p>
+<p>11: They will start the project next month.</p>
+<input type="text" id="11" name="11">
+<p>12: He will cook dinner for us.</p>
+<input type="text" id="12" name="12">
+<p>13: We will attend the conference next week.</p>
+<input type="text" id="13" name="13">
+<p>14: She will meet her friends at the mall.</p>
+<input type="text" id="14" name="14">
+<p>15: I will buy a gift for her birthday.</p>
+<input type="text" id="15" name="15">
+<p>16: He will not tell anyone the secret.</p>
+<input type="text" id="16" name="16">
+
+
+<br>
+<br>    
+    <button id="checkAnswersButton" onclick="checkAnswers()">Check Answers</button>
+    
+<h2>Result:</h2>
+    <p id="result"></p>
+    <div id="feedback"></div>
+    
+    <script>
+       function checkAnswers() {
+    const correctAnswers = {
+        1: "will win",
+        2: "will arrive",
+        3: "will visit",
+        4: "will eat",
+        5: "will call",
+        6: "They will not come to the meeting.",
+        7: "I will not clean the house today.",
+        8: "She will not invite her classmates to the party.",
+        9: "We will not visit the new museum.",
+        10: "He will not join the football team next year.",
+        11: "Will they start the project next month?",
+        12: "Will he cook dinner for us?",
+        13: "Will we attend the conference next week?",
+        14: "Will she meet her friends at the mall?",
+        15: "Will I buy a gift for her birthday?",
+        16: "Will he not tell anyone the secret?"
+
+    };
+    
+    let totalQuestions = Object.keys(correctAnswers).length;
+    let correctCount = 0;
+    let feedbackHTML = "";
+
+    for (let id in correctAnswers) {
+        let userAnswer = "";
+        let element = document.getElementById(id);
+        
+        if (element && element.tagName === "INPUT" && element.type === "text") {
+            // Text input
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (element && element.tagName === "SELECT") {
+            // Dropdown
+            userAnswer = element.value.trim().toLowerCase();
+        } else if (document.querySelector(`input[name="${id}"]:checked`)) {
+            // Radio buttons
+            userAnswer = document.querySelector(`input[name="${id}"]:checked`).nextSibling.textContent.trim().toLowerCase();
+        }
+        
+        let correctAnswer = correctAnswers[id].toLowerCase();
+        
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        } else {
+            feedbackHTML += `<p class="incorrect">Question ${id}: Your answer: "${userAnswer || "No answer"}", Correct answer: "${correctAnswers[id]}".</p>`;
+        }
+    }
+    
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `You have answered ${correctCount} out of ${totalQuestions} questions correctly.`;
+    
+    const feedbackElement = document.getElementById("feedback");
+    feedbackElement.innerHTML = feedbackHTML || "<p>All answers are correct! Well done!</p>";
+}
+    </script>
+</body>
+</html>

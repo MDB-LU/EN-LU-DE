@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Search Adjectives</title>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+    }
+    #puzzle {
+      font-size: 20px;
+      line-height: 1.5;
+      display: grid;
+      grid-template-columns: repeat(10, 30px);
+      grid-template-rows: repeat(5, 30px);
+      grid-gap: 2px;
+    }
+    .puzzle-cell {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+	<p><h1>Word Search - Adjectives</h1></p>
+	<p><span lang="de">Im folgenden Feld sind einige Worte versteckt. Alle Worte, die sie finden sollen sind <strong>Adjektive</strong>. Die Worte sind nur horizontal zu finden, also auf einer Zeile. Wie viele Wörter finden Sie?</span></p>
+<br>
+
+<div id="puzzle"> <!-- This div will display the word search puzzle -->
+  <!-- JavaScript will insert the word search puzzle here -->
+</div>
+
+<br>
+
+<form id="guessForm">
+  <label for="guess"><span lang="de">Geben Sie ein Wort ein:</span></label>
+  <input type="text" id="guess" name="guess">
+  <button type="submit"><span lang="de">Antwort prüfen</span></button>
+</form>
+
+<br>
+<p><span lang="de">Wollen Sie es noch einmal versuchen? Drücken Sie <strong>F5</strong> um die Seite neuzuladen und ein neues Feld zu generieren.</span></p>
+<br>
+<p><span lang="de">Falls Sie wissen wollen, welche Worte sich im Feld verstecken, dann laden Sie dieses Dokument herunter. Sie finden auch die deutsche Übersetzung dazu.</span></p>
+<p><a href="Wortschatz Englisch Adjektive.docx" target="_blank"><span lang="en">Word List Adjectives</span></a></p>
+<br>
+
+<script>
+  // List of words for the puzzle
+  var words = ["happy", "sad", "angry", "calm", "lonely", "sick", "polite", "clever", "honest", "annoying", "proud", "small", "short", "hard", "soft", "cheap", "expensive", "busy", "sunny", "rainy", "windy", "cloudy", "good", "healthy", "strong", "cool", "beautiful", "ugly", "kind", "scary", "cold", "funny", "difficult", "hot", "easy", "bad", "clean", "dirty", "near", "tired", "rich", "poor", "low", "high", "famous", "old", "young"];
+
+  // Function to generate a word search puzzle
+  function generatePuzzle(words) {
+    var grid = []; // Initialize the puzzle grid
+
+    // Initialize the grid with random letters
+    for (var i = 0; i < 5; i++) {
+      grid[i] = [];
+      for (var j = 0; j < 10; j++) {
+        var randomCharCode = Math.floor(Math.random() * 26) + 97; // Random lowercase letter (ASCII)
+        var randomLetter = String.fromCharCode(randomCharCode);
+        grid[i][j] = randomLetter;
+      }
+    }
+
+    // Add words to the puzzle grid horizontally
+    words.forEach(function(word) {
+      var row = Math.floor(Math.random() * 5); // Randomly choose the row
+      var col = Math.floor(Math.random() * (11 - word.length)); // Randomly choose the column within range
+
+      // Add the word horizontally
+      for (var i = 0; i < word.length; i++) {
+        grid[row][col + i] = word[i];
+      }
+    });
+
+    return grid;
+  }
+
+  // Display the word search puzzle
+  var puzzleGrid = generatePuzzle(words);
+  var puzzleHtml = '';
+  puzzleGrid.forEach(function(row) {
+    row.forEach(function(cell) {
+      puzzleHtml += '<div class="puzzle-cell">' + cell + '</div>';
+    });
+  });
+  document.getElementById('puzzle').innerHTML = puzzleHtml;
+
+  // Event listener for the form submission
+  document.getElementById('guessForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    var guess = document.getElementById('guess').value.trim().toLowerCase(); // Get the guess from the input field
+
+    var foundInWords = words.includes(guess); // Check if the guess is in the list of words
+
+    if (foundInWords) {
+      var foundInPuzzle = puzzleGrid.flat().join('').includes(guess);
+
+      if (foundInPuzzle) {
+        alert('Gratulation! Das Wort "' + guess + '" befand sich im Feld.');
+      } else {
+        alert('Tut mir leid, das Wort "' + guess + '" befindet sich nicht im Feld.');
+      }
+    } else {
+      alert('Tut mir leid, das Wort "' + guess + '" ist nicht in der Liste der zu suchenden Wörter.');
+    }
+
+    // Reset the input field
+    document.getElementById('guess').value = '';
+  });
+</script>
+
+</body>
+</html>

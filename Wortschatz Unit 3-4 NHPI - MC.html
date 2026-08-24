@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+    <button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"burglar": "Einbrecher",
+"fast asleep": "tief schlafen",
+"unfortunately": "leider",
+"believe": "glauben",
+"keep": "aufbewahren",
+"purse": "Portemonnaie",
+"drawer": "Schublade",
+"even": "sogar",
+"finally": "schliesslich",
+"burglary": "Einbruch",
+"angry": "zornig",
+"fortunately": "glücklicherweise",
+"catch": "fangen",
+"mend": "reparieren",
+"glue": "Leim",
+"run out of": "zu Ende gehen",
+"armed": "bewaffnet",
+"teller": "Kassierer",
+"demand": "verlangen",
+"claim": "behaupten",
+"distinct": "deutlich",
+"odour": "Geruch",
+"even so": "trotzdem",
+"drop": "fallen lassen",
+"escape": "entkommen",
+"furniture": "Möbel",
+"smash": "zertrümmern",
+"jewellery": "Schmuck",
+"immediately": "sofort",
+"revise": "überarbeiten",
+"suddenly": "plötzlich",
+"pick up": "aufheben",
+"petrol": "Benzin",
+"wallet": "Brieftasche",
+"play": "Theaterstück",
+"murder": "ermorden",
+"explanation": "Erklärung",
+"crime": "Verbrechen",
+"exactly": "genau, exakt",
+"path": "Pfad",
+"wedding anniversary": "Hochzeitstag",
+"couple": "Paar",
+"look forward to": "sich freuen auf",
+"adore": "anbeten",
+"turn around": "sich umdrehen",
+"no idea": "keine Ahnung",
+"as well": "auch",
+"hit": "schlagen",
+"move": "bewegen",
+"turn up": "auftauchen",
+"through": "durch",
+"tear": "Träne",
+"search": "durchsuchen",
+"murder weapon": "Mordwaffe",
+"melt": "schmelzen",
+"comfort": "trösten",
+"sob": "schluchzen",
+"wonder": "sich fragen",
+"sip": "Schluck",
+"behaviour": "Verhalten",
+"hide": "verstecken",
+"to get away with": "ungestraft davonkommen",
+"last": "zuletzt",
+"catch": "fangen",
+"what about": "Wie wäre es mit",
+"loaf": "Laib",
+"pork": "Schweinefleisch",
+"crisps": "Kartoffelchips",
+"anything else": "sonst noch etwas",
+"have a look": "nachsehen",
+"left": "übrig",
+"by the way": "übrigens",
+"traffic": "Verkehr",
+"close": "eng",
+"towel": "Handtuch",
+"soap": "Seife",
+"glasses": "Brille",
+"be bored": "sich langweilen",
+"shopkeeper": "Ladeninhaber",
+"almost": "fast, beinahe",
+"spend on": "ausgeben für",
+"accountant": "Buchhalter",
+"look after": "sich kümmern um",
+"underwear": "Unterwäsche",
+"jumper": "Pullover",
+"leather": "Leder",
+"pleasant": "angenehm",
+"describe": "beschreiben",
+"foreign": "ausländisch",
+"manufacturer": "Hersteller",
+"brand": "Marke",
+"survey": "Umfrage",
+"of course": "selbstverständlich",
+"recent": "kürzlich",
+"pronounce": "aussprechen",
+"mean": "bedeuten",
+"incredible": "unglaublich",
+"pavement": "Bürgersteig",
+"billboard": "Reklametafel",
+"goods": "Waren",
+"consumption": "Konsum",
+"department store": "Kaufhaus",
+"exquisite": "ausgezeichnet",
+"suit": "Anzug",
+"belt": "Gürtel",
+"stop": "stoppen",
+"fashionable": "schick",
+"lively": "lebendig",
+"well-known": "bekannt",
+"delicious": "köstlich",
+"for sale": "zum Verkauf",
+"size": "Grösse",
+"shaving foam": "Rasierschaum",
+"stomach ache": "Magenschmerzen",
+"sore throat": "Halsschmerzen",
+"sparkling": "sprudelnd"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+        let usedWords = [];
+        let wordList = Object.keys(wörterbuch);
+
+        function getRandomWord() {
+            if (wordList.length === 0) {
+                // Reset the word list if all words have been used
+                wordList = Object.keys(wörterbuch);
+                usedWords = [];
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            const word = wordList.splice(randomIndex, 1)[0];
+            usedWords.push(word);
+
+            return word;
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(wörterbuch);
+            const options = new Set([correctTranslation]);
+
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+
+            return Array.from(options);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        function displayOptions(correctTranslation) {
+            const options = getRandomOptions(correctTranslation);
+            const shuffledOptions = shuffleArray(options); // Shuffle options
+            const optionsContainer = document.getElementById('options');
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctTranslation);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctTranslation) {
+            const result = (selectedOption === correctTranslation) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (selectedOption === correctTranslation) {
+                correctCount++;
+                correctWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            } else {
+                incorrectCount++;
+                incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const englisch = getRandomWord();
+            const correctTranslation = wörterbuch[englisch];
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
+            displayOptions(correctTranslation);
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 3-4 NHPI.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 3-4 NHPI - TM.html";
+        }
+
+        // Initiales Setzen der Frage
+        nextQuestion();
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 3-4 NHPI.docx" target="_blank"><span lang="en">New Headway Pre-Intermediate Units 3-4</span></a></p>
+<br>
+<br>
+</body>
+</html>

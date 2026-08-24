@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch-Englisch Vokabeltest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .multiple-choice label {
+            display: block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deutsch-Englisch Vokabeltest</h1>
+    <div id="test"></div>
+    <button id="reloadButton" onclick="generateTest()">Test neu laden</button>
+    <button id="checkAnswersButton" class="hidden" onclick="checkAnswers()">Antworten prüfen</button>
+    <div id="result"></div>
+
+    <script>
+        const words = {
+ "Auszeichnung": "award",
+    "erscheinen": "appear",
+    "Exemplar": "copy",
+    "ein paar": "a couple of",
+    "gebrauchen": "use",
+    "Semester": "term",
+    "Müll": "rubbish",
+    "Schlagzeug": "drums",
+    "Mundharmonika": "harmonica",
+    "Sänger": "vocalist",
+    "Prominente": "celebrity",
+    "sensibel": "sensitive",
+    "getrennt": "separate",
+    "Karriere": "career",
+    "Künstler": "artist",
+    "erzielen": "score",
+    "Tor": "goal",
+    "offensichtlich": "obviously",
+    "Freiheit": "freedom",
+    "immer noch": "still",
+    "Lüge": "lie",
+    "liebste": "favourite",
+    "betrunken": "drunk",
+    "Spiel": "match",
+    "komisch": "funny",
+    "schüchtern": "shy",
+    "Kumpel": "mate",
+    "selbstverständlich": "naturally",
+    "beschuldigen": "accuse",
+    "bereit sein": "be prepared",
+    "Vertrauen": "trust",
+    "durchhalten": "last",
+    "Geschmack": "taste",
+    "auf den ersten Blick": "at first sight",
+    "Einstellung": "attitude",
+    "sich voneinander trennen": "spilt up",
+    "vorziehen": "prefer",
+    "Wechselgeld": "change",
+    "streng": "strict",
+    "annehmen": "suppose",
+    "eine Prüfung machen": "take an exam",
+    "Verkäufer": "shop assistant",
+    "Rezeptionist": "receptionist",
+    "Anwalt": "lawyer",
+    "Krankenwagenfahrer": "ambulance driver",
+    "Bergarbeiter": "miner",
+    "Soldat": "soldier",
+    "Tierarzt": "vet",
+    "Zahnarzt": "dentist",
+    "Klempner": "plumber",
+    "Feuerwehrmann": "firefighter",
+    "gewiss": "certain",
+    "übergewichtig sein": "be overweight",
+    "versuchen": "try",
+    "lokal": "local",
+    "Ratschlag": "advice",
+    "Kleidung": "clothes",
+    "Gesundheit": "health",
+    "Unterkunft": "accommodation",
+    "Essen": "food",
+    "vorschlagen": "suggest",
+    "Ausflug": "trip",
+    "empfehlen": "recommend",
+    "sich seinem Alter entsprechend verhalten": "act your age",
+    "zufrieden": "satisfied",
+    "verlangen nach": "long",
+    "albern": "silly",
+    "verfügbar": "available",
+    "hinauswerfen": "throw out",
+    "Drogen": "drugs",
+    "ausscheiden": "drop out",
+    "enden": "end up",
+    "raten": "advise",
+    "Unterstützung": "support",
+    "inzwischen": "meanwhile",
+    "schrecklich": "scary",
+    "Verantwortung übernehmen": "take responsibility",
+    "grausam": "cruel",
+    "besitzen": "own",
+    "ausstehen": "stand",
+    "unsichtbar": "invisible",
+    "sprechen mit": "have a word with",
+    "Firma": "company",
+    "Vereinbarung": "arrangement",
+    "etwas ausschalten": "turn something off",
+    "grossartig": "great",
+    "Erfindung": "invention",
+    "unhöflich": "rude",
+    "akzeptieren": "accept",
+    "abenteuerlich": "adventurous",
+    "Arbeitgeber": "employer",
+    "ausbeuten": "exploit",
+    "Arbeitnehmer": "employee",
+    "hart": "tough",
+    "Vorschlag": "suggestion",
+    "in der Öffentlichkeit": "in public",
+    "Lebensmittelvergiftung": "food poisoning",
+    "wehtun": "hurt",
+    "geschwollen": "swollen",
+    "schlucken": "swallow",
+    "niesen": "sneeze",
+    "laufend": "runny",
+    "Fieber": "temperature",
+    "schmerzen": "ache",
+    "verstauchen": "twist",
+    "Fussgelenk": "ankle",
+    "sich übergeben": "be sick",
+    "krank": "sick",
+    "untersuchen": "examine",
+    "Operation": "surgery",
+    "Rezept": "prescription",
+    "Termin": "appointment",
+    "Entzündung": "infection",
+    "was ist los?": "what is the matter?",
+    "verschreiben": "prescribe"
+        };
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function generateUniqueQuestions(wordKeys, usedWords, count, generateQuestionsFn) {
+            let html = '';
+            while (count > 0 && wordKeys.length > 0) {
+                const word = getRandomElement(wordKeys);
+                if (usedWords.has(word)) {
+                    wordKeys = wordKeys.filter(w => w !== word);
+                    continue;
+                }
+
+                const questionData = generateQuestionsFn(word, usedWords);
+                if (questionData) {
+                    html += questionData.html;
+                    usedWords.add(questionData.word);
+                    count--;
+                }
+            }
+            return html;
+        }
+
+        function generateTrueFalseQuestions(word, usedWords) {
+            const correctTranslation = words[word];
+            const germanWords = Object.keys(words).filter(w => w !== word);
+            const randomGermanWord = getRandomElement(germanWords);
+
+            const isCorrect = Math.random() < 0.5;
+            const secondWord = isCorrect ? word : randomGermanWord;
+
+            const questionText = `<strong>${word}</strong> heisst auf Englisch <span lang="en"><strong>${correctTranslation}</strong></span>.`;
+
+            return {
+                html: `
+                    <div class="question">
+                        <p>${questionText}</p>
+                        <label><input type="radio" name="truefalse_${word}" value="true"><span lang="en">True</span></label>
+                        <label><input type="radio" name="truefalse_${word}" value="false"><span lang="en">False</span></label>
+                        <input type="hidden" name="truefalse_answer_${word}" value="${isCorrect ? 'true' : 'false'}">
+                    </div>
+                `,
+                word: word
+            };
+        }
+
+        function generateTextInputQuestions(word, usedWords) {
+            const questionText = `<strong>${word}</strong>`;
+            const correctTranslation = words[word];
+
+            return {
+                html: `
+                    <div class="question">
+                        <p>${questionText}</p>
+                        <input type="text" name="textinput_${word}">
+                        <input type="hidden" name="textinput_answer_${word}" value="${correctTranslation}">
+                    </div>
+                `,
+                word: word
+            };
+        }
+
+function generateMultipleChoiceQuestions(word, usedWords) {
+    const correctTranslation = words[word];
+    const options = [correctTranslation];
+    const germanWords = Object.keys(words).filter(w => w !== word);
+
+    while (options.length < 4) {
+        const option = getRandomElement(Object.values(words));
+        if (!options.includes(option)) {
+            options.push(option);
+        }
+    }
+
+    shuffleArray(options);
+
+    const questionText = `Was bedeutet <strong>${word}</strong> auf Englisch?`;
+
+    return {
+        html: `
+            <div class="question multiple-choice">
+                <p>${questionText}</p>
+                ${options.map(option => `
+                    <label><input type="radio" name="multiplechoice_${word}" value="${option}"> 
+                        <span lang="en">${option}</span>
+                    </label>
+                `).join('')}
+                <input type="hidden" name="multiplechoice_answer_${word}" value="${correctTranslation}">
+            </div>
+        `,
+        word: word
+            };
+        }
+
+        function generateTest() {
+            const testElement = document.getElementById('test');
+            const reloadButton = document.getElementById('reloadButton');
+            const checkAnswersButton = document.getElementById('checkAnswersButton');
+            testElement.innerHTML = '';
+
+            const wordKeys = Object.keys(words);
+            const usedWords = new Set();
+
+            const sections = [
+                {
+                    html: '<h2><span lang="en">True or False</span></h2><p>Wählen Sie <span lang="en">TRUE</span>, wenn die Aussage stimmt. <span lang="en">FALSE</span>, wenn sie falsch ist.</p>',
+                    generateFn: generateTrueFalseQuestions,
+                    count: 10
+                },
+                {
+                    html: '<h2>Texteingabe</h2><p>Geben Sie die englische Übersetzung des deutschen Wortes ein.</p>',
+                    generateFn: generateTextInputQuestions,
+                    count: 10
+                },
+                {
+                    html: '<h2><span lang="en">Multiple Choice</span></h2><p>Wählen Sie die richtige englische Übersetzung des deutschen Wortes.</p>',
+                    generateFn: generateMultipleChoiceQuestions,
+                    count: 10
+                }
+            ];
+
+            shuffleArray(sections);
+            sections.forEach(section => {
+                testElement.innerHTML += section.html;
+                testElement.innerHTML += generateUniqueQuestions([...wordKeys], usedWords, section.count, section.generateFn);
+            });
+
+            reloadButton.classList.add('hidden');
+            checkAnswersButton.classList.remove('hidden');
+        }
+
+        function checkAnswers() {
+            const testElement = document.getElementById('test');
+            const resultElement = document.getElementById('result');
+            const questions = document.querySelectorAll('.question');
+            let correctCount = 0;
+            let incorrectQuestions = '';
+
+            questions.forEach((question) => {
+                const trueFalseInput = question.querySelector('input[type="radio"]:checked');
+                const textInput = question.querySelector('input[type="text"]');
+                const multipleChoiceInput = question.querySelector('input[type="radio"]:checked');
+                const correctAnswer = question.querySelector('input[type="hidden"]').value;
+
+                let userAnswer;
+                if (trueFalseInput) {
+                    userAnswer = trueFalseInput.value;
+                } else if (textInput) {
+                    userAnswer = textInput.value.trim();
+                } else if (multipleChoiceInput) {
+                    userAnswer = multipleChoiceInput.value;
+                }
+
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                } else {
+                    incorrectQuestions += `<div class="question">${question.innerHTML}</div>`;
+                }
+            });
+
+            testElement.innerHTML = '';
+            resultElement.innerHTML = `<h2>Ergebnis</h2><p>Sie haben ${correctCount} von 30 Fragen richtig beantwortet.</p>`;
+            if (incorrectQuestions) {
+                resultElement.innerHTML += `<h2>Falsch beantwortete Fragen</h2>${incorrectQuestions}`;
+            }
+        }
+
+        // Generate the test when the page loads
+        window.onload = generateTest;
+    </script>
+</body>
+</html>

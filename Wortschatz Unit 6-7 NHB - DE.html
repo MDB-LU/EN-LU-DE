@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="de">geniessen</span></p>
+    <input type="text" id="englisch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistics</button>
+    <button onclick="switchMode()">Change Mode</button>
+    <button onclick="TestMode()">Test Mode</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Correct Words: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Incorrect Words: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+      "Künstler": "artist",
+    "zuhause": "at home",
+    "Frühstück": "breakfast",
+    "kaufen": "buy",
+    "Uhr": "clock",
+    "kochen": "cook",
+    "Tag": "day",
+    "Abendessen": "dinner",
+    "früh": "early",
+    "aufstehen": "get up",
+    "Glass": "glass",
+    "gehen": "go",
+    "spazieren gehen": "go for a walk",
+    "ausgehen": "go out",
+    "einkaufen gehen": "go shopping",
+    "ins Bett gehen": "go to bed",
+    "Grossvater": "grandfather",
+    "duschen": "have a shower",
+    "frühstücken": "have breakfast",
+    "Mittag essen": "have lunch",
+    "spät": "late",
+    "verlassen": "leave",
+    "Musik hören": "listen to music",
+    "nie": "never",
+    "malen": "paint",
+    "Klavier spielen": "play the piano",
+    "manchmal": "sometimes",
+    "zuhause bleiben": "stay at home",
+    "Studio": "studio",
+    "Danke vielmals": "thank you very much",
+    "Zeit": "time",
+    "heute": "today",
+    "morgen": "tomorrow",
+    "bis": "until",
+    "normalerweise": "usually",
+    "schauen": "watch",
+    "Woche": "week",
+    "Wochenende": "weekend",
+    "Welche Zeit ist es?": "what time is it?",
+    "Wann?": "when?",
+    "Strand": "beach",
+    "weil": "because",
+    "Junge": "boy",
+    "fester Freund": "boyfriend",
+    "Gebäude": "building",
+    "Café": "cafe",
+    "Hauptstadt": "capital city",
+    "Katze": "cat",
+    "Champagner": "champagne",
+    "Umkleidekabine": "changing room",
+    "günstig": "cheap",
+    "Schokolade": "chocolate",
+    "Kleiderladen": "clothes shop",
+    "kalt": "cold",
+    "bequem": "comfortable",
+    "köstlich": "delicious",
+    "E-Mail": "email",
+    "jede": "every",
+    "teuer": "expensive",
+    "berühmt": "famous",
+    "fantastisch": "fantastic",
+    "erste": "first",
+    "Stockwerk": "floor",
+    "freundlich": "friendly",
+    "Mädchen": "girl",
+    "geben": "give",
+    "hassen": "hate",
+    "helfen": "help",
+    "hier": "here",
+    "Hausaufgabe": "homework",
+    "fürchterlich": "horrible",
+    "heiss": "hot",
+    "international": "international",
+    "Jacke": "jacket",
+    "Journalist": "journalist",
+    "schön": "lovely",
+    "heiraten": "marry",
+    "Geld": "money",
+    "Filme": "movies",
+    "neu": "new",
+    "natürlich": "of course",
+    "Postkarte": "postcard",
+    "Geschenk": "present",
+    "Präsident": "president",
+    "Pyramide": "pyramid",
+    "Bahnhof": "railway station",
+    "bis bald": "see you soon",
+    "senden": "send",
+    "unterrichten": "teach",
+    "dass": "that",
+    "Urlaub": "vacation",
+    "sehr viel": "very much",
+    "besuchen": "visit",
+    "Wetter": "weather",
+    "Hochzeit": "wedding",
+    "feucht": "wet",
+    "wieso": "why?",
+    "mit": "with"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        let wordList = Object.keys(wörterbuch); // Words that haven't been asked yet
+        let usedWords = []; // Words that have been asked
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getNextWord() {
+            if (wordList.length === 0) {
+                alert("All words have been asked once. Starting the next round!");
+                wordList = [...usedWords]; // Reset word list
+                shuffleArray(wordList); // Shuffle for randomness
+                usedWords = []; // Reset used words
+            }
+
+            const word = wordList.pop(); // Get last word from shuffled list
+            usedWords.push(word); // Mark it as used
+            return word;
+        }
+
+        function translate() {
+            const englisch = document.getElementById("englisch").value.trim();
+            const deutsch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[deutsch];
+
+            const result = (englisch.toLowerCase() === correctTranslation.toLowerCase()) 
+                ? "Correct!" 
+                : `Incorrect, the correct solution is: ${correctTranslation}`;
+            alert(result);
+
+            if (englisch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(deutsch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(deutsch);
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const nextWord = getNextWord();
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="de">${nextWord}</span>`;
+            document.getElementById("englisch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            window.location.href = "Wortschatz Unit 6-7 NHB - MC - DE.html";
+        }
+
+        function TestMode() {
+            window.location.href = "Wortschatz Unit 6-7 NHB - TM - DE.html";
+        }
+
+        shuffleArray(wordList); // Shuffle words at the start
+        nextQuestion();
+    </script>
+
+<br>
+<p><span lang="de">Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</span></p>
+<p><a href="Unit 6-7 NHB.docx" target="_blank"><span lang="en">New Headway Beginner Units 6-7</span></a></p>
+<br>
+<br>
+</body>
+</html>

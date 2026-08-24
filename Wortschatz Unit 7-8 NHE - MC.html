@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+    <button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"widow": "Witwe",
+"in tears": "unter Tränen",
+"agree": "zustimmen",
+"bomb": "bombardieren",
+"grow": "wachsen",
+"fight": "kämpfen",
+"own": "besitzen",
+"resign": "zurücktreten",
+"survive": "überleben",
+"farm": "Bauernhof",
+"education": "Bildung",
+"during": "während",
+"farmer": "Bauer",
+"soldier": "Soldat",
+"tobacco": "Tabak",
+"horse": "Pferd",
+"hard": "hart",
+"theatre": "Theater",
+"army": "Armee",
+"finally": "schliesslich",
+"capital city": "Hauptstadt",
+"build": "bauen",
+"by": "um",
+"tired of": "überdrüssig",
+"woman": "Frau",
+"above": "über",
+"chemistry": "Chemie",
+"rich": "reich",
+"businessman": "Geschäftsmann",
+"interest": "Interesse",
+"sleep": "Schlaf",
+"leader": "Führer",
+"strong": "stark",
+"personality": "Persönlichkeit",
+"be afraid of": "Angst haben vor",
+"terrorist": "Terrorist",
+"in office": "im Amt",
+"occasion": "Ereignis",
+"birthday": "Geburtstag",
+"wedding day": "Hochzeitstag",
+"Christmas Day": "Weihnachtstag",
+"New Year’s Eve": "Silvester",
+"Easter Day": "Ostersonntag",
+"tomorrow": "morgen",
+"Mother’s Day": "Muttertag",
+"Thanksgiving": "Erntedankfest",
+"Valentine’s Day": "Valentinstag",
+"again": "wieder",
+"card": "Karte",
+"rose": "Rose",
+"violet": "Veilchen",
+"blue": "blau",
+"no idea": "keine Ahnung",
+"congratulations": "Herzlichen Glückwunsch",
+"midnight": "Mitternacht",
+"everybody": "jede",
+"same to you": "gleichfalls",
+"alone": "allein",
+"next": "nächste",
+"outside": "draussen",
+"verandah": "Veranda",
+"poem": "Gedicht",
+"cotton field": "Baumwollfeld",
+"create": "erschaffen",
+"head": "Kopf",
+"earn": "verdienen",
+"marry": "heiraten",
+"die": "sterben",
+"hate": "hassen",
+"sure": "sicher",
+"so": "also",
+"important": "wichtig",
+"subject": "Schulfach",
+"begin": "beginnen",
+"get": "bekommen",
+"study": "studieren",
+"become": "werden",
+"win": "gewinnen",
+"lose": "verlieren",
+"university": "Universität",
+"together": "zusammen",
+"politics": "Politik",
+"president": "Präsident",
+"car crash": "Autounfall",
+"funeral": "Beerdigung",
+"happen": "passieren",
+"end": "enden",
+"moon": "Mond",
+"go shopping": "einkaufen gehen",
+"someone": "jemand",
+"kiss": "Kuss",
+"something": "etwas",
+"present": "Geschenk",
+"shoe": "Schuh",
+"grocer": "Lebensmittelhändler",
+"slave": "Sklave",
+"politician": "Politiker",
+"twin": "Zwilling",
+"eat": "essen",
+"record": "Schallplatte",
+"car": "Auto",
+"phone call": "Anruf",
+"bike": "Fahrrad",
+"invent": "erfinden",
+"inventor": "Erfinder",
+"cloth": "Stoff",
+"way": "Weg",
+"trousers": "Hose",
+"fashionable": "modisch",
+"transmit": "übertragen",
+"workroom": "Arbeitszimmer",
+"send": "senden",
+"produce": "produzieren",
+"company": "Firma",
+"drug": "Medikament",
+"best-selling": "meistgekauft",
+"painkiller": "Schmerzmittel",
+"astronaut": "Astronaut",
+"philosopher": "Philosoph",
+"call": "nennen",
+"century": "Jahrhundert",
+"bring back": "mitbringen",
+"incredible": "unglaublich",
+"true": "wahr",
+"believe": "glauben",
+"term": "Semester",
+"arrive": "ankommen",
+"last": "zuletzt",
+"get married": "heiraten",
+"coffee break": "Kaffeepause",
+"banana": "Banane",
+"fruit": "Frucht",
+"recipe": "Rezept",
+"vacuum cleaner": "Staubsauger",
+"kiss": "küssen",
+"throw": "werfen",
+"find": "finden",
+"green": "grün",
+"delicious": "lecker",
+"face": "Gesicht",
+"eye": "Auge",
+"mouth": "Mund",
+"leg": "Bein",
+"clock": "Uhr",
+"funny": "lustig",
+"nervous": "nervös",
+"worried": "besorgt",
+"get engaged": "sich verloben",
+"joke": "Witz",
+"to be in a hurry": "es eilig haben",
+"good luck": "viel Glück",
+"exam": "Prüfung",
+"invite": "einladen",
+"nowadays": "heutzutage",
+"business": "Geschäft",
+"look for": "suchen nach",
+"fisherman": "Fischer",
+"put": "setzen",
+"bottle": "Flasche",
+"sea": "Meer",
+"mile": "Meile",
+"away": "weg",
+"couple": "Paar",
+"sentence": "Satz",
+"face to face": "von Angesicht zu Angesicht",
+"stand": "stehen",
+"grandparents": "Grosseltern"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+        let usedWords = [];
+        let wordList = Object.keys(wörterbuch);
+
+        function getRandomWord() {
+            if (wordList.length === 0) {
+                // Reset the word list if all words have been used
+                wordList = Object.keys(wörterbuch);
+                usedWords = [];
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            const word = wordList.splice(randomIndex, 1)[0];
+            usedWords.push(word);
+
+            return word;
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(wörterbuch);
+            const options = new Set([correctTranslation]);
+
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+
+            return Array.from(options);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        function displayOptions(correctTranslation) {
+            const options = getRandomOptions(correctTranslation);
+            const shuffledOptions = shuffleArray(options); // Shuffle options
+            const optionsContainer = document.getElementById('options');
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctTranslation);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctTranslation) {
+            const result = (selectedOption === correctTranslation) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (selectedOption === correctTranslation) {
+                correctCount++;
+                correctWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            } else {
+                incorrectCount++;
+                incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const englisch = getRandomWord();
+            const correctTranslation = wörterbuch[englisch];
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
+            displayOptions(correctTranslation);
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 7-8 NHE.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 7-8 NHE - TM.html";
+        }
+
+
+        // Initiales Setzen der Frage
+        nextQuestion();
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 7-8 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 7-8</span></a></p>
+<br>
+<br>
+</body>
+</html>

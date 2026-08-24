@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+        "enjoy": "geniessen",
+"graduate": "einen Abschluss machen",
+"translator": "Übersetzer",
+"anyway": "jedenfalls",
+"wear": "tragen",
+"van": "Lieferwagen",
+"deliver": "austragen",
+"difference": "Unterschied",
+"different": "unterschiedlich",
+"way": "Art und Weise",
+"message": "Mitteilung",
+"including": "einschliesslich",
+"exchange": "austauschen",
+"sound": "Geräusch",
+"show": "zeigen",
+"anger": "Zorn",
+"compared to": "verglichen mit",
+"poetry": "Poesie",
+"tell a joke": "einen Witz erzählen",
+"make a promise": "ein Versprechen geben",
+"explain": "erklären",
+"persuade": "überzeugen",
+"tell the truth": "die Wahrheit sagen",
+"tell lies": "lügen",
+"important": "wichtig",
+"development": "Entwicklung",
+"ancient": "antik",
+"society": "Gesellschaft",
+"transform": "verwandeln",
+"public speaking": "öffentliche Rede",
+"develop": "entwickeln",
+"unique": "einzigartig",
+"government": "Regierung",
+"depend on": "abhängig von",
+"century": "Jahrhundert",
+"huge": "riesig",
+"influence": "Einfluss",
+"infinite": "unendlich",
+"mention": "erwähnen",
+"human": "menschlich",
+"happen": "passieren",
+"move into": "einziehen",
+"invite": "einladen",
+"introduce": "sich vorstellen",
+"belong to": "gehören zu",
+"population": "Bevölkerung",
+"just": "nur",
+"mainly": "hauptsächlich",
+"descent": "Herkunft",
+"Aborigine": "Ureinwohner",
+"climate": "Klima",
+"famous": "berühmt",
+"either ... or": "entweder … oder",
+"pet": "Haustier",
+"occupation": "Beruf",
+"get ready": "sich fertig machen",
+"backyard": "Hinterhof",
+"nearly": "beinahe",
+"descendant": "Nachkömmling",
+"relative": "Verwandte",
+"successful": "erfolgreich",
+"hesitation": "Zögern",
+"certainly": "sicherlich",
+"take": "nehmen",
+"opportunity": "Gelegenheit",
+"join": "sich anschliessen",
+"decide": "entscheiden",
+"strange": "fremd",
+"fact": "Tatsache",
+"independence": "Unabhängigkeit",
+"make decisions": "Entscheidungen treffen",
+"similar to": "ähnlich wie",
+"public transportation": "öffentliche Verkehrsmittel",
+"space": "Platz",
+"yard": "Garten",
+"crowded": "überfüllt",
+"in common": "gemeinsam",
+"member": "Mitglied",
+"miss": "vermissen",
+"abroad": "im Ausland",
+"foreigner": "Ausländer",
+"drive somebody mad": "jemanden verrückt machen",
+"annoy somebody": "jemanden ärgern",
+"untidy": "unordentlich",
+"on time": "pünktlich",
+"annoying": "ärgerlich",
+"habit": "Gewohnheit",
+"tidy up": "aufräumen",
+"mess": "Unordnung",
+"wet": "feucht",
+"horrible": "schrecklich",
+"miserable": "unglücklich",
+"get used to": "sich gewöhnen an",
+"spy": "Spion"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 1-2 NHPI - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 1-2 NHPI - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 1-2 NHPI.docx" target="_blank"><span lang="en">New Headway Pre-Intermediate Units 1-2</span></a></p>
+<br>
+<br>
+</body>
+</html>

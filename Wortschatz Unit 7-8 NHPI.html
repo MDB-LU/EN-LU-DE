@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"award": "Auszeichnung",
+"appear": "erscheinen",
+"copy": "Exemplar",
+"a couple of": "ein paar",
+"use": "gebrauchen",
+"term": "Semester",
+"rubbish": "Müll",
+"drums": "Schlagzeug",
+"harmonica": "Mundharmonika",
+"vocalist": "Sänger",
+"celebrity": "Prominente",
+"sensitive": "sensibel",
+"separate": "getrennt",
+"career": "Karriere",
+"artist": "Künstler",
+"score": "erzielen",
+"goal": "Tor",
+"obviously": "offensichtlich",
+"freedom": "Freiheit",
+"still": "immer noch",
+"lie": "Lüge",
+"favourite": "liebste",
+"drunk": "betrunken",
+"match": "Spiel",
+"funny": "komisch",
+"shy": "schüchtern",
+"mate": "Kumpel",
+"naturally": "selbstverständlich",
+"accuse": "beschuldigen",
+"be prepared": "bereit sein",
+"trust": "Vertrauen",
+"last": "durchhalten",
+"taste": "Geschmack",
+"at first sight": "auf den ersten Blick",
+"attitude": "Einstellung",
+"spilt up": "sich voneinander trennen",
+"prefer": "vorziehen",
+"change": "Wechselgeld",
+"strict": "streng",
+"suppose": "annehmen",
+"take an exam": "eine Prüfung machen",
+"shop assistant": "Verkäufer",
+"receptionist": "Rezeptionist",
+"lawyer": "Anwalt",
+"ambulance driver": "Krankenwagenfahrer",
+"miner": "Bergarbeiter",
+"soldier": "Soldat",
+"vet": "Tierarzt",
+"dentist": "Zahnarzt",
+"plumber": "Klempner",
+"firefighter": "Feuerwehrmann",
+"certain": "gewiss",
+"be overweight": "übergewichtig sein",
+"try": "versuchen",
+"local": "lokal",
+"advice": "Ratschlag",
+"clothes": "Kleidung",
+"health": "Gesundheit",
+"accommodation": "Unterkunft",
+"food": "Essen",
+"suggest": "vorschlagen",
+"trip": "Ausflug",
+"recommend": "empfehlen",
+"act your age": "sich seinem Alter entsprechend verhalten",
+"satisfied": "zufrieden",
+"long": "verlangen nach",
+"silly": "albern",
+"available": "verfügbar",
+"throw out": "hinauswerfen",
+"drugs": "Drogen",
+"drop out": "ausscheiden",
+"end up": "enden",
+"advise": "raten",
+"support": "Unterstützung",
+"meanwhile": "inzwischen",
+"scary": "schrecklich",
+"take responsibility": "Verantwortung übernehmen",
+"cruel": "grausam",
+"own": "besitzen",
+"stand": "ausstehen",
+"invisible": "unsichtbar",
+"have a word with": "sprechen mit",
+"company": "Firma",
+"arrangement": "Vereinbarung",
+"turn something off": "etwas ausschalten",
+"great": "grossartig",
+"invention": "Erfindung",
+"rude": "unhöflich",
+"accept": "akzeptieren",
+"adventurous": "abenteuerlich",
+"employer": "Arbeitgeber",
+"exploit": "ausbeuten",
+"employee": "Arbeitnehmer",
+"tough": "hart",
+"suggestion": "Vorschlag",
+"in public": "in der Öffentlichkeit",
+"food poisoning": "Lebensmittelvergiftung",
+"hurt": "wehtun",
+"swollen": "geschwollen",
+"swallow": "schlucken",
+"sneeze": "niesen",
+"runny": "laufend",
+"temperature": "Fieber",
+"ache": "schmerzen",
+"twist": "verstauchen",
+"ankle": "Fussgelenk",
+"be sick": "sich übergeben",
+"sick": "krank",
+"examine": "untersuchen",
+"surgery": "Operation",
+"prescription": "Rezept",
+"appointment": "Termin",
+"infection": "Entzündung",
+"what is the matter?": "was ist los?",
+"prescribe": "verschreiben"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 7-8 NHPI - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 7-8 NHPI - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 7-8 NHPI.docx" target="_blank"><span lang="en">New Headway Pre-Intermediate Units 7-8</span></a></p>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+"living room": "Wohnzimmer",
+"kitchen": "Küche",
+"armchair": "Sessel",
+"fridge": "Kühlschrank",
+"television": "Fernseher",
+"coffee table": "Couchtisch",
+"table": "Tisch",
+"shelf": "Regal",
+"plant": "Pflanze",
+"lamp": "Lampe",
+"cooker": "Herd",
+"washing machine": "Waschmaschine",
+"telephone": "Telefon",
+"cupboard": "Schrank",
+"cup": "Tasse",
+"cat": "Katze",
+"mirror": "Spiegel",
+"fire": "Feuer",
+"rug": "Teppich",
+"bookshelf": "Bücherregal",
+"on": "auf",
+"under": "unter",
+"next to": "neben",
+"in front of": "vor",
+"wall": "Wand",
+"exactly": "exakt",
+"well": "nun",
+"plate": "Teller",
+"knife": "Messer",
+"fork": "Gabel",
+"spoon": "Löffel",
+"champagne": "Champagner",
+"cheers": "Prost",
+"give": "geben",
+"floor": "Fussboden",
+"pen": "Kugelschreiber",
+"dirty": "dreckig",
+"briefcase": "Aktentasche",
+"notebook": "Notizbuch",
+"mobile phone": "Mobiltelefon",
+"look at something": "etwas anschauen",
+"over there": "dort drüben",
+"steps": "Treppe",
+"flight attendant": "Flugbegleiterin",
+"first class section": "Erste Klasse Abteil",
+"emergency exit": "Notausgang",
+"door": "Tür",
+"toilet": "Toilette",
+"grandson": "Enkel",
+"bedroom": "Schlafzimmer",
+"lady": "Dame",
+"visit": "Besuch",
+"front door": "Haustür",
+"at the top of": "zuoberst",
+"passport": "Pass",
+"luxury": "Luxus",
+"bath": "Badewanne",
+"no smoking": "Rauchen verboten",
+"sign": "Schild",
+"world": "Welt",
+"air conditioning": "Klimaanlage",
+"even": "sogar",
+"dishwasher": "Geschirrspülmaschine",
+"time": "Zeit",
+"upstairs": "Obergeschoss",
+"need": "brauchen",
+"extra information": "Zusatzinformationen",
+"garden": "Garten",
+"bank": "Bank",
+"bus stop": "Bushaltestelle",
+"bookshop": "Buchhandlung",
+"supermarket": "Supermarkt",
+"post office": "Postamt",
+"public toilet": "öffentliche Toilette",
+"chemist": "Apotheke",
+"music shop": "Musikladen",
+"phone box": "Telefonzelle",
+"travel agent": "Reisebüro",
+"post box": "Briefkasten",
+"newsagent": "Kiosk",
+"swimming pool": "Schwimmbad",
+"first": "erste",
+"right": "rechts",
+"straight ahead": "geradeaus",
+"left": "links",
+"a little": "ein wenig",
+"well": "gut",
+"swim": "schwimmen",
+"question": "Frage",
+"piano": "Klavier",
+"poetry": "Poesie",
+"laugh": "lachen",
+"chess": "Schach",
+"hear": "hören",
+"feel": "fühlen",
+"think": "denken",
+"conversation": "Gespräch",
+"fall in love": "sich verlieben",
+"yesterday": "gestern",
+"month": "Monat",
+"last": "letzte",
+"night": "Nacht",
+"genius": "Genie",
+"to be born": "geboren werden",
+"paint": "malen",
+"dance": "tanzen",
+"talk": "reden",
+"ride a bike": "Fahrrad fahren",
+"super": "super",
+"meet": "treffen",
+"lots of": "viele",
+"concert": "Konzert",
+"practice": "üben",
+"large": "gross",
+"picture": "Bild",
+"between": "zwischen",
+"parents": "Eltern",
+"sad": "traurig",
+"stop": "aufhören",
+"after": "nach",
+"hour": "Stunde",
+"until": "bis",
+"bedtime": "Schlafenszeit",
+"spend": "ausgeben",
+"save": "sparen",
+"poor": "arm",
+"fantastic": "fantastisch",
+"first of all": "zuerst",
+"black eye": "blaues Auge",
+"answer": "Antwort",
+"wear": "tragen, anhaben",
+"right": "richtig",
+"sun": "Sonne",
+"hat": "Hut, Mütze",
+"operator": "Telefonist",
+"initial": "Initiale",
+"recorded message": "aufgezeichnete Nachricht",
+"require": "benötigen",
+"take a message": "etwas ausrichten",
+"great": "grossartig",
+"bye": "tschüss",
+"next time": "nächstes Mal",
+"just": "einfach",
+"manager": "Geschäftsführer",
+"still": "immer noch",
+"wedding": "Hochzeit",
+"all right": "in Ordnung"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 5-6 NHE - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 5-6 NHE - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 5-6 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 5-6</span></a></p>
+<br>
+<br>
+</body>
+</html>

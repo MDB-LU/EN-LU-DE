@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <input type="text" id="deutsch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+<button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+            "a lot of": "viel",
+"also": "auch",
+"bank manager": "Bankdirektor",
+"beautiful": "wunderschön",
+"best": "beste",
+"big": "gross",
+"both": "beide",
+"brother": "Bruder",
+"bus": "Bus",
+"but": "aber",
+"child": "Kind",
+"children": "Kinder",
+"class": "Klasse",
+"classroom": "Klassenzimmer",
+"daughter": "Tochter",
+"director": "Direktor",
+"dog": "Hund",
+"family": "Familie",
+"fan": "Ventilator",
+"farm": "Bauernhof",
+"father": "Vater",
+"favourite": "liebste",
+"first name": "Vorname",
+"flat": "Wohnung",
+"friend": "Freund",
+"funny": "lustig",
+"girlfriend": "feste Freundin",
+"happy": "glücklich",
+"have": "haben",
+"have a good time": "eine gute Zeit haben",
+"husband": "Ehemann",
+"mother": "Mutter",
+"music": "Musik",
+"near": "nahe",
+"nice": "nett",
+"office": "Büro",
+"our": "unser",
+"parents": "Eltern",
+"part-time": "Teilzeit",
+"really": "wirklich",
+"sister": "Schwester",
+"small": "klein",
+"son": "Sohn",
+"spell": "buchstabieren",
+"surname": "Nachname",
+"their": "ihr",
+"together": "zusammen",
+"university": "Universität",
+"very": "sehr",
+"who": "wer",
+"wife": "Ehefrau",
+"a little": "ein wenig",
+"actor": "Schauspieler",
+"be": "sein",
+"beer": "Bier",
+"cheese": "Käse",
+"coffee": "Kaffee",
+"drink": "trinken",
+"eat": "essen",
+"food": "Essen",
+"football": "Fussball",
+"ice-cream": "Eiscreme",
+"identity": "Identität",
+"language": "Sprache",
+"life": "Leben",
+"like": "mögen",
+"live": "leben",
+"love": "lieben",
+"mobile phone": "Handy",
+"nationality": "Nationalität",
+"now": "jetzt",
+"orange": "orange",
+"party": "Party",
+"place": "Ort",
+"play": "spielen",
+"pound": "Pfund",
+"price": "Preis",
+"radio": "Radio",
+"restaurant": "Restaurant",
+"skiing": "Skifahren",
+"speak": "sprechen",
+"sport": "Sport",
+"swimming": "Schwimmen",
+"tea": "Tee",
+"think": "denken",
+"waiter": "Kellner",
+"want": "wollen",
+"wine": "Wein",
+"work": "arbeiten"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        function getRandomWord() {
+            const keys = Object.keys(wörterbuch);
+            const randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+        function translate() {
+            const deutsch = document.getElementById("deutsch").value.trim();
+            const englisch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[englisch];
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(englisch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(englisch);
+            }
+
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            document.getElementById("deutsch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+        
+	    function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 4-5 NHB - MC.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 4-5 NHB - TM.html";
+        }
+
+        // Set a random initial word
+        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 4-5 NHB.docx" target="_blank"><span lang="en">New Headway Beginner Units 4-5</span></a></p>
+<br>
+<br>
+</body>
+</html>

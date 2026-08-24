@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        .option {
+            display: block;
+            margin: 5px 0;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="en">Dog</span></p>
+    <div id="options"></div>
+<br>
+    <button onclick="showStatistics()">Statistik Ansehen</button>
+    <button onclick="switchMode()">Lernmodus Wechseln</button>
+<button onclick="TestMode()">Testmodus</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Anzahl falscher Wörter: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+                "enjoy": "geniessen",
+"graduate": "einen Abschluss machen",
+"translator": "Übersetzer",
+"anyway": "jedenfalls",
+"wear": "tragen",
+"van": "Lieferwagen",
+"deliver": "austragen",
+"difference": "Unterschied",
+"different": "unterschiedlich",
+"way": "Art und Weise",
+"message": "Mitteilung",
+"including": "einschliesslich",
+"exchange": "austauschen",
+"sound": "Geräusch",
+"show": "zeigen",
+"anger": "Zorn",
+"compared to": "verglichen mit",
+"poetry": "Poesie",
+"tell a joke": "einen Witz erzählen",
+"make a promise": "ein Versprechen geben",
+"explain": "erklären",
+"persuade": "überzeugen",
+"tell the truth": "die Wahrheit sagen",
+"tell lies": "lügen",
+"important": "wichtig",
+"development": "Entwicklung",
+"ancient": "antik",
+"society": "Gesellschaft",
+"transform": "verwandeln",
+"public speaking": "öffentliche Rede",
+"develop": "entwickeln",
+"unique": "einzigartig",
+"government": "Regierung",
+"depend on": "abhängig von",
+"century": "Jahrhundert",
+"huge": "riesig",
+"influence": "Einfluss",
+"infinite": "unendlich",
+"mention": "erwähnen",
+"human": "menschlich",
+"happen": "passieren",
+"move into": "einziehen",
+"invite": "einladen",
+"introduce": "sich vorstellen",
+"belong to": "gehören zu",
+"population": "Bevölkerung",
+"just": "nur",
+"mainly": "hauptsächlich",
+"descent": "Herkunft",
+"Aborigine": "Ureinwohner",
+"climate": "Klima",
+"famous": "berühmt",
+"either ... or": "entweder … oder",
+"pet": "Haustier",
+"occupation": "Beruf",
+"get ready": "sich fertig machen",
+"backyard": "Hinterhof",
+"nearly": "beinahe",
+"descendant": "Nachkömmling",
+"relative": "Verwandte",
+"successful": "erfolgreich",
+"hesitation": "Zögern",
+"certainly": "sicherlich",
+"take": "nehmen",
+"opportunity": "Gelegenheit",
+"join": "sich anschliessen",
+"decide": "entscheiden",
+"strange": "fremd",
+"fact": "Tatsache",
+"independence": "Unabhängigkeit",
+"make decisions": "Entscheidungen treffen",
+"similar to": "ähnlich wie",
+"public transportation": "öffentliche Verkehrsmittel",
+"space": "Platz",
+"yard": "Garten",
+"crowded": "überfüllt",
+"in common": "gemeinsam",
+"member": "Mitglied",
+"miss": "vermissen",
+"abroad": "im Ausland",
+"foreigner": "Ausländer",
+"drive somebody mad": "jemanden verrückt machen",
+"annoy somebody": "jemanden ärgern",
+"untidy": "unordentlich",
+"on time": "pünktlich",
+"annoying": "ärgerlich",
+"habit": "Gewohnheit",
+"tidy up": "aufräumen",
+"mess": "Unordnung",
+"wet": "feucht",
+"horrible": "schrecklich",
+"miserable": "unglücklich",
+"get used to": "sich gewöhnen an",
+"spy": "Spion"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+        let usedWords = [];
+        let wordList = Object.keys(wörterbuch);
+
+        function getRandomWord() {
+            if (wordList.length === 0) {
+                // Reset the word list if all words have been used
+                wordList = Object.keys(wörterbuch);
+                usedWords = [];
+            }
+
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            const word = wordList.splice(randomIndex, 1)[0];
+            usedWords.push(word);
+
+            return word;
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(wörterbuch);
+            const options = new Set([correctTranslation]);
+
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+
+            return Array.from(options);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        function displayOptions(correctTranslation) {
+            const options = getRandomOptions(correctTranslation);
+            const shuffledOptions = shuffleArray(options); // Shuffle options
+            const optionsContainer = document.getElementById('options');
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctTranslation);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctTranslation) {
+            const result = (selectedOption === correctTranslation) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+            alert(result);
+
+            if (selectedOption === correctTranslation) {
+                correctCount++;
+                correctWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            } else {
+                incorrectCount++;
+                incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const englisch = getRandomWord();
+            const correctTranslation = wörterbuch[englisch];
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
+            displayOptions(correctTranslation);
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("correctWords").innerHTML = correctWordsHtml;
+
+            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 1-2 NHPI.html";
+        }
+
+function TestMode() {
+            // Hier die URL der Zielseite einfügen
+            window.location.href = "Wortschatz Unit 1-2 NHPI - TM.html";
+        }
+
+        // Initiales Setzen der Frage
+        nextQuestion();
+    </script>
+<br>
+<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+<p><a href="Unit 1-2 NHPI.docx" target="_blank"><span lang="en">New Headway Pre-Intermediate Units 1-2</span></a></p>
+<br>
+<br>
+</body>
+</html>
