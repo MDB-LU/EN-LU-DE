@@ -31,7 +31,7 @@
 <br>
     <button onclick="showStatistics()">Statistik Ansehen</button>
     <button onclick="switchMode()">Lernmodus Wechseln</button>
-<button onclick="TestMode()">Testmodus</button>
+    <button onclick="TestMode()">Testmodus</button>
     <div id="result"></div>
     <div id="statistics" style="display: none;">
         <p>Anzahl richtiger Wörter: <span id="correctCount">0</span></p>
@@ -41,8 +41,8 @@
     </div>
 
     <script>
-        const wörterbuch = {
-           "hello": "hallo",
+        const woerterbuch = {
+              "hello": "hallo",
 "what": "was",
 "where": "wo",
 "from": "von",
@@ -190,50 +190,42 @@
         let incorrectCount = 0;
         let correctWords = [];
         let incorrectWords = [];
+        let unusedWords = Object.keys(woerterbuch);
         let usedWords = [];
-        let wordList = Object.keys(wörterbuch);
-
-        function getRandomWord() {
-            if (wordList.length === 0) {
-                // Reset the word list if all words have been used
-                wordList = Object.keys(wörterbuch);
-                usedWords = [];
-            }
-
-            const randomIndex = Math.floor(Math.random() * wordList.length);
-            const word = wordList.splice(randomIndex, 1)[0];
-            usedWords.push(word);
-
-            return word;
-        }
-
-        function getRandomOptions(correctTranslation) {
-            const translations = Object.values(wörterbuch);
-            const options = new Set([correctTranslation]);
-
-            while (options.size < 4) {
-                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
-                options.add(randomTranslation);
-            }
-
-            return Array.from(options);
-        }
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            return array;
+        }
+
+        function getNextWord() {
+            if (unusedWords.length === 0) {
+                alert("Alle Wörter wurden einmal gefragt. Eine neue Runde beginnt jetzt.");
+                unusedWords = usedWords;
+                usedWords = [];
+                shuffleArray(unusedWords);
+            }
+            return unusedWords.pop();
+        }
+
+        function getRandomOptions(correctTranslation) {
+            const translations = Object.values(woerterbuch);
+            const options = new Set([correctTranslation]);
+            while (options.size < 4) {
+                const randomTranslation = translations[Math.floor(Math.random() * translations.length)];
+                options.add(randomTranslation);
+            }
+            return Array.from(options);
         }
 
         function displayOptions(correctTranslation) {
             const options = getRandomOptions(correctTranslation);
-            const shuffledOptions = shuffleArray(options); // Shuffle options
+            shuffleArray(options);
             const optionsContainer = document.getElementById('options');
-
-            optionsContainer.innerHTML = ''; // Clear previous options
-            shuffledOptions.forEach(option => {
+            optionsContainer.innerHTML = '';
+            options.forEach(option => {
                 const button = document.createElement('button');
                 button.className = 'option';
                 button.textContent = option;
@@ -253,13 +245,13 @@
                 incorrectCount++;
                 incorrectWords.push(document.getElementById("wordToTranslate").textContent.trim());
             }
-
             nextQuestion();
         }
 
         function nextQuestion() {
-            const englisch = getRandomWord();
-            const correctTranslation = wörterbuch[englisch];
+            const englisch = getNextWord();
+            usedWords.push(englisch);
+            const correctTranslation = woerterbuch[englisch];
             document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${englisch}</span>`;
             displayOptions(correctTranslation);
         }
@@ -267,33 +259,27 @@
         function showStatistics() {
             document.getElementById("correctCount").textContent = correctCount;
             document.getElementById("incorrectCount").textContent = incorrectCount;
-
-            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
-            document.getElementById("correctWords").innerHTML = correctWordsHtml;
-
-            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
-            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
-
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
             document.getElementById("statistics").style.display = "block";
         }
 
         function switchMode() {
-            // Hier die URL der Zielseite einfügen
             window.location.href = "Wortschatz Unit 1-2 NHE.html";
         }
 
-function TestMode() {
-            // Hier die URL der Zielseite einfügen
+        function TestMode() {
             window.location.href = "Wortschatz Unit 1-2 NHE - TM.html";
         }
 
-        // Initiales Setzen der Frage
+        shuffleArray(unusedWords);
         nextQuestion();
     </script>
-<br>
-<p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
-<p><a href="Unit 1-2 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 1-2</span></a></p>
-<br>
-<br>
+
+    <br>
+    <p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
+    <p><a href="Unit 1-2 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 1-2</span></a></p>
+    <br>
+    <br>
 </body>
 </html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch-Englisch Vokabeltest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .multiple-choice label {
+            display: block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deutsch-Englisch Vokabeltest</h1>
+    <div id="test"></div>
+    <button id="reloadButton" onclick="generateTest()">Test neu laden</button>
+    <button id="checkAnswersButton" class="hidden" onclick="checkAnswers()">Antworten prüfen</button>
+    <div id="result"></div>
+
+    <script>
+        const words = {
+"Blasinstrument": "wind instrument",
+  "Cello": "cello",
+  "Klarinette": "clarinet",
+  "Schlagzeug": "drums",
+  "Flöte": "flute",
+  "Gitarre": "guitar",
+  "Keyboard": "keyboards",
+  "Orgel": "organ",
+  "Klavier": "piano",
+  "Saxophon": "saxophone",
+  "Posaune": "trombone",
+  "Trompete": "trumpet",
+  "Violine": "violin",
+  "Saiteninstrument": "stringed instrument",
+  "Perkussionsinstrument": "percussion instrument",
+  "Begleitsänger": "backing vocalist",
+  "Leadsänger": "lead singer",
+  "Studiomusiker": "session musician",
+  "Darbietung": "performance",
+  "Musikfestival": "music festival",
+  "im Einklang sein": "be in tune",
+  "ein Konzert geben": "give a concert",
+  "Hitparade": "charts",
+  "auf Tour": "on tour",
+  "auf der Bühne": "on stage",
+  "im Radio": "on the radio",
+  "ein Lied singen": "sing a song",
+  "Lied": "song",
+  "Aerobic": "aerobics",
+  "Leichtathletik": "athletics",
+  "Gymnastik": "gymnastics",
+  "Radfahren": "cycling",
+  "tauchen": "diving",
+  "reiten": "horse-riding",
+  "Joggen": "jogging",
+  "Laufen": "running",
+  "Segeln": "sailing",
+  "Ski fahren": "skiing",
+  "Snowboarden": "snowboarding",
+  "Schwimmen": "swimming",
+  "Windsurfen": "windsurfing",
+  "Badminton": "badminton",
+  "Baseball": "baseball",
+  "Basketball": "basketball",
+  "Fussball": "football",
+  "Gold": "golf",
+  "Handball": "handball",
+  "Eishockey": "hockey",
+  "Rugby": "rugby",
+  "Tennis": "tennis",
+  "Volleyball": "volleyball",
+  "Athlet": "athlete",
+  "Spieler": "player",
+  "Wettkämpfer": "competitor",
+  "Radfahrer": "cyclist",
+  "Taucher": "diver",
+  "Turner": "gymnast",
+  "Reiter": "horse-rider",
+  "Jogger": "jogger",
+  "Läufer": "runner",
+  "Skifahrer": "skier",
+  "Snowboarder": "snowboarder",
+  "Schwimmer": "swimmer",
+  "Windsurfer": "windsurfer",
+  "Konkurrent": "competitor",
+  "Gegner": "opponent",
+  "Teilnehmer": "participant",
+  "Hauptfeld": "peloton",
+  "Schiedsrichter": "referee",
+  "Zweitplatzierter": "runner-up",
+  "Zuschauer": "spectator",
+  "Fan": "supporter",
+  "Mannschaft": "team",
+  "Schiedsrichter": "umpire",
+  "Gewinner": "winner",
+  "Leichtathletikbahn": "athletics track",
+  "Stadion": "stadium",
+  "Platz": "court",
+  "Fairway": "fairway",
+  "Platz": "pitch",
+  "Golfkurs": "golf course",
+  "grün": "green",
+  "Turnhalle": "gym",
+  "Eisstadion": "ice-skating rink",
+  "Bahn": "lane",
+  "Rennstrecke": "motor-racing circuit",
+  "Piste": "slope",
+  "Schwimmbad": "swimming pool",
+  "Turnier": "tournament",
+  "Sportevent": "sporting event",
+  "Wettkampf": "competition",
+  "Schläger": "racket",
+  "Pfosten": "goal posts",
+  "Golfschläger": "golf clubs",
+  "Hockeystock": "hockey stick",
+  "Netz": "net",
+  "Sicherheitshelm": "safety helmet",
+  "Skibrille": "goggles",
+  "Skier und Skistöcke": "skis and ski sticks",
+  "ein Rekord brechen": "break a record",
+  "ein Foul begehen": "commit a foul",
+  "ein Wurf üben": "practise a shot",
+  "ein Tor erzielen": "score a goal",
+  "einen Eckball treten": "take a corner",
+  "stattfinden": "take place",
+  "einen neuen Sport anfangen": "take up a new sport",
+  "gewinnen": "win"
+        };
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function generateUniqueQuestions(wordKeys, usedWords, count, generateQuestionsFn) {
+            let html = '';
+            while (count > 0 && wordKeys.length > 0) {
+                const word = getRandomElement(wordKeys);
+                if (usedWords.has(word)) {
+                    wordKeys = wordKeys.filter(w => w !== word);
+                    continue;
+                }
+
+                const questionData = generateQuestionsFn(word, usedWords);
+                if (questionData) {
+                    html += questionData.html;
+                    usedWords.add(questionData.word);
+                    count--;
+                }
+            }
+            return html;
+        }
+
+        function generateTrueFalseQuestions(word, usedWords) {
+            const correctTranslation = words[word];
+            const germanWords = Object.keys(words).filter(w => w !== word);
+            const randomGermanWord = getRandomElement(germanWords);
+
+            const isCorrect = Math.random() < 0.5;
+            const secondWord = isCorrect ? word : randomGermanWord;
+
+            const questionText = `<strong>${word}</strong> heisst auf Englisch <span lang="en"><strong>${correctTranslation}</strong></span>.`;
+
+            return {
+                html: `
+                    <div class="question">
+                        <p>${questionText}</p>
+                        <label><input type="radio" name="truefalse_${word}" value="true"><span lang="en">True</span></label>
+                        <label><input type="radio" name="truefalse_${word}" value="false"><span lang="en">False</span></label>
+                        <input type="hidden" name="truefalse_answer_${word}" value="${isCorrect ? 'true' : 'false'}">
+                    </div>
+                `,
+                word: word
+            };
+        }
+
+        function generateTextInputQuestions(word, usedWords) {
+            const questionText = `<strong>${word}</strong>`;
+            const correctTranslation = words[word];
+
+            return {
+                html: `
+                    <div class="question">
+                        <p>${questionText}</p>
+                        <input type="text" name="textinput_${word}">
+                        <input type="hidden" name="textinput_answer_${word}" value="${correctTranslation}">
+                    </div>
+                `,
+                word: word
+            };
+        }
+
+function generateMultipleChoiceQuestions(word, usedWords) {
+    const correctTranslation = words[word];
+    const options = [correctTranslation];
+    const germanWords = Object.keys(words).filter(w => w !== word);
+
+    while (options.length < 4) {
+        const option = getRandomElement(Object.values(words));
+        if (!options.includes(option)) {
+            options.push(option);
+        }
+    }
+
+    shuffleArray(options);
+
+    const questionText = `Was bedeutet <strong>${word}</strong> auf Englisch?`;
+
+    return {
+        html: `
+            <div class="question multiple-choice">
+                <p>${questionText}</p>
+                ${options.map(option => `
+                    <label><input type="radio" name="multiplechoice_${word}" value="${option}"> 
+                        <span lang="en">${option}</span>
+                    </label>
+                `).join('')}
+                <input type="hidden" name="multiplechoice_answer_${word}" value="${correctTranslation}">
+            </div>
+        `,
+        word: word
+            };
+        }
+
+        function generateTest() {
+            const testElement = document.getElementById('test');
+            const reloadButton = document.getElementById('reloadButton');
+            const checkAnswersButton = document.getElementById('checkAnswersButton');
+            testElement.innerHTML = '';
+
+            const wordKeys = Object.keys(words);
+            const usedWords = new Set();
+
+            const sections = [
+                {
+                    html: '<h2><span lang="en">True or False</span></h2><p>Wählen Sie <span lang="en">TRUE</span>, wenn die Aussage stimmt. <span lang="en">FALSE</span>, wenn sie falsch ist.</p>',
+                    generateFn: generateTrueFalseQuestions,
+                    count: 10
+                },
+                {
+                    html: '<h2>Texteingabe</h2><p>Geben Sie die englische Übersetzung des deutschen Wortes ein.</p>',
+                    generateFn: generateTextInputQuestions,
+                    count: 10
+                },
+                {
+                    html: '<h2><span lang="en">Multiple Choice</span></h2><p>Wählen Sie die richtige englische Übersetzung des deutschen Wortes.</p>',
+                    generateFn: generateMultipleChoiceQuestions,
+                    count: 10
+                }
+            ];
+
+            shuffleArray(sections);
+            sections.forEach(section => {
+                testElement.innerHTML += section.html;
+                testElement.innerHTML += generateUniqueQuestions([...wordKeys], usedWords, section.count, section.generateFn);
+            });
+
+            reloadButton.classList.add('hidden');
+            checkAnswersButton.classList.remove('hidden');
+        }
+
+        function checkAnswers() {
+            const testElement = document.getElementById('test');
+            const resultElement = document.getElementById('result');
+            const questions = document.querySelectorAll('.question');
+            let correctCount = 0;
+            let incorrectQuestions = '';
+
+            questions.forEach((question) => {
+                const trueFalseInput = question.querySelector('input[type="radio"]:checked');
+                const textInput = question.querySelector('input[type="text"]');
+                const multipleChoiceInput = question.querySelector('input[type="radio"]:checked');
+                const correctAnswer = question.querySelector('input[type="hidden"]').value;
+
+                let userAnswer;
+                if (trueFalseInput) {
+                    userAnswer = trueFalseInput.value;
+                } else if (textInput) {
+                    userAnswer = textInput.value.trim();
+                } else if (multipleChoiceInput) {
+                    userAnswer = multipleChoiceInput.value;
+                }
+
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                } else {
+                    incorrectQuestions += `<div class="question">${question.innerHTML}</div>`;
+                }
+            });
+
+            testElement.innerHTML = '';
+            resultElement.innerHTML = `<h2>Ergebnis</h2><p>Sie haben ${correctCount} von 30 Fragen richtig beantwortet.</p>`;
+            if (incorrectQuestions) {
+                resultElement.innerHTML += `<h2>Falsch beantwortete Fragen</h2>${incorrectQuestions}`;
+            }
+        }
+
+        // Generate the test when the page loads
+        window.onload = generateTest;
+    </script>
+</body>
+</html>

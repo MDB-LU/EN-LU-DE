@@ -185,18 +185,37 @@
         let incorrectCount = 0;
         let correctWords = [];
         let incorrectWords = [];
+        let wordList = Object.keys(wörterbuch); // Words that haven't been asked yet
+        let usedWords = []; // Words that have been asked
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
 
         function getRandomWord() {
-            const keys = Object.keys(wörterbuch);
-            const randomIndex = Math.floor(Math.random() * keys.length);
-            return keys[randomIndex];
+            if (wordList.length === 0) {
+                alert("Alle Wörter wurden einmal gefragt. Die nächste Runde beginnt!");
+                wordList = [...usedWords]; // Reset word list
+                shuffleArray(wordList); // Shuffle for randomness
+                usedWords = []; // Reset used words
+            }
+
+            const word = wordList.pop(); // Get last word from shuffled list
+            usedWords.push(word); // Mark it as used
+            return word;
         }
 
         function translate() {
             const deutsch = document.getElementById("deutsch").value.trim();
             const englisch = document.getElementById("wordToTranslate").textContent.trim();
             const correctTranslation = wörterbuch[englisch];
-            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) ? "Richtig!" : "Falsch, die richtige Übersetzung ist: " + correctTranslation;
+
+            const result = (deutsch.toLowerCase() === correctTranslation.toLowerCase()) 
+                ? "Richtig!" 
+                : `Falsch, die richtige Übersetzung ist: ${correctTranslation}`;
             alert(result);
 
             if (deutsch.toLowerCase() === correctTranslation.toLowerCase()) {
@@ -207,7 +226,12 @@
                 incorrectWords.push(englisch);
             }
 
-            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const nextWord = getRandomWord();
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${nextWord}</span>`;
             document.getElementById("deutsch").value = '';
         }
 
@@ -221,28 +245,24 @@
             document.getElementById("correctCount").textContent = correctCount;
             document.getElementById("incorrectCount").textContent = incorrectCount;
 
-            const correctWordsHtml = correctWords.map(word => `<span lang="en">${word}</span>`).join(", ");
-            document.getElementById("correctWords").innerHTML = correctWordsHtml;
-
-            const incorrectWordsHtml = incorrectWords.map(word => `<span lang="en">${word}</span>`).join(", ");
-            document.getElementById("incorrectWords").innerHTML = incorrectWordsHtml;
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
 
             document.getElementById("statistics").style.display = "block";
         }
 
         function switchMode() {
-            // Hier die URL der Zielseite einfügen
             window.location.href = "Wortschatz Unit 1-2 NHE - MC.html";
         }
 
-function TestMode() {
-            // Hier die URL der Zielseite einfügen
+        function TestMode() {
             window.location.href = "Wortschatz Unit 1-2 NHE - TM.html";
         }
 
-        // Set a random initial word
-        document.getElementById("wordToTranslate").innerHTML = `<span lang="en">${getRandomWord()}</span>`;
+        shuffleArray(wordList); // Shuffle words at the start
+        nextQuestion();
     </script>
+
 <br>
 <p>Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</p>
 <p><a href="Unit 1-2 NHE.docx" target="_blank"><span lang="en">New Headway Elementary Units 1-2</span></a></p>

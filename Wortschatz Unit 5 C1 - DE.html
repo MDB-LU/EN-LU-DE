@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            margin: 50px;
+        }
+        input, button {
+            padding: 5px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="wordToTranslate"><span lang="de">geniessen</span></p>
+    <input type="text" id="englisch" onkeypress="checkEnter(event)"><br>
+    <button onclick="showStatistics()">Statistics</button>
+    <button onclick="switchMode()">Change Mode</button>
+    <button onclick="TestMode()">Test Mode</button>
+    <div id="result"></div>
+    <div id="statistics" style="display: none;">
+        <p>Correct Words: <span id="correctCount">0</span></p>
+        <p id="correctWords"></p>
+        <p>Incorrect Words: <span id="incorrectCount">0</span></p>
+        <p id="incorrectWords"></p>
+    </div>
+
+    <script>
+        const wörterbuch = {
+  "funktionieren": "working",
+  "Beziehung": "relationship",
+  "Geschäft": "business",
+  "eng": "close",
+  "schwierig": "difficult",
+  "Familie": "family",
+  "offiziell": "formal",
+  "freundlich": "friendly",
+  "intim": "intimate",
+  "andauernd": "lasting",
+  "persönlich": "personal",
+  "professionell": "professional",
+  "gereizt": "prickly",
+  "gelassen": "relaxed",
+  "steinig": "rocky",
+  "solid": "solid",
+  "stabil": "stable",
+  "stark": "strong",
+  "beunruhigend": "uneasy",
+  "heftige Auseinandersetzung": "heated argument",
+  "wütende Auseinandersetzung": "furious argument",
+  "sinnlose Auseinandersetzung": "pointless argument",
+  "älteres Paar": "elderly couple",
+  "verheiratetes Paar": "married couple",
+  "junges Paar": "young couple",
+  "Adoptiveltern": "adoptive parents",
+  "erweiterte Familie": "extended family",
+  "engste Familie": "immediate family",
+  "gemischte Gefühle": "mixed feelings",
+  "starke Gefühle": "strong feelings",
+  "bester Freund": "best friend",
+  "enger Freund": "close friend",
+  "gemeinsamer Freund": "mutual friend",
+  "Bruderliebe": "brotherly love",
+  "erste Liebe": "first love",
+  "wahre Liebe": "true love",
+  "steigende Spannung": "rising tension",
+  "soziale Spannung": "social tension",
+  "jemanden beschimpfen": "call somebody names",
+  "jemanden beim Namen rufen": "call somebody by their first name",
+  "sich in jemanden verlieben": "fall for somebody",
+  "sich mit jemanden streiten": "fall out with somebody",
+  "dicke Freunde sein": "get on like a house on fire",
+  "jemanden auf die Nerven gehen": "get on somebody's nerves",
+  "die Gesellschaft anderer meiden": "keep oneself to oneself",
+  "mit jemanden in Kontakt bleiben": "keep in touch with somebody",
+  "zu jemanden aufschauen": "look up to somebody",
+  "auf jemanden hinunterschauen": "look down on somebody",
+  "jemanden heftig kritisieren": "put somebody down",
+  "jemanden ähneln": "take after somebody",
+  "jemanden auf Anhieb mögen": "take an instant liking to somebody",
+  "jemanden mögen": "take to somebody",
+  "einen Heiratsantrag ablehnen": "turn down a proposal of marriage",
+  "jemanden den Rücken zuwenden": "turn one's back on somebody",
+  "sich bei jemanden Hilfe suchen": "turn to somebody for help"
+        };
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let correctWords = [];
+        let incorrectWords = [];
+
+        let wordList = Object.keys(wörterbuch); // Words that haven't been asked yet
+        let usedWords = []; // Words that have been asked
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getNextWord() {
+            if (wordList.length === 0) {
+                alert("All words have been asked once. Starting the next round!");
+                wordList = [...usedWords]; // Reset word list
+                shuffleArray(wordList); // Shuffle for randomness
+                usedWords = []; // Reset used words
+            }
+
+            const word = wordList.pop(); // Get last word from shuffled list
+            usedWords.push(word); // Mark it as used
+            return word;
+        }
+
+        function translate() {
+            const englisch = document.getElementById("englisch").value.trim();
+            const deutsch = document.getElementById("wordToTranslate").textContent.trim();
+            const correctTranslation = wörterbuch[deutsch];
+
+            const result = (englisch.toLowerCase() === correctTranslation.toLowerCase()) 
+                ? "Correct!" 
+                : `Incorrect, the correct solution is: ${correctTranslation}`;
+            alert(result);
+
+            if (englisch.toLowerCase() === correctTranslation.toLowerCase()) {
+                correctCount++;
+                correctWords.push(deutsch);
+            } else {
+                incorrectCount++;
+                incorrectWords.push(deutsch);
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const nextWord = getNextWord();
+            document.getElementById("wordToTranslate").innerHTML = `<span lang="de">${nextWord}</span>`;
+            document.getElementById("englisch").value = '';
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                translate();
+            }
+        }
+
+        function showStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+
+            document.getElementById("correctWords").innerHTML = correctWords.join(", ");
+            document.getElementById("incorrectWords").innerHTML = incorrectWords.join(", ");
+
+            document.getElementById("statistics").style.display = "block";
+        }
+
+        function switchMode() {
+            window.location.href = "Wortschatz Unit 5 C1 - MC - DE.html";
+        }
+
+        function TestMode() {
+            window.location.href = "Wortschatz Unit 5 C1 - TM - DE.html";
+        }
+
+        shuffleArray(wordList); // Shuffle words at the start
+        nextQuestion();
+    </script>
+
+<br>
+<p><span lang="de">Falls Sie alle Worte in einem Word-Dokument üben wollen, dann klicken Sie den folgenden Link:</span></p>
+<p><a href="C1 Unit 5.docx" target="_blank"><span lang="en">Ready for Advanced (C1) Unit 5</span></a></p>
+<br>
+<br>
+</body>
+</html>
